@@ -20,15 +20,20 @@
   --radius:8px;--radius-lg:14px;
 }
 body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.5;min-height:100vh}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:56px;background:var(--maroon);gap:16px;position:sticky;top:0;z-index:100}
-.tb-left{display:flex;align-items:center;gap:14px}
-.tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
-.tb-seal{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:12px}
-.tb-name{font-family:'Playfair Display',serif;font-size:15px;color:white;font-weight:600}
-.tb-school{font-size:12px;color:rgba(255,255,255,0.7);border-left:1px solid rgba(255,255,255,0.25);padding-left:14px;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tb-right{display:flex;align-items:center;gap:8px}
-.tb-gwa{font-size:12px;font-weight:600;background:rgba(255,255,255,0.18);color:white;padding:4px 12px;border-radius:99px}
-.tb-user{font-size:12px;color:rgba(255,255,255,0.75)}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;height:54px;background:var(--maroon);gap:12px;position:sticky;top:0;z-index:100}
+.tb-left{display:flex;align-items:center;gap:0;flex-shrink:0}
+.tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:10px}
+.tb-seal{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:12px;flex-shrink:0}
+.tb-name{font-family:'Playfair Display',serif;font-size:15px;color:white;font-weight:600;white-space:nowrap}
+.tb-nav{display:flex;align-items:center;gap:1px}
+.tb-link{font-size:12px;color:rgba(255,255,255,0.72);text-decoration:none;padding:6px 11px;border-radius:6px;transition:all 0.12s;white-space:nowrap;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;line-height:1}
+.tb-link:hover{background:rgba(255,255,255,0.15);color:white}
+.tb-link.active{background:rgba(255,255,255,0.2);color:white;font-weight:500}
+.tb-right{display:flex;align-items:center;gap:1px;flex-shrink:0}
+.tb-sep{width:1px;height:18px;background:rgba(255,255,255,0.2);margin:0 8px;flex-shrink:0}
+.tb-profile-btn{display:flex;align-items:center;gap:7px;padding:4px 12px 4px 5px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none;margin-left:4px}
+.tb-profile-btn:hover{background:rgba(255,255,255,0.24);color:white}
+.tb-avatar{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
 .icon-btn{width:32px;height:32px;border-radius:var(--radius);border:none;background:rgba(255,255,255,0.15);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background 0.15s;text-decoration:none}
 .icon-btn:hover{background:rgba(255,255,255,0.25)}
 .content{max-width:1000px;margin:0 auto;padding:2rem 2rem 5rem}
@@ -127,18 +132,24 @@ input::placeholder{color:var(--light)}
       <div class="tb-seal">A</div>
       <span class="tb-name">AcadTrack</span>
     </a>
-    <div style="display:flex;align-items:center;gap:2px;margin-left:4px">
-      <a href="dashboard.html" style="font-size:12px;color:white;text-decoration:none;padding:5px 10px;border-radius:6px;background:rgba(255,255,255,0.18)">Dashboard</a>
-      <a href="schedule.html" style="font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;padding:5px 10px;border-radius:6px;transition:all 0.12s">Schedule</a>
-      <a href="calendar.html" style="font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;padding:5px 10px;border-radius:6px;transition:all 0.12s">Calendar</a>
+    <div class="tb-nav">
+      <a href="dashboard.html" class="tb-link active">Dashboard</a>
+      <a href="schedule.html"  class="tb-link">Schedule</a>
+      <a href="calendar.html"  class="tb-link">Calendar</a>
     </div>
   </div>
   <div class="tb-right">
-    <div class="tb-gwa" id="tb-gwa">GWA —</div>
-    <div class="tb-user" id="tb-user"></div>
-    <a href="about.html" class="icon-btn" title="About">?</a>
-    <button class="icon-btn" onclick="openSettings()" title="Settings">⚙</button>
+    <div class="tb-sep"></div>
+    <button class="tb-link" onclick="openSettings()">Settings</button>
+    <a href="about.html"           class="tb-link">About</a>
+    <a href="about.html#feedback"  class="tb-link">Contact</a>
+    <button class="tb-profile-btn" onclick="openSettings()" id="tb-profile-btn">
+      <div class="tb-avatar" id="tb-avatar">?</div>
+      <span id="tb-profile-label">Profile</span>
+    </button>
   </div>
+</div>
+
 </div>
 
 <div class="content">
@@ -243,6 +254,20 @@ input::placeholder{color:var(--light)}
         <div class="fg"><label>Current semester</label><select id="st-sem"><option value="1">1st Semester</option><option value="2">2nd Semester</option><option value="3">Summer</option></select></div>
       </div>
       <div class="fg"><label>Target graduation date</label><input type="month" id="st-graddate"></div>
+    </div>
+    <div class="stg-section">
+      <h4>Curriculum</h4>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:10px">Import a curriculum file to populate your subject list. Upload a <strong>.txt</strong> copy of your curriculum (tab-separated, with Year/Semester headers). This <em>adds</em> to your existing subjects — it won't delete anything.</p>
+      <label class="btn" style="cursor:pointer;margin-bottom:8px">
+        📂 Upload curriculum .txt
+        <input type="file" id="dash-curr-input" accept=".txt" style="display:none" onchange="dashImportCurriculum(event)">
+      </label>
+      <div id="dash-curr-preview" style="display:none;font-size:12px;margin-top:6px">
+        <div id="dash-curr-stats" style="color:var(--gp);font-weight:600;margin-bottom:4px"></div>
+        <div id="dash-curr-breakdown" style="color:var(--gray);margin-bottom:8px"></div>
+        <div id="dash-curr-error" style="color:var(--gf);display:none"></div>
+        <button class="btn btn-primary" id="dash-curr-apply" onclick="dashApplyCurriculum()" style="font-size:12px;padding:6px 14px">Add these subjects →</button>
+      </div>
     </div>
     <div class="stg-section">
       <h4>Data &amp; backup</h4>
@@ -510,6 +535,109 @@ function saveSettings(){
 }
 function confirmReset(){showConfirm('Reset all data?','This will permanently delete all your subjects and settings. This cannot be undone.',()=>{localStorage.removeItem(KEY);window.location.href='index.html';});}
 
+// ── CURRICULUM IMPORT (dashboard) ────────────────────────────────────────────
+let dashParsedSubjects = null;
+
+function parseCurriculumText(text) {
+  text = text.replace(/\r/g, '');
+  var rawLines = text.split('\n');
+  var lines = rawLines.map(function(l){ return l.trim(); });
+  var subjects = [];
+  var currentYear = 1, currentSem = 1;
+  var YEAR_MAP = {'first':1,'second':2,'third':3,'fourth':4,'fifth':5,'1st':1,'2nd':2,'3rd':3,'4th':4,'5th':5};
+  var SEM_MAP  = {'1st':1,'first':1,'2nd':2,'second':2,'summer':3,'midyear':3,'mid-year':3};
+  var courseNumToId = {};
+
+  for (var li = 0; li < lines.length; li++) {
+    var line = lines[li];
+    if (!line) continue;
+    var ysm = line.match(/^(first|second|third|fourth|fifth|1st|2nd|3rd|4th|5th)\s+year[,\s]+(1st|2nd|summer|midyear|mid-year|first|second)/i);
+    if (ysm) {
+      currentYear = YEAR_MAP[ysm[1].toLowerCase()] || parseInt(ysm[1]) || currentYear;
+      currentSem  = SEM_MAP[ysm[2].toLowerCase()] || 1;
+      continue;
+    }
+    if (/^(course\s*no|description|total\s*units|elective|co-req)/i.test(line)) continue;
+    var cols = line.indexOf('\t') >= 0 ? line.split('\t') : line.split(/\s{2,}/);
+    cols = cols.map(function(c){ return c.trim(); });
+    if (cols.length < 3) continue;
+    var courseNo = cols[0]||'', code = cols[1]||'', name = cols[2]||'';
+    var units = parseInt(cols[3])||3;
+    var prereqRaw = cols[4] ? cols[4].split(',').map(function(c){return c.trim();}).filter(Boolean) : [];
+    if (!name || name.length < 2 || !/[A-Za-z]/.test(name)) continue;
+    if (!courseNo && code.length < 2) continue;
+    var id = 'u_' + (courseNo||code).replace(/\s/g,'') + '_' + li;
+    if (courseNo) courseNumToId[courseNo] = id;
+    if (code) courseNumToId[code] = id;
+    var normName = name.split(' ').map(function(w){
+      if (!w) return w;
+      if (w.length <= 3 || /^[A-Z0-9]+$/.test(w)) return w.toUpperCase();
+      return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    }).join(' ');
+    subjects.push({id:id, code:code, name:normName, units:units, year:currentYear, sem:currentSem, prereqs:prereqRaw, status:'not_taken', grade:''});
+  }
+  if (!subjects.length) throw new Error('No subjects found. Check the file has Year/Semester headers and tab-separated columns.');
+  subjects.forEach(function(s){
+    s.prereqs = s.prereqs.map(function(num){ return courseNumToId[num]; }).filter(Boolean);
+  });
+  return subjects;
+}
+
+function dashImportCurriculum(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var preview = document.getElementById('dash-curr-preview');
+    var statsEl = document.getElementById('dash-curr-stats');
+    var breakEl = document.getElementById('dash-curr-breakdown');
+    var errEl   = document.getElementById('dash-curr-error');
+    var applyBtn = document.getElementById('dash-curr-apply');
+    preview.style.display = 'block';
+    errEl.style.display = 'none';
+    try {
+      var subs = parseCurriculumText(ev.target.result);
+      dashParsedSubjects = subs;
+      var totalU = subs.reduce(function(a,s){return a+s.units;},0);
+      statsEl.textContent = '\u2713 Found ' + subs.length + ' subjects — ' + totalU + ' total units';
+      var byYear = {};
+      subs.forEach(function(s){
+        var k = 'Year '+s.year;
+        byYear[k] = (byYear[k]||0)+1;
+      });
+      breakEl.textContent = Object.keys(byYear).map(function(k){return k+': '+byYear[k]+' subj.';}).join('  ·  ');
+      applyBtn.style.display = 'inline-flex';
+      applyBtn.disabled = false;
+      applyBtn.textContent = 'Add these subjects \u2192';
+    } catch(err) {
+      dashParsedSubjects = null;
+      statsEl.textContent = '';
+      breakEl.textContent = '';
+      errEl.style.display = 'block';
+      errEl.textContent = '\u26a0 ' + err.message;
+      applyBtn.style.display = 'none';
+    }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function dashApplyCurriculum() {
+  if (!dashParsedSubjects || !dashParsedSubjects.length) return;
+  // Add subjects that don't already exist (match by code)
+  var existingCodes = D.subjects.map(function(s){return s.code;}).filter(Boolean);
+  var toAdd = dashParsedSubjects.filter(function(s){ return !existingCodes.includes(s.code); });
+  var skipped = dashParsedSubjects.length - toAdd.length;
+  D.subjects = D.subjects.concat(toAdd);
+  save(); closeModal('settings-overlay'); render();
+  activeYear = 1;
+  var msg = toAdd.length + ' subjects added';
+  if (skipped) msg += ' (' + skipped + ' skipped — already exist)';
+  showToast(msg);
+  dashParsedSubjects = null;
+  document.getElementById('dash-curr-preview').style.display = 'none';
+}
+
 // ── EXPORT / IMPORT ───────────────────────────────────────────────────────────
 function exportData(){
   const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});
@@ -594,5 +722,17 @@ if(D){activeYear=D.yearLevel||1;render();}
   } catch {}
 })();
 </script>
+<script>
+(function(){
+  try{
+    var d=JSON.parse(localStorage.getItem('acadtrack_data')||'{}');
+    var name=d.name||(d.school?d.school.split(' ')[0]:'');
+    var init=name?name.charAt(0).toUpperCase():'?';
+    var av=document.getElementById('tb-avatar');
+    var lb=document.getElementById('tb-profile-label');
+    if(av)av.textContent=init;
+    if(lb)lb.textContent=name||'Profile';
+  }catch(e){}
+})();</script>
 </body>
 </html>
