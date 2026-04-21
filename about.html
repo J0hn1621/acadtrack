@@ -19,12 +19,25 @@
   --radius:8px;--radius-lg:14px;
 }
 body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.6}
-nav{display:flex;align-items:center;justify-content:space-between;padding:0.875rem 2.5rem;background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-seal{width:34px;height:34px;border-radius:50%;background:var(--maroon);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:13px;font-weight:600;flex-shrink:0}
-.logo-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--maroon)}
-.nav-links{display:flex;align-items:center;gap:6px}
-.nav-link{font-size:13px;color:var(--gray);text-decoration:none;padding:6px 12px;border-radius:var(--radius);transition:all 0.12s}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;height:54px;background:var(--maroon);gap:12px;position:sticky;top:0;z-index:100}
+.tb-left{display:flex;align-items:center;gap:0;flex-shrink:0}
+.tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:10px}
+.tb-seal{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:12px;flex-shrink:0}
+.tb-name{font-family:'Playfair Display',serif;font-size:15px;color:white;font-weight:600;white-space:nowrap}
+.tb-nav{display:flex;align-items:center;gap:1px}
+.tb-link{font-size:12px;color:rgba(255,255,255,0.72);text-decoration:none;padding:6px 11px;border-radius:6px;transition:all 0.12s;white-space:nowrap;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;line-height:1}
+.tb-link:hover{background:rgba(255,255,255,0.15);color:white}
+.tb-link.active{background:rgba(255,255,255,0.2);color:white;font-weight:500}
+.tb-right{display:flex;align-items:center;gap:1px;flex-shrink:0}
+.tb-sep{width:1px;height:18px;background:rgba(255,255,255,0.2);margin:0 8px;flex-shrink:0}
+.tb-profile-btn{display:flex;align-items:center;gap:7px;padding:4px 12px 4px 5px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none;margin-left:4px}
+.tb-profile-btn:hover{background:rgba(255,255,255,0.24);color:white}
+.tb-avatar{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
+
+
+
+
+
 .nav-link:hover,.nav-link.active{background:var(--maroon-light);color:var(--maroon)}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius);font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;border:none;transition:all 0.15s}
 .btn-primary{background:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover)}
@@ -97,20 +110,47 @@ textarea{resize:vertical;min-height:100px}
 /* FOOTER */
 footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-top:1px solid var(--border);background:var(--white);margin-top:2rem}
 @media(max-width:520px){nav{padding:0.75rem 1.25rem}.page{padding:2rem 1.25rem 4rem}.form-row{grid-template-columns:1fr}.nav-link{display:none}}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;height:54px;background:var(--maroon);gap:12px;position:sticky;top:0;z-index:100}
+.tb-left{display:flex;align-items:center;gap:0;flex-shrink:0}
+.tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:10px}
+.tb-seal{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:12px;flex-shrink:0}
+.tb-name{font-family:'Playfair Display',serif;font-size:15px;color:white;font-weight:600;white-space:nowrap}
+.tb-nav{display:flex;align-items:center;gap:1px}
+.tb-link{font-size:12px;color:rgba(255,255,255,0.72);text-decoration:none;padding:6px 11px;border-radius:6px;transition:all 0.12s;white-space:nowrap;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;line-height:1}
+.tb-link:hover{background:rgba(255,255,255,0.15);color:white}
+.tb-link.active{background:rgba(255,255,255,0.2);color:white;font-weight:500}
+.tb-right{display:flex;align-items:center;gap:1px;flex-shrink:0}
+.tb-sep{width:1px;height:18px;background:rgba(255,255,255,0.2);margin:0 8px;flex-shrink:0}
+.tb-profile-btn{display:flex;align-items:center;gap:7px;padding:4px 12px 4px 5px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none;margin-left:4px}
+.tb-profile-btn:hover{background:rgba(255,255,255,0.24);color:white}
+.tb-avatar{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="logo">
-    <div class="logo-seal">A</div>
-    <span class="logo-name">AcadTrack</span>
-  </a>
-  <div class="nav-links">
-    <a href="about.html" class="nav-link active">About</a>
-    <a href="index.html" class="btn btn-outline btn-sm">Get started →</a>
+<div class="topbar">
+  <div class="tb-left">
+    <a href="index.html" class="tb-logo">
+      <div class="tb-seal">A</div>
+      <span class="tb-name">AcadTrack</span>
+    </a>
+    <div class="tb-nav">
+      <a href="dashboard.html" class="tb-link">Dashboard</a>
+      <a href="schedule.html"  class="tb-link">Schedule</a>
+      <a href="calendar.html"  class="tb-link">Calendar</a>
+    </div>
   </div>
-</nav>
+  <div class="tb-right">
+    <div class="tb-sep"></div>
+    <a href="dashboard.html" class="tb-link">Settings</a>
+    <a href="about.html"     class="tb-link active">About</a>
+    <a href="about.html#feedback" class="tb-link">Contact</a>
+    <a href="dashboard.html" class="tb-profile-btn" id="tb-profile-btn">
+      <div class="tb-avatar" id="tb-avatar">?</div>
+      <span id="tb-profile-label">Profile</span>
+    </a>
+  </div>
+</div>
 
 <div class="page">
 
@@ -203,7 +243,7 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
 
   <!-- FEEDBACK FORM -->
   <div class="section">
-    <h2 class="section-title">Send feedback or report a bug</h2>
+    <h2 class="section-title" id="feedback">Send feedback or report a bug</h2>
 
     <div class="prose">
       <p>Found a bug? Have a suggestion? Want to request a curriculum template? Send us a message — it helps make AcadTrack better for everyone.</p>
@@ -338,6 +378,31 @@ async function handleSubmit(e) {
     alert('Could not send message. Please try again, or email us directly at acadtrack.feedback@gmail.com');
   }
 }
+</script>
+<script>
+(function(){
+  try{
+    var d=JSON.parse(localStorage.getItem('acadtrack_data')||'{}');
+    var name=d.name||(d.school?d.school.split(' ')[0]:'');
+    var init=name?name.charAt(0).toUpperCase():'?';
+    var av=document.getElementById('tb-avatar');
+    var lb=document.getElementById('tb-profile-label');
+    if(av)av.textContent=init;
+    if(lb)lb.textContent=name||'Profile';
+  }catch(e){}
+})();</script>
+<script>
+(function(){
+  try{
+    var d=JSON.parse(localStorage.getItem('acadtrack_data')||'{}');
+    var name=d.name||(d.school?d.school.split(' ')[0]:'');
+    var init=name?name.charAt(0).toUpperCase():'?';
+    var av=document.getElementById('tb-avatar');
+    var lb=document.getElementById('tb-profile-label');
+    if(av)av.textContent=init;
+    if(lb)lb.textContent=name||'Profile';
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
