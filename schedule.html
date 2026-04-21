@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedule — AcadTrack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --maroon:#7B1C1C;--maroon-hover:#9B2525;--maroon-light:#F5EBEB;
+  --gold:#B8960C;--gold-light:#FBF4DC;--gold-border:#E8D06A;
+  --cream:#FAF7F2;--border:#E5DDD4;--dark:#1C1917;--mid:#44403C;
+  --gray:#78716C;--light:#A8A29E;--white:#FFFFFF;
+  --gp:#15803D;--gp-bg:#DCFCE7;--gf:#B91C1C;--gf-bg:#FEE2E2;
+  --go:#1D4ED8;--go-bg:#DBEAFE;--gn:#57534E;--gn-bg:#F5F5F4;
+  --prelim:#C2410C;--prelim-bg:#FFF7ED;--prelim-border:#FED7AA;
+  --midterm:#1D4ED8;--midterm-bg:#EFF6FF;--midterm-border:#BFDBFE;
+  --finals:#7E22CE;--finals-bg:#FAF5FF;--finals-border:#DDD6FE;
+  --radius:8px;--radius-lg:14px;
+}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.5;min-height:100vh}
+/* NAV */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;background:var(--maroon);gap:16px;position:sticky;top:0;z-index:100}
+.tb-left{display:flex;align-items:center;gap:14px}
+.tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.tb-seal{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:12px}
+.tb-name{font-family:'Playfair Display',serif;font-size:15px;color:white;font-weight:600}
+.tb-nav{display:flex;align-items:center;gap:2px}
+.tb-link{font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;padding:6px 11px;border-radius:var(--radius);transition:all 0.12s;white-space:nowrap}
+.tb-link:hover,.tb-link.active{background:rgba(255,255,255,0.18);color:white}
+.tb-right{display:flex;align-items:center;gap:8px}
+.icon-btn{width:32px;height:32px;border-radius:var(--radius);border:none;background:rgba(255,255,255,0.15);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background 0.15s}
+.icon-btn:hover{background:rgba(255,255,255,0.25)}
+/* CONTENT */
+.content{max-width:1040px;margin:0 auto;padding:1.75rem 2rem 5rem}
+/* RIGHT NOW BANNER */
+.rightnow{border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid}
+.rightnow.status-current{background:var(--gp-bg);border-color:#86EFAC}
+.rightnow.status-upcoming{background:var(--go-bg);border-color:#93C5FD}
+.rightnow.status-exam-current{background:var(--prelim-bg);border-color:var(--prelim-border)}
+.rightnow.status-exam-upcoming{background:var(--midterm-bg);border-color:var(--midterm-border)}
+.rightnow.status-none{background:var(--cream);border-color:var(--border)}
+.rn-icon{font-size:28px;flex-shrink:0}
+.rn-body{flex:1;min-width:0}
+.rn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;opacity:0.7}
+.rn-main{font-size:18px;font-weight:600;line-height:1.3}
+.rn-sub{font-size:13px;opacity:0.8;margin-top:3px}
+.rn-time{font-size:13px;font-weight:600;text-align:right;white-space:nowrap}
+/* TODAY ROW */
+.today-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1.75rem}
+.today-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem}
+.tc-title{font-size:12px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.class-chip{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius);margin-bottom:6px;border:1px solid var(--border)}
+.chip-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chip-body{flex:1;min-width:0}
+.chip-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip-meta{font-size:11px;color:var(--gray)}
+.chip-time{font-size:11px;font-weight:600;color:var(--gray);white-space:nowrap}
+.chip-status{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px}
+.cs-current{background:var(--gp-bg);color:var(--gp)}
+.cs-upcoming{background:var(--go-bg);color:var(--go)}
+.cs-done{background:var(--gn-bg);color:var(--gn);opacity:0.7}
+.cs-exam{background:var(--prelim-bg);color:var(--prelim)}
+/* JOURNAL */
+.journal-area{resize:none;width:100%;min-height:90px;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.12s;line-height:1.6}
+.journal-area:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
+.journal-area::placeholder{color:var(--light)}
+.save-indicator{font-size:11px;color:var(--light);margin-top:4px;height:14px;transition:opacity 0.3s}
+/* SECTION */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;gap:12px}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600}
+/* WEEK GRID */
+.week-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:2rem}
+.day-col{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;min-height:100px}
+.day-header{padding:8px 10px 6px;border-bottom:1px solid var(--border);background:var(--cream)}
+.day-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray)}
+.day-header.today-col .day-name{color:var(--maroon)}
+.day-header.today-col{background:var(--maroon-light)}
+.day-classes{padding:8px}
+.sched-block{border-radius:var(--radius);padding:7px 8px;margin-bottom:5px;cursor:pointer;transition:opacity 0.1s;border:1px solid transparent}
+.sched-block:hover{opacity:0.85}
+.sb-code{font-size:10px;font-weight:700;margin-bottom:2px}
+.sb-name{font-size:11px;font-weight:500;line-height:1.3;margin-bottom:3px}
+.sb-meta{font-size:10px;opacity:0.8}
+.no-class{font-size:11px;color:var(--light);padding:8px;text-align:center}
+/* EXAM PERIODS */
+.exam-section{margin-bottom:2rem}
+.exam-period-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:10px;overflow:hidden}
+.epc-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none;gap:12px}
+.epc-header:hover{background:var(--cream)}
+.epc-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.ep-prelim .epc-badge{background:var(--prelim-bg);color:var(--prelim);border:1px solid var(--prelim-border)}
+.ep-midterm .epc-badge{background:var(--midterm-bg);color:var(--midterm);border:1px solid var(--midterm-border)}
+.ep-finals .epc-badge{background:var(--finals-bg);color:var(--finals);border:1px solid var(--finals-border)}
+.epc-info{flex:1}
+.epc-title{font-size:14px;font-weight:600}
+.epc-dates{font-size:12px;color:var(--gray);margin-top:2px}
+.epc-arrow{font-size:12px;color:var(--light);transition:transform 0.2s}
+.epc-arrow.open{transform:rotate(180deg)}
+.epc-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border)}
+.epc-body.open{display:block}
+.epc-dates-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.exam-entry{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;background:var(--cream)}
+.ee-info{flex:1;min-width:0}
+.ee-subject{font-size:13px;font-weight:500}
+.ee-meta{font-size:11px;color:var(--gray);margin-top:2px}
+.ee-date{font-size:11px;font-weight:600;color:var(--mid);white-space:nowrap}
+/* MODALS */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem}
+.overlay.open{display:flex}
+.modal{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;width:min(520px,100%);max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;margin-bottom:1.5rem}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:4px}
+.fg .hint{font-size:11px;color:var(--light);margin-top:3px}
+.fg .req{color:var(--maroon)}.fg .opt{color:var(--light);font-weight:400}
+input[type=text],input[type=time],input[type=date],input[type=color],select,textarea{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.12s}
+input:focus,select:focus,textarea:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
+input::placeholder{color:var(--light)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.days-picker{display:flex;gap:6px;flex-wrap:wrap}
+.day-pill{padding:5px 12px;border-radius:99px;font-size:12px;font-weight:500;border:1.5px solid var(--border);cursor:pointer;user-select:none;transition:all 0.12s;background:var(--white);color:var(--gray)}
+.day-pill.selected{background:var(--maroon);border-color:var(--maroon);color:white}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--mid);transition:all 0.12s}
+.btn:hover{border-color:var(--mid);color:var(--dark)}
+.btn-primary{background:var(--maroon);border-color:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover,#9B2525)}
+.btn-danger{border-color:#FCA5A5;color:var(--gf)}.btn-danger:hover{background:var(--gf-bg)}
+.btn-sm{padding:5px 12px;font-size:12px}
+/* ADD BTN */
+.add-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius);background:var(--maroon);color:white;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'Inter',sans-serif}
+.add-btn:hover{background:var(--maroon-hover,#9B2525)}
+/* COLOR SWATCHES */
+.color-swatches{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all 0.12s}
+.swatch.selected{border-color:var(--dark);transform:scale(1.1)}
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:white;padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;z-index:999;transform:translateY(10px);opacity:0;transition:all 0.25s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.confirm-msg{font-size:14px;color:var(--mid);margin-bottom:1.25rem;line-height:1.6}
+/* EMPTY STATE */
+.empty-week{text-align:center;padding:2.5rem;color:var(--light);font-size:13px;grid-column:1/-1}
+.empty-week p{margin-bottom:12px}
+@media(max-width:700px){.week-grid{grid-template-columns:repeat(3,1fr)}.today-row{grid-template-columns:1fr}.tb-link:not(.always){display:none}.form-row,.form-row3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-left">
+    <a href="index.html" class="tb-logo">
+      <div class="tb-seal">A</div>
+      <span class="tb-name">AcadTrack</span>
+    </a>
+    <div class="tb-nav">
+      <a href="dashboard.html" class="tb-link">Dashboard</a>
+      <a href="schedule.html" class="tb-link active always">Schedule</a>
+      <a href="calendar.html" class="tb-link">Calendar</a>
+      <a href="about.html" class="tb-link">About</a>
+    </div>
+  </div>
+  <div class="tb-right">
+    <button class="icon-btn" id="refresh-btn" onclick="renderAll()" title="Refresh">↻</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- RIGHT NOW BANNER -->
+  <div class="rightnow status-none" id="rightnow">
+    <div class="rn-icon" id="rn-icon">🎓</div>
+    <div class="rn-body">
+      <div class="rn-label" id="rn-label">Right now</div>
+      <div class="rn-main" id="rn-main">No classes scheduled for today</div>
+      <div class="rn-sub" id="rn-sub">Enjoy your free time!</div>
+    </div>
+    <div class="rn-time" id="rn-time"></div>
+  </div>
+
+  <!-- TODAY ROW: classes + journal -->
+  <div class="today-row">
+    <div class="today-card">
+      <div class="tc-title">
+        <span id="today-date-label">Today's classes</span>
+        <span id="today-count" style="font-size:11px;color:var(--light)"></span>
+      </div>
+      <div id="today-list"><span style="font-size:13px;color:var(--light)">No classes today.</span></div>
+    </div>
+    <div class="today-card">
+      <div class="tc-title">
+        <span>📝 Today's note</span>
+        <span class="save-indicator" id="save-ind"></span>
+      </div>
+      <textarea class="journal-area" id="journal-input" placeholder="Write a quick note for today — upcoming quiz, assignment due, reminders..."></textarea>
+    </div>
+  </div>
+
+  <!-- WEEKLY SCHEDULE -->
+  <div class="sec-header">
+    <span class="sec-title">Weekly schedule</span>
+    <button class="add-btn" onclick="openClassModal()">+ Add class</button>
+  </div>
+  <div class="week-grid" id="week-grid">
+    <div class="empty-week"><p>No classes added yet.</p><button class="add-btn" onclick="openClassModal()">+ Add your first class</button></div>
+  </div>
+
+  <!-- EXAM PERIODS -->
+  <div class="sec-header" style="margin-top:0.5rem">
+    <span class="sec-title">Exam periods</span>
+    <span style="font-size:12px;color:var(--gray)">Set dates and temporary room changes</span>
+  </div>
+  <div class="exam-section" id="exam-section">
+    <!-- rendered by JS -->
+  </div>
+
+</div>
+
+<!-- ADD/EDIT CLASS MODAL -->
+<div class="overlay" id="class-overlay">
+  <div class="modal">
+    <div class="modal-title" id="class-modal-title">Add class</div>
+    <div class="form-row">
+      <div class="fg"><label>Subject code</label><input type="text" id="c-code" placeholder="e.g. MK422"></div>
+      <div class="fg"><label>Subject name <span class="req">*</span></label><input type="text" id="c-name" placeholder="e.g. Marketing Management"></div>
+    </div>
+    <div class="fg">
+      <label>Days</label>
+      <div class="days-picker" id="days-picker">
+        <span class="day-pill" data-day="1">Mon</span>
+        <span class="day-pill" data-day="2">Tue</span>
+        <span class="day-pill" data-day="3">Wed</span>
+        <span class="day-pill" data-day="4">Thu</span>
+        <span class="day-pill" data-day="5">Fri</span>
+        <span class="day-pill" data-day="6">Sat</span>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Start time</label><input type="time" id="c-start" value="08:00"></div>
+      <div class="fg"><label>End time</label><input type="time" id="c-end" value="09:30"></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Room</label><input type="text" id="c-room" placeholder="e.g. 301"></div>
+      <div class="fg"><label>Building</label><input type="text" id="c-bldg" placeholder="e.g. Bldg A / Main Building"></div>
+    </div>
+    <div class="fg"><label>Instructor <span class="opt">(optional)</span></label><input type="text" id="c-instructor" placeholder="e.g. Prof. Santos"></div>
+    <div class="fg">
+      <label>Color label</label>
+      <div class="color-swatches" id="color-swatches">
+        <div class="swatch selected" data-color="#7B1C1C" style="background:#7B1C1C"></div>
+        <div class="swatch" data-color="#1D4ED8" style="background:#1D4ED8"></div>
+        <div class="swatch" data-color="#15803D" style="background:#15803D"></div>
+        <div class="swatch" data-color="#B8960C" style="background:#B8960C"></div>
+        <div class="swatch" data-color="#7E22CE" style="background:#7E22CE"></div>
+        <div class="swatch" data-color="#C2410C" style="background:#C2410C"></div>
+        <div class="swatch" data-color="#0F766E" style="background:#0F766E"></div>
+        <div class="swatch" data-color="#9D174D" style="background:#9D174D"></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" id="delete-class-btn" style="display:none;margin-right:auto" onclick="deleteClass()">Delete</button>
+      <button class="btn" onclick="closeModal('class-overlay')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveClass()">Save class</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD EXAM OVERRIDE MODAL -->
+<div class="overlay" id="exam-overlay">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-title" id="exam-modal-title">Add exam schedule</div>
+    <div class="fg">
+      <label>Subject</label>
+      <select id="ex-class">
+        <option value="">— select subject —</option>
+      </select>
+    </div>
+    <div class="fg"><label>Exam date</label><input type="date" id="ex-date"></div>
+    <div class="form-row">
+      <div class="fg"><label>Start time</label><input type="time" id="ex-start" value="08:00"></div>
+      <div class="fg"><label>End time</label><input type="time" id="ex-end" value="10:00"></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Exam room</label><input type="text" id="ex-room" placeholder="e.g. Gym / Room 201"></div>
+      <div class="fg"><label>Building</label><input type="text" id="ex-bldg" placeholder="e.g. Main Building"></div>
+    </div>
+    <div class="fg"><label>Notes <span class="opt">(optional)</span></label><input type="text" id="ex-notes" placeholder="e.g. Bring blue ballpen, calculator allowed"></div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" id="delete-exam-btn" style="display:none;margin-right:auto" onclick="deleteExam()">Delete</button>
+      <button class="btn" onclick="closeModal('exam-overlay')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveExam()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXAM PERIOD DATES MODAL -->
+<div class="overlay" id="epdates-overlay">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-title" id="epd-title">Set exam period dates</div>
+    <input type="hidden" id="epd-id">
+    <div class="form-row">
+      <div class="fg"><label>Start date</label><input type="date" id="epd-start"></div>
+      <div class="fg"><label>End date</label><input type="date" id="epd-end"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('epdates-overlay')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEPDates()">Save dates</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="overlay" id="confirm-overlay">
+  <div class="modal" style="max-width:360px">
+    <div class="modal-title" id="confirm-title">Confirm</div>
+    <div class="confirm-msg" id="confirm-msg"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('confirm-overlay')">Cancel</button>
+      <button class="btn btn-danger" id="confirm-ok">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const SKEY = 'acadtrack_sched';
+let S = null;
+
+const DEFAULT_S = {
+  classes: [],
+  examPeriods: [
+    { id:'prelim',  label:'Prelim',  start:'', end:'', exams:[] },
+    { id:'midterm', label:'Midterm', start:'', end:'', exams:[] },
+    { id:'finals',  label:'Finals',  start:'', end:'', exams:[] }
+  ],
+  events: [],
+  notes: {}
+};
+
+function loadS() {
+  try {
+    const r = localStorage.getItem(SKEY);
+    S = r ? JSON.parse(r) : JSON.parse(JSON.stringify(DEFAULT_S));
+    // Ensure exam periods exist
+    if (!S.examPeriods) S.examPeriods = JSON.parse(JSON.stringify(DEFAULT_S.examPeriods));
+    DEFAULT_S.examPeriods.forEach(ep => {
+      if (!S.examPeriods.find(p => p.id === ep.id))
+        S.examPeriods.push({ ...ep });
+    });
+    if (!S.notes) S.notes = {};
+    if (!S.events) S.events = [];
+  } catch { S = JSON.parse(JSON.stringify(DEFAULT_S)); }
+}
+function saveS() { localStorage.setItem(SKEY, JSON.stringify(S)); }
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const DAYS_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function fmt12(t) {
+  if (!t) return '';
+  const [h,m] = t.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  return ((h % 12) || 12) + ':' + String(m).padStart(2,'0') + ' ' + ampm;
+}
+function timeToNum(t) {
+  if (!t) return 0;
+  const [h,m] = t.split(':').map(Number);
+  return h * 100 + m;
+}
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function fmtDate(str) {
+  if (!str) return '';
+  const [y,m,d] = str.split('-');
+  return MONTHS[parseInt(m)-1].slice(0,3) + ' ' + parseInt(d) + ', ' + y;
+}
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── RIGHT NOW LOGIC ───────────────────────────────────────────────────────────
+function getRightNow() {
+  const now = new Date();
+  const day = now.getDay();
+  const timeNum = timeToNum(now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0'));
+  const today = todayStr();
+
+  // Check exam period
+  for (const ep of S.examPeriods) {
+    if (ep.start && ep.end && today >= ep.start && today <= ep.end) {
+      // Check if today has an exam override
+      const exam = ep.exams.find(e => e.date === today);
+      if (exam) {
+        const cls = S.classes.find(c => c.id === exam.classId);
+        const s = timeToNum(exam.start), e = timeToNum(exam.end);
+        if (timeNum >= s && timeNum < e) return { type:'exam-current', cls, exam, period:ep };
+        if (timeNum < s) return { type:'exam-upcoming', cls, exam, period:ep };
+      }
+      // In exam period but no specific exam today
+      return { type:'exam-period', period:ep };
+    }
+  }
+
+  // Regular classes
+  const todayClasses = S.classes
+    .filter(c => (c.days||[]).includes(day))
+    .sort((a,b) => timeToNum(a.start) - timeToNum(b.start));
+
+  const current = todayClasses.find(c => {
+    const s = timeToNum(c.start), e = timeToNum(c.end);
+    return timeNum >= s && timeNum < e;
+  });
+  if (current) return { type:'current', cls:current };
+
+  const next = todayClasses.find(c => timeToNum(c.start) > timeNum);
+  if (next) return { type:'upcoming', cls:next };
+
+  if (todayClasses.length) return { type:'done' };
+  return { type:'none' };
+}
+
+function renderRightNow() {
+  const rn = document.getElementById('rightnow');
+  const icon = document.getElementById('rn-icon');
+  const label = document.getElementById('rn-label');
+  const main = document.getElementById('rn-main');
+  const sub = document.getElementById('rn-sub');
+  const time = document.getElementById('rn-time');
+
+  const now = getRightNow();
+  const nowTime = new Date().toLocaleTimeString('en-PH', {hour:'numeric',minute:'2-digit'});
+
+  rn.className = 'rightnow';
+
+  if (now.type === 'current') {
+    rn.classList.add('status-current');
+    icon.textContent = '🏫';
+    label.textContent = 'You should be in class right now';
+    main.textContent = (now.cls.room ? 'Room ' + now.cls.room + (now.cls.building ? ', ' + now.cls.building : '') : 'Check your schedule') + ' — ' + now.cls.name;
+    sub.textContent = 'Until ' + fmt12(now.cls.end) + (now.cls.instructor ? ' · ' + now.cls.instructor : '');
+    time.textContent = nowTime;
+  } else if (now.type === 'upcoming') {
+    const mins = Math.round((timeToNum(now.cls.start) - timeToNum(new Date().getHours().toString().padStart(2,'0') + ':' + new Date().getMinutes().toString().padStart(2,'0'))) / 100 * 60);
+    rn.classList.add('status-upcoming');
+    icon.textContent = '⏰';
+    label.textContent = 'Upcoming class';
+    main.textContent = now.cls.name + ' at ' + fmt12(now.cls.start);
+    sub.textContent = (now.cls.room ? 'Room ' + now.cls.room + (now.cls.building ? ', ' + now.cls.building : '') : '') + (mins > 0 ? ' · in ~' + mins + ' min' : '');
+    time.textContent = nowTime;
+  } else if (now.type === 'exam-current') {
+    rn.classList.add('status-exam-current');
+    icon.textContent = '📝';
+    label.textContent = now.period.label.toUpperCase() + ' EXAM — happening now';
+    main.textContent = now.cls ? now.cls.name : 'Exam';
+    sub.textContent = (now.exam.room ? 'Exam room: ' + now.exam.room + (now.exam.building ? ', ' + now.exam.building : '') : '') + (now.exam.notes ? ' · ' + now.exam.notes : '');
+    time.textContent = fmt12(now.exam.start) + ' – ' + fmt12(now.exam.end);
+  } else if (now.type === 'exam-upcoming') {
+    rn.classList.add('status-exam-upcoming');
+    icon.textContent = '⚠️';
+    label.textContent = now.period.label + ' exam today';
+    main.textContent = now.cls ? now.cls.name + ' — exam at ' + fmt12(now.exam.start) : 'Exam coming up';
+    sub.textContent = (now.exam.room ? 'Room: ' + now.exam.room + (now.exam.building ? ', ' + now.exam.building : '') : '') + (now.exam.notes ? ' · ' + now.exam.notes : '');
+    time.textContent = nowTime;
+  } else if (now.type === 'exam-period') {
+    rn.classList.add('status-exam-upcoming');
+    icon.textContent = '📋';
+    label.textContent = now.period.label + ' period';
+    main.textContent = 'Exam period is ongoing — check your exam schedules';
+    sub.textContent = fmtDate(now.period.start) + ' to ' + fmtDate(now.period.end);
+    time.textContent = nowTime;
+  } else if (now.type === 'done') {
+    rn.classList.add('status-none');
+    icon.textContent = '✅';
+    label.textContent = 'Classes done for today';
+    main.textContent = 'All your classes for today are done!';
+    sub.textContent = 'Rest up and review your notes.';
+    time.textContent = nowTime;
+  } else {
+    rn.classList.add('status-none');
+    icon.textContent = '📚';
+    label.textContent = 'Right now';
+    main.textContent = S.classes.length ? 'No classes scheduled for today' : 'No classes added yet';
+    sub.textContent = S.classes.length ? 'Enjoy your free time!' : 'Click "+ Add class" to add your schedule.';
+    time.textContent = nowTime;
+  }
+}
+
+// ── TODAY LIST ────────────────────────────────────────────────────────────────
+function renderTodayList() {
+  const el = document.getElementById('today-list');
+  const cnt = document.getElementById('today-count');
+  const dayLabel = document.getElementById('today-date-label');
+  const now = new Date();
+  const day = now.getDay();
+  const timeNum = timeToNum(now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0'));
+  const today = todayStr();
+
+  dayLabel.textContent = DAYS_FULL[day] + "'s classes";
+
+  // Check exam period for today
+  const examPeriod = S.examPeriods.find(p => p.start && p.end && today >= p.start && today <= p.end);
+  const todayExams = examPeriod ? examPeriod.exams.filter(e => e.date === today) : [];
+
+  const classes = S.classes.filter(c => (c.days||[]).includes(day))
+    .sort((a,b) => timeToNum(a.start) - timeToNum(b.start));
+
+  if (!classes.length && !todayExams.length) {
+    el.innerHTML = '<span style="font-size:13px;color:var(--light)">No classes today.</span>';
+    cnt.textContent = '';
+    return;
+  }
+
+  cnt.textContent = classes.length + ' class' + (classes.length !== 1 ? 'es' : '');
+
+  let html = '';
+  classes.forEach(c => {
+    const s = timeToNum(c.start), e = timeToNum(c.end);
+    const status = timeNum >= s && timeNum < e ? 'current' : timeNum > e ? 'done' : 'upcoming';
+    // Check if this class has an exam today
+    const examOverride = examPeriod ? examPeriod.exams.find(ex => ex.classId === c.id && ex.date === today) : null;
+    const room = examOverride ? (examOverride.room || c.room) : c.room;
+    const bldg = examOverride ? (examOverride.building || c.building) : c.building;
+    html += `<div class="class-chip">
+      <div class="chip-dot" style="background:${c.color||'#7B1C1C'}"></div>
+      <div class="chip-body">
+        <div class="chip-name">${esc(c.name)}</div>
+        <div class="chip-meta">${room ? 'Room ' + esc(room) + (bldg ? ', ' + esc(bldg) : '') : 'No room set'}${examOverride ? ' · <span style="color:var(--prelim);font-weight:600">Exam today</span>' : ''}</div>
+      </div>
+      <div>
+        <div class="chip-time">${fmt12(examOverride ? examOverride.start : c.start)}</div>
+        <div class="chip-status ${status === 'current' ? 'cs-current' : status === 'done' ? 'cs-done' : examOverride ? 'cs-exam' : 'cs-upcoming'}">${status === 'current' ? 'Now' : status === 'done' ? 'Done' : examOverride ? 'Exam' : 'Upcoming'}</div>
+      </div>
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+// ── JOURNAL ───────────────────────────────────────────────────────────────────
+let journalTimer;
+function initJournal() {
+  const input = document.getElementById('journal-input');
+  const today = todayStr();
+  input.value = S.notes[today] || '';
+  input.addEventListener('input', () => {
+    S.notes[today] = input.value;
+    clearTimeout(journalTimer);
+    journalTimer = setTimeout(() => {
+      saveS();
+      const ind = document.getElementById('save-ind');
+      ind.textContent = 'Saved';
+      setTimeout(() => ind.textContent = '', 1500);
+    }, 600);
+  });
+}
+
+// ── WEEK GRID ─────────────────────────────────────────────────────────────────
+function renderWeekGrid() {
+  const grid = document.getElementById('week-grid');
+  if (!S.classes.length) {
+    grid.innerHTML = '<div class="empty-week"><p>No classes added yet.</p><button class="add-btn" onclick="openClassModal()">+ Add your first class</button></div>';
+    return;
+  }
+  const today = new Date().getDay();
+  let html = '';
+  for (let d = 1; d <= 6; d++) {
+    const isToday = d === today;
+    const dayClasses = S.classes.filter(c => (c.days||[]).includes(d))
+      .sort((a,b) => timeToNum(a.start) - timeToNum(b.start));
+    html += `<div class="day-col">
+      <div class="day-header${isToday ? ' today-col' : ''}">
+        <div class="day-name">${DAYS[d]}${isToday ? ' · Today' : ''}</div>
+      </div>
+      <div class="day-classes">`;
+    if (dayClasses.length) {
+      dayClasses.forEach(c => {
+        const bg = hexToRgba(c.color||'#7B1C1C', 0.12);
+        html += `<div class="sched-block" style="background:${bg};border-color:${hexToRgba(c.color||'#7B1C1C',0.3)}" onclick="openClassModal('${c.id}')">
+          <div class="sb-code" style="color:${c.color||'#7B1C1C'}">${esc(c.code||'')}</div>
+          <div class="sb-name">${esc(c.name)}</div>
+          <div class="sb-meta" style="color:${c.color||'#7B1C1C'}">${fmt12(c.start)} – ${fmt12(c.end)}</div>
+          ${c.room ? `<div class="sb-meta">Rm ${esc(c.room)}</div>` : ''}
+        </div>`;
+      });
+    } else {
+      html += `<div class="no-class">Free</div>`;
+    }
+    html += `</div></div>`;
+  }
+  grid.innerHTML = html;
+}
+
+// ── EXAM PERIODS ──────────────────────────────────────────────────────────────
+function renderExamPeriods() {
+  const sec = document.getElementById('exam-section');
+  const EP_COLORS = { prelim:'ep-prelim', midterm:'ep-midterm', finals:'ep-finals' };
+  let html = '';
+  S.examPeriods.forEach(ep => {
+    const colorCls = EP_COLORS[ep.id] || 'ep-prelim';
+    const hasDate = ep.start && ep.end;
+    html += `<div class="exam-period-card ${colorCls}">
+      <div class="epc-header" onclick="toggleEP('${ep.id}')">
+        <div class="epc-badge">${esc(ep.label)}</div>
+        <div class="epc-info">
+          <div class="epc-title">${esc(ep.label)} Period</div>
+          <div class="epc-dates">${hasDate ? fmtDate(ep.start) + ' – ' + fmtDate(ep.end) : 'Dates not set — click to configure'}</div>
+        </div>
+        <span style="font-size:12px;color:var(--light)">${ep.exams.length} exam${ep.exams.length !== 1 ? 's' : ''} scheduled</span>
+        <span class="epc-arrow" id="arrow-${ep.id}">▼</span>
+      </div>
+      <div class="epc-body" id="epbody-${ep.id}">
+        <div style="display:flex;gap:10px;align-items:center;margin:12px 0 8px;flex-wrap:wrap">
+          <span style="font-size:12px;color:var(--gray)">Period dates:</span>
+          <button class="btn btn-sm" onclick="openEPDates('${ep.id}')">${hasDate ? fmtDate(ep.start) + ' – ' + fmtDate(ep.end) : 'Set dates'}</button>
+          <button class="btn btn-sm" onclick="openExamModal('${ep.id}')">+ Add exam schedule</button>
+        </div>
+        ${ep.exams.length ? ep.exams.map(ex => {
+          const cls = S.classes.find(c => c.id === ex.classId);
+          return `<div class="exam-entry">
+            <div class="ee-info">
+              <div class="ee-subject">${esc(cls ? cls.name : 'Unknown subject')}</div>
+              <div class="ee-meta">${ex.room ? 'Room ' + esc(ex.room) + (ex.building ? ', ' + esc(ex.building) : '') : 'No room set'} · ${fmt12(ex.start)} – ${fmt12(ex.end)}${ex.notes ? ' · ' + esc(ex.notes) : ''}</div>
+            </div>
+            <div class="ee-date">${fmtDate(ex.date)}</div>
+            <button class="btn btn-sm" onclick="openExamModal('${ep.id}','${ex.id}')">Edit</button>
+          </div>`;
+        }).join('') : '<div style="font-size:12px;color:var(--light);padding:4px 0">No exam schedules added yet. Use "+ Add exam schedule" to set temporary room and time changes.</div>'}
+      </div>
+    </div>`;
+  });
+  sec.innerHTML = html;
+}
+
+function toggleEP(id) {
+  const body = document.getElementById('epbody-' + id);
+  const arrow = document.getElementById('arrow-' + id);
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+// ── CLASS MODAL ───────────────────────────────────────────────────────────────
+let editClassId = null;
+let selectedColor = '#7B1C1C';
+
+function openClassModal(id) {
+  editClassId = id || null;
+  const cls = id ? S.classes.find(c => c.id === id) : null;
+
+  document.getElementById('class-modal-title').textContent = cls ? 'Edit class' : 'Add class';
+  document.getElementById('c-code').value = cls ? cls.code || '' : '';
+  document.getElementById('c-name').value = cls ? cls.name : '';
+  document.getElementById('c-start').value = cls ? cls.start : '08:00';
+  document.getElementById('c-end').value = cls ? cls.end : '09:30';
+  document.getElementById('c-room').value = cls ? cls.room || '' : '';
+  document.getElementById('c-bldg').value = cls ? cls.building || '' : '';
+  document.getElementById('c-instructor').value = cls ? cls.instructor || '' : '';
+
+  selectedColor = cls ? cls.color || '#7B1C1C' : '#7B1C1C';
+  document.querySelectorAll('.swatch').forEach(sw => {
+    sw.classList.toggle('selected', sw.dataset.color === selectedColor);
+  });
+
+  // Days
+  const days = cls ? cls.days || [] : [];
+  document.querySelectorAll('.day-pill').forEach(p => {
+    p.classList.toggle('selected', days.includes(parseInt(p.dataset.day)));
+  });
+
+  document.getElementById('delete-class-btn').style.display = cls ? 'inline-flex' : 'none';
+  document.getElementById('class-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('c-name').focus(), 100);
+}
+
+document.querySelectorAll('.day-pill').forEach(p => {
+  p.addEventListener('click', () => p.classList.toggle('selected'));
+});
+document.querySelectorAll('.swatch').forEach(sw => {
+  sw.addEventListener('click', () => {
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+    sw.classList.add('selected');
+    selectedColor = sw.dataset.color;
+  });
+});
+
+function saveClass() {
+  const name = document.getElementById('c-name').value.trim();
+  if (!name) { document.getElementById('c-name').focus(); return; }
+  const days = [...document.querySelectorAll('.day-pill.selected')].map(p => parseInt(p.dataset.day));
+  const cls = {
+    id: editClassId || ('c' + Date.now()),
+    code: document.getElementById('c-code').value.trim(),
+    name,
+    days,
+    start: document.getElementById('c-start').value,
+    end: document.getElementById('c-end').value,
+    room: document.getElementById('c-room').value.trim(),
+    building: document.getElementById('c-bldg').value.trim(),
+    instructor: document.getElementById('c-instructor').value.trim(),
+    color: selectedColor
+  };
+  if (editClassId) S.classes = S.classes.map(c => c.id === editClassId ? cls : c);
+  else S.classes.push(cls);
+  saveS(); closeModal('class-overlay'); renderAll();
+  showToast(editClassId ? 'Class updated' : 'Class added');
+}
+
+function deleteClass() {
+  showConfirm('Delete class?', 'This will also remove all exam schedules for this class.',
+    () => {
+      S.classes = S.classes.filter(c => c.id !== editClassId);
+      S.examPeriods.forEach(ep => { ep.exams = ep.exams.filter(e => e.classId !== editClassId); });
+      saveS(); closeModal('class-overlay'); renderAll();
+      showToast('Class deleted');
+    });
+}
+
+// ── EXAM MODAL ────────────────────────────────────────────────────────────────
+let currentEPId = null, editExamId = null;
+
+function openExamModal(periodId, examId) {
+  currentEPId = periodId;
+  editExamId = examId || null;
+  const ep = S.examPeriods.find(p => p.id === periodId);
+  const exam = examId ? ep.exams.find(e => e.id === examId) : null;
+
+  document.getElementById('exam-modal-title').textContent = (exam ? 'Edit' : 'Add') + ' exam — ' + ep.label;
+
+  const sel = document.getElementById('ex-class');
+  sel.innerHTML = '<option value="">— select subject —</option>' +
+    S.classes.map(c => `<option value="${c.id}" ${exam && exam.classId === c.id ? 'selected' : ''}>${esc(c.code ? c.code + ' — ' : '') + esc(c.name)}</option>`).join('');
+
+  document.getElementById('ex-date').value = exam ? exam.date : (ep.start || '');
+  document.getElementById('ex-start').value = exam ? exam.start : '08:00';
+  document.getElementById('ex-end').value = exam ? exam.end : '10:00';
+  document.getElementById('ex-room').value = exam ? exam.room || '' : '';
+  document.getElementById('ex-bldg').value = exam ? exam.building || '' : '';
+  document.getElementById('ex-notes').value = exam ? exam.notes || '' : '';
+
+  document.getElementById('delete-exam-btn').style.display = exam ? 'inline-flex' : 'none';
+  document.getElementById('exam-overlay').classList.add('open');
+}
+
+function saveExam() {
+  const classId = document.getElementById('ex-class').value;
+  const date = document.getElementById('ex-date').value;
+  if (!classId || !date) { showToast('Please select a subject and date'); return; }
+  const ep = S.examPeriods.find(p => p.id === currentEPId);
+  const exam = {
+    id: editExamId || ('ex' + Date.now()),
+    classId,
+    date,
+    start: document.getElementById('ex-start').value,
+    end: document.getElementById('ex-end').value,
+    room: document.getElementById('ex-room').value.trim(),
+    building: document.getElementById('ex-bldg').value.trim(),
+    notes: document.getElementById('ex-notes').value.trim()
+  };
+  if (editExamId) ep.exams = ep.exams.map(e => e.id === editExamId ? exam : e);
+  else ep.exams.push(exam);
+  saveS(); closeModal('exam-overlay'); renderExamPeriods();
+  showToast('Exam schedule saved');
+}
+
+function deleteExam() {
+  showConfirm('Delete exam schedule?', 'This will remove this exam entry.',
+    () => {
+      const ep = S.examPeriods.find(p => p.id === currentEPId);
+      ep.exams = ep.exams.filter(e => e.id !== editExamId);
+      saveS(); closeModal('exam-overlay'); renderExamPeriods();
+      showToast('Exam deleted');
+    });
+}
+
+// ── EXAM PERIOD DATES ─────────────────────────────────────────────────────────
+function openEPDates(id) {
+  const ep = S.examPeriods.find(p => p.id === id);
+  document.getElementById('epd-title').textContent = 'Set ' + ep.label + ' period dates';
+  document.getElementById('epd-id').value = id;
+  document.getElementById('epd-start').value = ep.start || '';
+  document.getElementById('epd-end').value = ep.end || '';
+  document.getElementById('epdates-overlay').classList.add('open');
+}
+function saveEPDates() {
+  const id = document.getElementById('epd-id').value;
+  const ep = S.examPeriods.find(p => p.id === id);
+  ep.start = document.getElementById('epd-start').value;
+  ep.end = document.getElementById('epd-end').value;
+  saveS(); closeModal('epdates-overlay'); renderExamPeriods();
+  showToast('Dates saved');
+}
+
+// ── MODALS ────────────────────────────────────────────────────────────────────
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function showConfirm(title, msg, onOk) {
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-msg').textContent = msg;
+  document.getElementById('confirm-ok').onclick = () => { closeModal('confirm-overlay'); onOk(); };
+  document.getElementById('confirm-overlay').classList.add('open');
+}
+document.querySelectorAll('.overlay').forEach(el => el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); }));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.overlay.open').forEach(el => el.classList.remove('open')); });
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg;
+  t.classList.add('show'); clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ── RENDER ALL ────────────────────────────────────────────────────────────────
+function renderAll() {
+  renderRightNow();
+  renderTodayList();
+  renderWeekGrid();
+  renderExamPeriods();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadS();
+initJournal();
+renderAll();
+// Auto-refresh right now every 60 seconds
+setInterval(() => { renderRightNow(); renderTodayList(); }, 60000);
+</script>
+</body>
+</html>

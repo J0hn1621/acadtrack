@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar — AcadTrack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --maroon:#7B1C1C;--maroon-hover:#9B2525;--maroon-light:#F5EBEB;
+  --gold:#B8960C;--gold-light:#FBF4DC;--gold-border:#E8D06A;
+  --cream:#FAF7F2;--border:#E5DDD4;--dark:#1C1917;--mid:#44403C;
+  --gray:#78716C;--light:#A8A29E;--white:#FFFFFF;
+  --gp:#15803D;--gp-bg:#DCFCE7;--gf:#B91C1C;--gf-bg:#FEE2E2;
+  --go:#1D4ED8;--go-bg:#DBEAFE;
+  --prelim:#C2410C;--prelim-bg:#FFF7ED;--prelim-border:#FED7AA;
+  --midterm:#1D4ED8;--midterm-bg:#EFF6FF;--midterm-border:#BFDBFE;
+  --finals:#7E22CE;--finals-bg:#FAF5FF;--finals-border:#DDD6FE;
+  --radius:8px;--radius-lg:14px;
+}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.5;min-height:100vh}
+/* NAV */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;background:var(--maroon);gap:16px;position:sticky;top:0;z-index:100}
+.tb-left{display:flex;align-items:center;gap:14px}
+.tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.tb-seal{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:12px}
+.tb-name{font-family:'Playfair Display',serif;font-size:15px;color:white;font-weight:600}
+.tb-nav{display:flex;align-items:center;gap:2px}
+.tb-link{font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;padding:6px 11px;border-radius:var(--radius);transition:all 0.12s;white-space:nowrap}
+.tb-link:hover,.tb-link.active{background:rgba(255,255,255,0.18);color:white}
+/* LAYOUT */
+.main{display:grid;grid-template-columns:1fr 320px;gap:1.5rem;max-width:1100px;margin:0 auto;padding:1.75rem 2rem 5rem;align-items:start}
+/* CALENDAR */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.cal-month{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600}
+.cal-nav{display:flex;gap:6px}
+.nav-btn{width:32px;height:32px;border-radius:var(--radius);border:1px solid var(--border);background:var(--white);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.12s}
+.nav-btn:hover{border-color:var(--maroon);color:var(--maroon)}
+.today-btn{font-size:12px;padding:6px 12px;border:1px solid var(--border);background:var(--white);border-radius:var(--radius);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.12s}
+.today-btn:hover{border-color:var(--maroon);color:var(--maroon)}
+/* GRID */
+.cal-grid{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.cal-days-header{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border)}
+.cal-day-label{padding:8px 0;text-align:center;font-size:11px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.06em}
+.cal-day-label.weekend{color:var(--maroon);opacity:0.7}
+.cal-weeks{display:flex;flex-direction:column}
+.cal-week{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border)}
+.cal-week:last-child{border-bottom:none}
+.cal-cell{border-right:1px solid var(--border);min-height:88px;padding:5px 6px;cursor:pointer;transition:background 0.1s;position:relative;overflow:hidden}
+.cal-cell:last-child{border-right:none}
+.cal-cell:hover{background:var(--cream)}
+.cal-cell.other-month{opacity:0.4}
+.cal-cell.today{background:var(--maroon-light)}
+.cal-cell.selected{background:rgba(123,28,28,0.08);outline:2px solid var(--maroon);outline-offset:-2px;border-radius:2px}
+.cal-cell.exam-period-prelim{background:var(--prelim-bg)}
+.cal-cell.exam-period-midterm{background:var(--midterm-bg)}
+.cal-cell.exam-period-finals{background:var(--finals-bg)}
+.cell-num{font-size:12px;font-weight:600;color:var(--mid);margin-bottom:3px;line-height:1}
+.cal-cell.today .cell-num{color:var(--maroon);font-size:13px}
+.cell-event{font-size:10px;padding:1px 5px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;cursor:pointer}
+.cell-more{font-size:9px;color:var(--light);margin-top:1px}
+.cell-dot-row{display:flex;gap:2px;flex-wrap:wrap;margin-top:2px}
+.cell-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+/* LEGEND */
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1rem}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.legend-block{width:12px;height:8px;border-radius:2px;flex-shrink:0}
+/* SIDE PANEL */
+.side-panel{position:sticky;top:72px}
+.sp-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1rem}
+.sp-date{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;margin-bottom:12px}
+.sp-section-title{font-size:11px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;margin-top:14px}
+.sp-section-title:first-of-type{margin-top:0}
+.sp-class{display:flex;align-items:flex-start;gap:8px;padding:7px 8px;border-radius:var(--radius);margin-bottom:5px;border:1px solid transparent}
+.sp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.sp-cls-name{font-size:13px;font-weight:500}
+.sp-cls-meta{font-size:11px;color:var(--gray);margin-top:1px}
+.sp-event{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:var(--radius);margin-bottom:4px;background:var(--cream)}
+.sp-ev-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sp-ev-name{font-size:13px;font-weight:500}
+.sp-ev-meta{font-size:11px;color:var(--gray)}
+.sp-ev-edit{font-size:11px;padding:2px 8px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;background:transparent;font-family:'Inter',sans-serif;margin-left:auto;flex-shrink:0}
+.sp-ev-edit:hover{border-color:var(--mid)}
+/* JOURNAL */
+.note-area{width:100%;resize:none;min-height:80px;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Inter',sans-serif;outline:none;transition:border-color 0.12s;line-height:1.6;color:var(--dark);background:var(--white)}
+.note-area:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
+.note-area::placeholder{color:var(--light)}
+.save-ind{font-size:11px;color:var(--light);margin-top:4px;height:14px}
+/* EMPTY */
+.sp-empty{font-size:12px;color:var(--light)}
+/* MODALS */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem}
+.overlay.open{display:flex}
+.modal{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;width:min(460px,100%);max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;margin-bottom:1.5rem}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:4px}
+.fg .opt{color:var(--light);font-weight:400}
+input[type=text],input[type=date],input[type=time],select{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.12s}
+input:focus,select:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
+input::placeholder{color:var(--light)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--mid);transition:all 0.12s}
+.btn:hover{border-color:var(--mid)}
+.btn-primary{background:var(--maroon);border-color:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover,#9B2525)}
+.btn-danger{border-color:#FCA5A5;color:var(--gf)}.btn-danger:hover{background:var(--gf-bg)}
+.btn-sm{padding:5px 12px;font-size:12px}
+.add-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius);background:var(--maroon);color:white;font-size:12px;font-weight:500;border:none;cursor:pointer;font-family:'Inter',sans-serif}
+/* TYPE COLORS */
+.ev-class{background:#F5EBEB;color:var(--maroon)}
+.ev-exam{background:var(--prelim-bg);color:var(--prelim)}
+.ev-deadline{background:#FEF3C7;color:#92400E}
+.ev-event{background:var(--gp-bg);color:var(--gp)}
+.ev-holiday{background:var(--gn-bg);color:var(--gn)}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:white;padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;z-index:999;transform:translateY(10px);opacity:0;transition:all 0.25s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.confirm-msg{font-size:14px;color:var(--mid);margin-bottom:1.25rem;line-height:1.6}
+@media(max-width:780px){.main{grid-template-columns:1fr}.side-panel{position:static}.tb-link:not(.always){display:none}.cal-cell{min-height:60px}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-left">
+    <a href="index.html" class="tb-logo">
+      <div class="tb-seal">A</div>
+      <span class="tb-name">AcadTrack</span>
+    </a>
+    <div class="tb-nav">
+      <a href="dashboard.html" class="tb-link">Dashboard</a>
+      <a href="schedule.html" class="tb-link">Schedule</a>
+      <a href="calendar.html" class="tb-link active always">Calendar</a>
+      <a href="about.html" class="tb-link">About</a>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- CALENDAR -->
+  <div>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--maroon)"></span>Class</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--prelim)"></span>Exam</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#B8960C"></span>Deadline</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--gp)"></span>Event</span>
+      <span class="legend-item"><span class="legend-block" style="background:var(--prelim-bg);border:1px solid var(--prelim-border)"></span>Prelim period</span>
+      <span class="legend-item"><span class="legend-block" style="background:var(--midterm-bg);border:1px solid var(--midterm-border)"></span>Midterm</span>
+      <span class="legend-item"><span class="legend-block" style="background:var(--finals-bg);border:1px solid var(--finals-border)"></span>Finals</span>
+    </div>
+    <div class="cal-header">
+      <div class="cal-month" id="cal-month">April 2025</div>
+      <div class="cal-nav">
+        <button class="today-btn" onclick="goToday()">Today</button>
+        <button class="nav-btn" onclick="changeMonth(-1)">‹</button>
+        <button class="nav-btn" onclick="changeMonth(1)">›</button>
+      </div>
+    </div>
+    <div class="cal-grid">
+      <div class="cal-days-header">
+        <div class="cal-day-label weekend">Sun</div>
+        <div class="cal-day-label">Mon</div>
+        <div class="cal-day-label">Tue</div>
+        <div class="cal-day-label">Wed</div>
+        <div class="cal-day-label">Thu</div>
+        <div class="cal-day-label">Fri</div>
+        <div class="cal-day-label weekend">Sat</div>
+      </div>
+      <div class="cal-weeks" id="cal-weeks"></div>
+    </div>
+  </div>
+
+  <!-- SIDE PANEL -->
+  <div class="side-panel">
+    <div class="sp-card">
+      <div class="sp-date" id="sp-date">Select a date</div>
+      <div id="sp-exam-banner" style="display:none;font-size:11px;font-weight:600;padding:4px 10px;border-radius:99px;margin-bottom:10px;display:none"></div>
+
+      <div class="sp-section-title">Classes</div>
+      <div id="sp-classes"><span class="sp-empty">Select a date to see classes.</span></div>
+
+      <div class="sp-section-title" style="display:flex;align-items:center;justify-content:space-between">
+        <span>Events</span>
+        <button class="add-btn" id="add-event-btn" onclick="openEventModal()" style="display:none">+ Add</button>
+      </div>
+      <div id="sp-events"><span class="sp-empty">Select a date.</span></div>
+
+      <div class="sp-section-title">Note</div>
+      <textarea class="note-area" id="day-note" placeholder="Write a note for this day..." style="display:none"></textarea>
+      <div class="save-ind" id="note-save-ind"></div>
+      <span class="sp-empty" id="note-placeholder">Select a date to write a note.</span>
+    </div>
+  </div>
+</div>
+
+<!-- EVENT MODAL -->
+<div class="overlay" id="event-overlay">
+  <div class="modal">
+    <div class="modal-title" id="ev-modal-title">Add event</div>
+    <div class="fg"><label>Title <span style="color:var(--maroon)">*</span></label><input type="text" id="ev-title" placeholder="e.g. Project deadline, Org meeting, Holiday"></div>
+    <div class="fg">
+      <label>Type</label>
+      <select id="ev-type">
+        <option value="event">📅 Event / Activity</option>
+        <option value="exam">📝 Exam / Quiz</option>
+        <option value="deadline">⏰ Deadline / Submission</option>
+        <option value="holiday">🏖 Holiday / No class</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Date</label><input type="date" id="ev-date"></div>
+      <div class="fg"><label>End date <span class="opt">(optional)</span></label><input type="date" id="ev-end-date"><div style="font-size:11px;color:var(--light);margin-top:3px">For multi-day events</div></div>
+    </div>
+    <div class="form-row" id="ev-time-row">
+      <div class="fg"><label>Time <span class="opt">(optional)</span></label><input type="time" id="ev-time"></div>
+      <div class="fg"><label>End time <span class="opt">(optional)</span></label><input type="time" id="ev-end-time"></div>
+    </div>
+    <div class="fg"><label>Notes <span class="opt">(optional)</span></label><input type="text" id="ev-notes" placeholder="Additional details"></div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" id="del-ev-btn" style="display:none;margin-right:auto" onclick="deleteEvent()">Delete</button>
+      <button class="btn" onclick="closeModal('event-overlay')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEvent()">Save event</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="overlay" id="confirm-overlay">
+  <div class="modal" style="max-width:360px">
+    <div class="modal-title" id="confirm-title">Confirm</div>
+    <div class="confirm-msg" id="confirm-msg"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('confirm-overlay')">Cancel</button>
+      <button class="btn btn-danger" id="confirm-ok">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const SKEY = 'acadtrack_sched';
+let S = null;
+
+function loadS() {
+  try {
+    const r = localStorage.getItem(SKEY);
+    S = r ? JSON.parse(r) : { classes:[], examPeriods:[], events:[], notes:{} };
+    if (!S.notes) S.notes = {};
+    if (!S.events) S.events = [];
+    if (!S.examPeriods) S.examPeriods = [];
+    if (!S.classes) S.classes = [];
+  } catch { S = { classes:[], examPeriods:[], events:[], notes:{} }; }
+}
+function saveS() { localStorage.setItem(SKEY, JSON.stringify(S)); }
+
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+function fmt12(t) {
+  if (!t) return '';
+  const [h,m] = t.split(':').map(Number);
+  return ((h%12)||12) + ':' + String(m).padStart(2,'0') + (h>=12?' PM':' AM');
+}
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function toDateStr(y, m, d) { return y + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0'); }
+function todayStr() { const d = new Date(); return toDateStr(d.getFullYear(), d.getMonth(), d.getDate()); }
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let viewYear = new Date().getFullYear();
+let viewMonth = new Date().getMonth(); // 0-indexed
+let selectedDate = todayStr();
+let editEventId = null;
+
+// ── CALENDAR RENDER ───────────────────────────────────────────────────────────
+function renderCalendar() {
+  document.getElementById('cal-month').textContent = MONTHS[viewMonth] + ' ' + viewYear;
+  const weeks = document.getElementById('cal-weeks');
+  const today = todayStr();
+
+  // First day of month
+  const first = new Date(viewYear, viewMonth, 1).getDay();
+  // Days in month
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+  // Days in prev month
+  const daysInPrev = new Date(viewYear, viewMonth, 0).getDate();
+
+  let html = '';
+  let day = 1 - first; // start from a negative offset if month doesn't start on Sunday
+
+  for (let week = 0; week < 6; week++) {
+    let hasAnyDay = false;
+    let weekHtml = '<div class="cal-week">';
+    for (let dow = 0; dow < 7; dow++) {
+      let cellYear = viewYear, cellMonth = viewMonth, cellDay;
+      let otherMonth = false;
+      if (day < 1) {
+        cellMonth = viewMonth - 1;
+        if (cellMonth < 0) { cellMonth = 11; cellYear--; }
+        cellDay = daysInPrev + day;
+        otherMonth = true;
+      } else if (day > daysInMonth) {
+        cellMonth = viewMonth + 1;
+        if (cellMonth > 11) { cellMonth = 0; cellYear++; }
+        cellDay = day - daysInMonth;
+        otherMonth = true;
+      } else {
+        cellDay = day;
+        hasAnyDay = true;
+      }
+
+      const dateStr = toDateStr(cellYear, cellMonth, cellDay);
+      const isToday = dateStr === today;
+      const isSelected = dateStr === selectedDate;
+
+      // Exam period highlight
+      const examPeriod = S.examPeriods.find(p => p.start && p.end && dateStr >= p.start && dateStr <= p.end);
+      const epCls = examPeriod ? 'exam-period-' + examPeriod.id : '';
+
+      // Get events for this day
+      const dayEvents = S.events.filter(e => {
+        if (e.endDate) return dateStr >= e.date && dateStr <= e.endDate;
+        return e.date === dateStr;
+      });
+
+      // Get classes for this day's day-of-week
+      const dow2 = new Date(cellYear, cellMonth, cellDay).getDay();
+      const dayClasses = S.classes.filter(c => (c.days||[]).includes(dow2));
+
+      // Check exam overrides for this day
+      const examOverrides = [];
+      S.examPeriods.forEach(ep => {
+        if (ep.exams) ep.exams.filter(e => e.date === dateStr).forEach(e => examOverrides.push(e));
+      });
+
+      let cellContent = `<div class="cell-num">${cellDay}</div>`;
+
+      // Show exam override badges first
+      examOverrides.forEach(ex => {
+        const cls = S.classes.find(c => c.id === ex.classId);
+        cellContent += `<div class="cell-event ev-exam">${esc(cls ? (cls.code || cls.name.slice(0,8)) : 'Exam')}</div>`;
+      });
+
+      // Show up to 2 events
+      const shown = dayEvents.slice(0,2);
+      shown.forEach(e => {
+        const cls = 'ev-' + (e.type || 'event');
+        cellContent += `<div class="cell-event ${cls}" onclick="event.stopPropagation();openEventModal('${e.id}')">${esc(e.title)}</div>`;
+      });
+      if (dayEvents.length > 2) cellContent += `<div class="cell-more">+${dayEvents.length - 2} more</div>`;
+
+      // Class dots
+      if (dayClasses.length && !examOverrides.length) {
+        cellContent += '<div class="cell-dot-row">' + dayClasses.slice(0,4).map(c => `<div class="cell-dot" style="background:${c.color||'#7B1C1C'}" title="${esc(c.name)}"></div>`).join('') + '</div>';
+      }
+
+      weekHtml += `<div class="cal-cell${otherMonth ? ' other-month' : ''}${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}${epCls ? ' ' + epCls : ''}" onclick="selectDate('${dateStr}')">${cellContent}</div>`;
+      day++;
+    }
+    weekHtml += '</div>';
+    if (hasAnyDay || week < 5) html += weekHtml;
+    if (!hasAnyDay && week >= 5) break;
+  }
+  weeks.innerHTML = html;
+}
+
+// ── SIDE PANEL ────────────────────────────────────────────────────────────────
+let noteTimer;
+function renderSidePanel() {
+  if (!selectedDate) return;
+
+  const [y, m, d] = selectedDate.split('-').map(Number);
+  const dateObj = new Date(y, m-1, d);
+  const dow = dateObj.getDay();
+
+  document.getElementById('sp-date').textContent = DAYS[dow] + ', ' + MONTHS[m-1] + ' ' + d + ', ' + y;
+  document.getElementById('add-event-btn').style.display = 'inline-flex';
+
+  // Exam period banner
+  const ep = S.examPeriods.find(p => p.start && p.end && selectedDate >= p.start && selectedDate <= p.end);
+  const banner = document.getElementById('sp-exam-banner');
+  if (ep) {
+    banner.style.display = 'inline-block';
+    const colors = { prelim:'var(--prelim)', midterm:'var(--midterm)', finals:'var(--finals)' };
+    const bgs = { prelim:'var(--prelim-bg)', midterm:'var(--midterm-bg)', finals:'var(--finals-bg)' };
+    banner.style.background = bgs[ep.id] || 'var(--prelim-bg)';
+    banner.style.color = colors[ep.id] || 'var(--prelim)';
+    banner.textContent = '📋 ' + ep.label + ' Period';
+  } else {
+    banner.style.display = 'none';
+  }
+
+  // Classes
+  const classes = S.classes.filter(c => (c.days||[]).includes(dow));
+  // Check exam overrides
+  const examOverrides = {};
+  S.examPeriods.forEach(p => {
+    (p.exams||[]).filter(e => e.date === selectedDate).forEach(e => { examOverrides[e.classId] = { exam: e, period: p }; });
+  });
+
+  const classEl = document.getElementById('sp-classes');
+  if (!classes.length) {
+    classEl.innerHTML = '<span class="sp-empty">No classes on ' + DAYS[dow] + '.</span>';
+  } else {
+    classEl.innerHTML = classes.map(c => {
+      const ov = examOverrides[c.id];
+      const room = ov ? (ov.exam.room || c.room) : c.room;
+      const bldg = ov ? (ov.exam.building || c.building) : c.building;
+      const start = ov ? ov.exam.start : c.start;
+      const end = ov ? ov.exam.end : c.end;
+      return `<div class="sp-class" style="background:${hexToRgba(c.color||'#7B1C1C',0.06)};border-color:${hexToRgba(c.color||'#7B1C1C',0.2)}">
+        <div class="sp-dot" style="background:${c.color||'#7B1C1C'}"></div>
+        <div>
+          <div class="sp-cls-name">${esc(c.code ? c.code + ' — ' : '') + esc(c.name)}</div>
+          <div class="sp-cls-meta">${fmt12(start)} – ${fmt12(end)}${room ? ' · Room ' + esc(room) + (bldg ? ', ' + esc(bldg) : '') : ''}${ov ? ' · <span style="color:var(--prelim);font-weight:600">' + ov.period.label + ' Exam</span>' : ''}${c.instructor ? ' · ' + esc(c.instructor) : ''}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Events
+  const events = S.events.filter(e => {
+    if (e.endDate) return selectedDate >= e.date && selectedDate <= e.endDate;
+    return e.date === selectedDate;
+  });
+  const evEl = document.getElementById('sp-events');
+  if (!events.length) {
+    evEl.innerHTML = '<span class="sp-empty">No events. Click "+ Add" to create one.</span>';
+  } else {
+    const TYPE_COLORS = { event:'var(--gp)', exam:'var(--prelim)', deadline:'#B8960C', holiday:'var(--gn)' };
+    evEl.innerHTML = events.map(e => `
+      <div class="sp-event">
+        <div class="sp-ev-dot" style="background:${TYPE_COLORS[e.type||'event']||'var(--gp)'}"></div>
+        <div style="flex:1;min-width:0">
+          <div class="sp-ev-name">${esc(e.title)}</div>
+          <div class="sp-ev-meta">${e.time ? fmt12(e.time) + (e.endTime ? ' – ' + fmt12(e.endTime) : '') + ' · ' : ''}${e.notes ? esc(e.notes) : ''}</div>
+        </div>
+        <button class="sp-ev-edit" onclick="openEventModal('${e.id}')">Edit</button>
+      </div>`).join('');
+  }
+
+  // Journal note
+  const noteArea = document.getElementById('day-note');
+  const notePlaceholder = document.getElementById('note-placeholder');
+  noteArea.style.display = 'block';
+  notePlaceholder.style.display = 'none';
+  noteArea.value = S.notes[selectedDate] || '';
+  noteArea.oninput = () => {
+    S.notes[selectedDate] = noteArea.value;
+    clearTimeout(noteTimer);
+    noteTimer = setTimeout(() => {
+      saveS();
+      const ind = document.getElementById('note-save-ind');
+      ind.textContent = 'Saved';
+      setTimeout(() => ind.textContent = '', 1500);
+    }, 600);
+  };
+}
+
+function hexToRgba(hex, alpha) {
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function selectDate(dateStr) {
+  selectedDate = dateStr;
+  renderCalendar();
+  renderSidePanel();
+}
+
+function changeMonth(dir) {
+  viewMonth += dir;
+  if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+  if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+  renderCalendar();
+}
+
+function goToday() {
+  const now = new Date();
+  viewYear = now.getFullYear(); viewMonth = now.getMonth();
+  selectedDate = todayStr();
+  renderCalendar(); renderSidePanel();
+}
+
+// ── EVENT MODAL ───────────────────────────────────────────────────────────────
+function openEventModal(id) {
+  editEventId = id || null;
+  const ev = id ? S.events.find(e => e.id === id) : null;
+  document.getElementById('ev-modal-title').textContent = ev ? 'Edit event' : 'Add event';
+  document.getElementById('ev-title').value = ev ? ev.title : '';
+  document.getElementById('ev-type').value = ev ? ev.type || 'event' : 'event';
+  document.getElementById('ev-date').value = ev ? ev.date : (selectedDate || todayStr());
+  document.getElementById('ev-end-date').value = ev ? ev.endDate || '' : '';
+  document.getElementById('ev-time').value = ev ? ev.time || '' : '';
+  document.getElementById('ev-end-time').value = ev ? ev.endTime || '' : '';
+  document.getElementById('ev-notes').value = ev ? ev.notes || '' : '';
+  document.getElementById('del-ev-btn').style.display = ev ? 'inline-flex' : 'none';
+  document.getElementById('event-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('ev-title').focus(), 100);
+}
+
+function saveEvent() {
+  const title = document.getElementById('ev-title').value.trim();
+  const date = document.getElementById('ev-date').value;
+  if (!title || !date) { showToast('Title and date are required'); return; }
+  const ev = {
+    id: editEventId || ('ev' + Date.now()),
+    title,
+    type: document.getElementById('ev-type').value,
+    date,
+    endDate: document.getElementById('ev-end-date').value || null,
+    time: document.getElementById('ev-time').value || null,
+    endTime: document.getElementById('ev-end-time').value || null,
+    notes: document.getElementById('ev-notes').value.trim() || null
+  };
+  if (editEventId) S.events = S.events.map(e => e.id === editEventId ? ev : e);
+  else S.events.push(ev);
+  saveS(); closeModal('event-overlay');
+  // Navigate to event date
+  const [y,m] = ev.date.split('-').map(Number);
+  viewYear = y; viewMonth = m-1; selectedDate = ev.date;
+  renderCalendar(); renderSidePanel();
+  showToast(editEventId ? 'Event updated' : 'Event added');
+}
+
+function deleteEvent() {
+  showConfirm('Delete event?', 'This will permanently remove this event.',
+    () => { S.events = S.events.filter(e => e.id !== editEventId); saveS(); closeModal('event-overlay'); renderCalendar(); renderSidePanel(); showToast('Event deleted'); });
+}
+
+// ── MODAL HELPERS ─────────────────────────────────────────────────────────────
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function showConfirm(title, msg, onOk) {
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-msg').textContent = msg;
+  document.getElementById('confirm-ok').onclick = () => { closeModal('confirm-overlay'); onOk(); };
+  document.getElementById('confirm-overlay').classList.add('open');
+}
+document.querySelectorAll('.overlay').forEach(el => el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); }));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.overlay.open').forEach(el => el.classList.remove('open')); });
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg;
+  t.classList.add('show'); clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadS();
+renderCalendar();
+renderSidePanel();
+</script>
+</body>
+</html>
