@@ -22,15 +22,20 @@
 }
 body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.5;min-height:100vh}
 /* NAV */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;background:var(--maroon);gap:16px;position:sticky;top:0;z-index:100}
-.tb-left{display:flex;align-items:center;gap:14px}
-.tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
-.tb-seal{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:12px}
-.tb-name{font-family:'Playfair Display',serif;font-size:15px;color:white;font-weight:600}
-.tb-nav{display:flex;align-items:center;gap:2px}
-.tb-link{font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;padding:6px 11px;border-radius:var(--radius);transition:all 0.12s;white-space:nowrap}
-.tb-link:hover,.tb-link.active{background:rgba(255,255,255,0.18);color:white}
-.tb-right{display:flex;align-items:center;gap:8px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;height:54px;background:var(--maroon);gap:12px;position:sticky;top:0;z-index:100}
+.tb-left{display:flex;align-items:center;gap:0;flex-shrink:0}
+.tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:10px}
+.tb-seal{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:12px;flex-shrink:0}
+.tb-name{font-family:'Playfair Display',serif;font-size:15px;color:white;font-weight:600;white-space:nowrap}
+.tb-nav{display:flex;align-items:center;gap:1px}
+.tb-link{font-size:12px;color:rgba(255,255,255,0.72);text-decoration:none;padding:6px 11px;border-radius:6px;transition:all 0.12s;white-space:nowrap;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;line-height:1}
+.tb-link:hover{background:rgba(255,255,255,0.15);color:white}
+.tb-link.active{background:rgba(255,255,255,0.2);color:white;font-weight:500}
+.tb-right{display:flex;align-items:center;gap:1px;flex-shrink:0}
+.tb-sep{width:1px;height:18px;background:rgba(255,255,255,0.2);margin:0 8px;flex-shrink:0}
+.tb-profile-btn{display:flex;align-items:center;gap:7px;padding:4px 12px 4px 5px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none;margin-left:4px}
+.tb-profile-btn:hover{background:rgba(255,255,255,0.24);color:white}
+.tb-avatar{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
 .icon-btn{width:32px;height:32px;border-radius:var(--radius);border:none;background:rgba(255,255,255,0.15);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background 0.15s}
 .icon-btn:hover{background:rgba(255,255,255,0.25)}
 /* CONTENT */
@@ -157,14 +162,22 @@ input::placeholder{color:var(--light)}
     </a>
     <div class="tb-nav">
       <a href="dashboard.html" class="tb-link">Dashboard</a>
-      <a href="schedule.html" class="tb-link active always">Schedule</a>
-      <a href="calendar.html" class="tb-link">Calendar</a>
-      <a href="about.html" class="tb-link">About</a>
+      <a href="schedule.html"  class="tb-link active">Schedule</a>
+      <a href="calendar.html"  class="tb-link">Calendar</a>
     </div>
   </div>
   <div class="tb-right">
-    <button class="icon-btn" id="refresh-btn" onclick="renderAll()" title="Refresh">↻</button>
+    <div class="tb-sep"></div>
+    <a href="dashboard.html" class="tb-link">Settings</a>
+    <a href="about.html"           class="tb-link">About</a>
+    <a href="about.html#feedback"  class="tb-link">Contact</a>
+    <a href="dashboard.html" class="tb-profile-btn" id="tb-profile-btn">
+      <div class="tb-avatar" id="tb-avatar">?</div>
+      <span id="tb-profile-label">Profile</span>
+    </a>
   </div>
+</div>
+
 </div>
 
 <div class="content">
@@ -889,5 +902,17 @@ renderAll();
 // Auto-refresh right now every 60 seconds
 setInterval(() => { renderRightNow(); renderTodayList(); }, 60000);
 </script>
+<script>
+(function(){
+  try{
+    var d=JSON.parse(localStorage.getItem('acadtrack_data')||'{}');
+    var name=d.name||(d.school?d.school.split(' ')[0]:'');
+    var init=name?name.charAt(0).toUpperCase():'?';
+    var av=document.getElementById('tb-avatar');
+    var lb=document.getElementById('tb-profile-label');
+    if(av)av.textContent=init;
+    if(lb)lb.textContent=name||'Profile';
+  }catch(e){}
+})();</script>
 </body>
 </html>
