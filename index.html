@@ -204,7 +204,31 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
     <div class="panel" id="p4">
       <p style="font-size:13px;color:var(--gray);margin-bottom:14px">Load a pre-built curriculum to auto-populate all your subjects, units, and prerequisites. You can always add, edit, or remove subjects on your dashboard.</p>
       <div class="tpl-grid" id="tpl-grid"></div>
-      <div class="tpl-note">💡 More templates will be added over time. If your school or course isn't listed, select "Start empty" and add subjects manually. You can also <a href="about.html" style="color:var(--maroon)">send a curriculum request</a>.</div>
+
+      <div style="display:flex;align-items:center;gap:12px;margin:14px 0 10px">
+        <div style="flex:1;height:1px;background:var(--border)"></div>
+        <span style="font-size:11px;color:var(--light);text-transform:uppercase;letter-spacing:0.08em">or upload your curriculum</span>
+        <div style="flex:1;height:1px;background:var(--border)"></div>
+      </div>
+
+      <div style="border:1.5px dashed var(--border);border-radius:var(--radius);padding:16px;background:var(--cream)">
+        <div style="font-size:13px;font-weight:500;margin-bottom:5px">Upload curriculum file</div>
+        <div style="font-size:11px;color:var(--gray);margin-bottom:12px;line-height:1.7">
+          Copy your curriculum from any document and save it as a <strong>.txt</strong> file. AcadTrack will auto-parse subjects, units, year level, and semester. Supports the standard Philippine university curriculum format (tab-separated with Year/Sem headers).
+        </div>
+        <label class="btn" style="cursor:pointer;display:inline-flex;margin-bottom:10px">
+          📂 Choose .txt file
+          <input type="file" id="curr-file-input" accept=".txt" style="display:none" onchange="parseCurriculumFile(event)">
+        </label>
+        <div id="parse-preview" style="display:none">
+          <div id="parse-stats" style="font-size:12px;color:var(--gp);font-weight:600;margin-bottom:8px"></div>
+          <div id="parse-breakdown" style="font-size:11px;color:var(--gray);margin-bottom:10px"></div>
+          <div id="parse-error" style="font-size:12px;color:var(--gf);display:none"></div>
+          <button class="btn btn-primary btn-sm" onclick="useUploadedCurriculum()" id="use-upload-btn">Use this curriculum →</button>
+        </div>
+      </div>
+
+      <div class="tpl-note" style="margin-top:12px">💡 More templates will be added over time. You can also <a href="about.html" style="color:var(--maroon)">send a curriculum request</a> and we'll add your school's program.</div>
       <div class="pactions"><button class="btn btn-outline" onclick="goStep(3)">← Back</button><button class="btn btn-gold" onclick="createTracker()">Start tracking →</button></div>
     </div>
   </div>
@@ -268,10 +292,145 @@ function createTracker(){
   const school=document.getElementById('f-school').value.trim();
   if(!school){goStep(1);return;}
   let subjects=[],schoolVal=school,courseVal=document.getElementById('f-course').value.trim();
-  if(selectedTemplate){const tpl=TEMPLATES.find(t=>t.id===selectedTemplate);if(tpl){subjects=expandTemplate(tpl);if(!schoolVal)schoolVal=tpl.school;if(!courseVal)courseVal=tpl.course;}}
+  if(selectedTemplate==='__uploaded__'&&uploadedSubjects){subjects=uploadedSubjects;}else if(selectedTemplate){const tpl=TEMPLATES.find(t=>t.id===selectedTemplate);if(tpl){subjects=expandTemplate(tpl);if(!schoolVal)schoolVal=tpl.school;if(!courseVal)courseVal=tpl.course;}}
   const data={school:schoolVal,name:document.getElementById('f-name').value.trim(),course:courseVal,gradeSystem:document.querySelector('input[name="gsys"]:checked').value,passingGrade:parseFloat(document.getElementById('f-passing').value)||3.00,targetGWA:document.getElementById('f-targetgwa').value.trim()||null,yearLevel:parseInt(document.getElementById('f-year').value),currentSem:parseInt(document.getElementById('f-sem').value),progYears:parseInt(document.getElementById('f-prog-years').value),targetDate:document.getElementById('f-graddate').value,subjects,created:new Date().toISOString()};
   localStorage.setItem('acadtrack_data',JSON.stringify(data));
   window.location.href='dashboard.html';
+}
+
+// ── CURRICULUM FILE PARSER ───────────────────────────────────────────────────
+let uploadedSubjects = null;
+
+function parseCurriculumFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const subjects = parseCurriculumText(ev.target.result);
+      if (!subjects.length) throw new Error('No subjects found. Check the file format.');
+      uploadedSubjects = subjects;
+      showParsePreview(subjects);
+    } catch(err) {
+      document.getElementById('parse-preview').style.display = 'block';
+      document.getElementById('parse-stats').textContent = '';
+      document.getElementById('parse-breakdown').textContent = '';
+      const errEl = document.getElementById('parse-error');
+      errEl.style.display = 'block';
+      errEl.textContent = '⚠ ' + err.message;
+      document.getElementById('use-upload-btn').style.display = 'none';
+    }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function parseCurriculumText(text) {
+  // Normalize line endings safely (avoid regex with special chars)
+  text = text.replace(/\r/g, '');
+  const lines = text.split('\n').map(function(l){ return l.trim(); });
+  const subjects = [];
+  var currentYear = 1, currentSem = 1;
+
+  var YEAR_MAP = {'first':1,'second':2,'third':3,'fourth':4,'fifth':5,'1st':1,'2nd':2,'3rd':3,'4th':4,'5th':5};
+  var SEM_MAP  = {'1st':1,'first':1,'2nd':2,'second':2,'summer':3,'midyear':3,'mid-year':3};
+  var courseNumToId = {};
+
+  for (var li = 0; li < lines.length; li++) {
+    var line = lines[li];
+    if (!line) continue;
+
+    // Detect "First Year, 1st Semester" or "Second Year, 2nd Semester"
+    var ysm = line.match(/^(first|second|third|fourth|fifth|1st|2nd|3rd|4th|5th)\s+year[,\s]+(1st|2nd|summer|midyear|mid-year|first|second)/i);
+    if (ysm) {
+      currentYear = YEAR_MAP[ysm[1].toLowerCase()] || parseInt(ysm[1]) || currentYear;
+      currentSem  = SEM_MAP[ysm[2].toLowerCase()] || 1;
+      continue;
+    }
+
+    // Skip header/footer rows
+    if (/^(course\s*no|description|total\s*units|elective|co-req)/i.test(line)) continue;
+
+    // Split on tabs OR multiple spaces (handle both formats)
+    var cols;
+    if (line.indexOf('\t') >= 0) {
+      cols = line.split('\t').map(function(c){ return c.trim(); });
+    } else {
+      cols = line.split(/\s{2,}/).map(function(c){ return c.trim(); });
+    }
+    if (cols.length < 3) continue;
+
+    var courseNo = cols[0] || '';
+    var code     = cols[1] || '';
+    var name     = cols[2] || '';
+    var units    = parseInt(cols[3]) || 3;
+    var prereqRaw = cols[4] ? cols[4].split(',').map(function(c){ return c.trim(); }).filter(Boolean) : [];
+
+    // Skip obviously non-subject rows
+    if (!name || name.length < 2) continue;
+    if (!/[A-Za-z]/.test(name)) continue;
+    if (!courseNo && code.length < 2) continue;
+
+    var id = 'u_' + (courseNo || code).replace(/\s/g,'') + '_' + (code || '').replace(/\s/g,'') + '_' + li;
+    if (courseNo) courseNumToId[courseNo] = id;
+    if (code)     courseNumToId[code]     = id;
+
+    // Normalize name to title case
+    var normName = name.split(' ').map(function(w) {
+      if (!w) return w;
+      var upper = w.toUpperCase();
+      // Keep short words and abbreviations uppercase
+      if (w.length <= 3 || /^[A-Z0-9]+$/.test(w)) return upper;
+      return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    }).join(' ');
+
+    subjects.push({ id:id, code:code, name:normName, units:units, year:currentYear, sem:currentSem, prereqs:prereqRaw, status:'not_taken', grade:'' });
+  }
+
+  if (!subjects.length) throw new Error('Could not parse any subjects. Make sure the file uses tab-separated columns and has Year/Semester headers.');
+
+  // Resolve prereq course numbers/codes to subject IDs
+  subjects.forEach(function(s) {
+    s.prereqs = s.prereqs.map(function(num){ return courseNumToId[num]; }).filter(Boolean);
+  });
+
+  return subjects;
+}
+
+function showParsePreview(subjects) {
+  const preview = document.getElementById('parse-preview');
+  const stats   = document.getElementById('parse-stats');
+  const breakdown = document.getElementById('parse-breakdown');
+  const errEl   = document.getElementById('parse-error');
+  const btn     = document.getElementById('use-upload-btn');
+
+  preview.style.display = 'block';
+  errEl.style.display = 'none';
+  btn.style.display = 'inline-flex';
+
+  const totalUnits = subjects.reduce((a,s) => a + s.units, 0);
+  stats.textContent = '✓ Found ' + subjects.length + ' subjects — ' + totalUnits + ' total units';
+
+  const byYear = {};
+  subjects.forEach(s => {
+    const k = 'Year ' + s.year;
+    if (!byYear[k]) byYear[k] = 0;
+    byYear[k]++;
+  });
+  breakdown.textContent = Object.entries(byYear).map(([k,v]) => k + ': ' + v + ' subj.').join('  ·  ');
+
+  // Deselect templates and mark upload as selected
+  document.querySelectorAll('.tpl-card').forEach(el => el.classList.remove('selected'));
+  document.getElementById('tc-none').classList.remove('selected');
+  selectedTemplate = '__uploaded__';
+}
+
+function useUploadedCurriculum() {
+  if (!uploadedSubjects) return;
+  selectedTemplate = '__uploaded__';
+  const btn = document.getElementById('use-upload-btn');
+  btn.textContent = '✓ Will use uploaded curriculum';
+  btn.disabled = true;
 }
 
 window.addEventListener('DOMContentLoaded',()=>{
