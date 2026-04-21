@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AcadTrack — College Progress Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --maroon:#7B1C1C;--maroon-hover:#9B2525;--maroon-light:#F5EBEB;
+  --gold:#B8960C;--gold-hover:#9A7D0A;--gold-light:#FBF4DC;--gold-border:#E8D06A;
+  --cream:#FAF7F2;--border:#E5DDD4;--dark:#1C1917;--mid:#44403C;
+  --gray:#78716C;--light:#A8A29E;--white:#FFFFFF;
+  --success:#15803D;--success-bg:#DCFCE7;
+  --radius:8px;--radius-lg:14px;
+}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.6}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0.875rem 2.5rem;background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-seal{width:34px;height:34px;border-radius:50%;background:var(--maroon);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:13px;font-weight:600;flex-shrink:0}
+.logo-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--maroon)}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-link{font-size:13px;color:var(--gray);text-decoration:none;padding:6px 12px;border-radius:var(--radius);transition:all 0.12s}
+.nav-link:hover{background:var(--maroon-light);color:var(--maroon)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius);font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;border:none;transition:all 0.15s}
+.btn-primary{background:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover)}
+.btn-outline{background:transparent;border:1.5px solid var(--maroon);color:var(--maroon)}.btn-outline:hover{background:var(--maroon);color:white}
+.btn-gold{background:var(--gold);color:white}.btn-gold:hover{background:var(--gold-hover)}
+.btn-sm{padding:6px 14px;font-size:12px}
+.hero{max-width:860px;margin:0 auto;padding:5rem 2rem 4rem;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;background:var(--gold-light);color:var(--gold);border:1px solid var(--gold-border);font-size:11px;font-weight:600;padding:5px 14px;border-radius:99px;margin-bottom:1.75rem;letter-spacing:0.06em;text-transform:uppercase}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,4.5vw,3.2rem);font-weight:600;line-height:1.18;color:var(--dark);margin-bottom:1.25rem}
+.hero h1 em{color:var(--maroon);font-style:italic}
+.hero p{font-size:1.05rem;color:var(--gray);max-width:520px;margin:0 auto 2.25rem}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.returning{max-width:580px;margin:0 auto 0.5rem;padding:0 2rem;display:none}
+.ret-card{background:var(--gold-light);border:1px solid var(--gold-border);border-radius:var(--radius);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ret-card p{font-size:12px;color:#7A5E08}
+.ret-card strong{font-size:14px;font-weight:600;color:#5A4206;display:block;margin-bottom:2px}
+.divider{display:flex;align-items:center;gap:16px;max-width:800px;margin:1rem auto 0;padding:0 2rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.divider span{font-size:10px;color:var(--light);letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;max-width:880px;margin:3rem auto;padding:0 2rem}
+.feat{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem}
+.feat-icon{width:38px;height:38px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:17px}
+.feat h3{font-size:14px;font-weight:600;margin-bottom:5px}
+.feat p{font-size:12px;color:var(--gray);line-height:1.65}
+.setup{max-width:580px;margin:2rem auto 5rem;padding:0 2rem}
+.setup-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:600;text-align:center;margin-bottom:6px}
+.setup-sub{text-align:center;color:var(--gray);font-size:13px;margin-bottom:1.75rem}
+.setup-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;box-shadow:0 1px 6px rgba(0,0,0,0.04)}
+.stepper{display:flex;align-items:center;justify-content:center;margin-bottom:2rem;flex-wrap:wrap;row-gap:8px}
+.step-item{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:500;color:var(--light)}
+.step-item.active{color:var(--maroon)}
+.step-item.done{color:var(--success)}
+.step-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.step-item.done .step-dot{background:var(--success);border-color:var(--success);color:white}
+.step-item.active .step-dot{background:var(--maroon);border-color:var(--maroon);color:white}
+.step-line{width:22px;height:1px;background:var(--border);margin:0 2px}
+.panel{display:none}.panel.active{display:block}
+.fg{margin-bottom:1.1rem}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:5px}
+.fg .hint{font-size:11px;color:var(--light);margin-top:4px}
+.fg .req{color:var(--maroon)}.fg .opt{color:var(--light);font-weight:400}
+input[type=text],input[type=month],select,input[type=number]{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.15s}
+input:focus,select:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
+input::placeholder{color:var(--light)}
+input.error{border-color:#B91C1C}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.radio-group{display:flex;flex-direction:column;gap:8px}
+.radio-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all 0.12s}
+.radio-opt:hover{border-color:var(--maroon);background:rgba(123,28,28,0.02)}
+.radio-opt.selected{border-color:var(--maroon);background:rgba(123,28,28,0.04)}
+.radio-opt input{margin-top:3px;accent-color:var(--maroon);flex-shrink:0}
+.radio-opt .rt{font-size:13px;font-weight:500}.radio-opt .rd{font-size:11px;color:var(--gray);margin-top:2px}
+.pactions{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.sec-label{font-size:10px;font-weight:600;color:var(--light);letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin:3rem 0 0.5rem}
+/* TEMPLATE STEP */
+.tpl-grid{display:flex;flex-direction:column;gap:10px}
+.tpl-card{border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:all 0.12s}
+.tpl-card:hover{border-color:var(--maroon);background:rgba(123,28,28,0.02)}
+.tpl-card.selected{border-color:var(--maroon);background:rgba(123,28,28,0.04)}
+.tpl-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:3px}
+.tpl-school{font-size:11px;color:var(--maroon);font-weight:600}
+.tpl-name{font-size:13px;font-weight:600;color:var(--dark)}
+.tpl-badge{font-size:10px;font-weight:600;background:var(--gold-light);color:var(--gold);border:1px solid var(--gold-border);padding:2px 8px;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.tpl-meta{font-size:11px;color:var(--light);margin-top:3px}
+.tpl-skip{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px dashed var(--border);border-radius:var(--radius);cursor:pointer;transition:all 0.12s}
+.tpl-skip:hover{border-color:var(--light)}.tpl-skip.selected{border-color:var(--light);background:var(--cream)}
+.tpl-skip input{accent-color:var(--maroon)}
+.tpl-note{font-size:11px;color:var(--gray);background:var(--cream);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-top:12px;line-height:1.65}
+footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-top:1px solid var(--border);background:var(--white);margin-top:2rem}
+@media(max-width:520px){nav{padding:0.75rem 1.25rem}.hero{padding:3rem 1.25rem 2.5rem}.form-row{grid-template-columns:1fr}.setup{padding:0 1.25rem}.nav-link{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-seal">A</div>
+    <span class="logo-name">AcadTrack</span>
+  </a>
+  <div class="nav-links">
+    <a href="about.html" class="nav-link">About</a>
+    <a href="dashboard.html" class="btn btn-outline btn-sm" id="resume-btn" style="display:none">Resume tracker →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">Free &nbsp;·&nbsp; No sign-up &nbsp;·&nbsp; Your data stays on your device</div>
+  <h1>Your college journey,<br><em>tracked with purpose</em></h1>
+  <p>Monitor subjects, compute your GWA, track earned units, and get an estimated graduation date — all saved privately on your device.</p>
+  <div class="hero-ctas">
+    <a href="#setup" class="btn btn-primary">Get started →</a>
+    <a href="#features" class="btn btn-outline">See features</a>
+  </div>
+</section>
+
+<div class="returning" id="returning">
+  <div class="ret-card">
+    <div>
+      <strong id="ret-name">Welcome back!</strong>
+      <p id="ret-desc">You have an existing tracker on this device.</p>
+    </div>
+    <a href="dashboard.html" class="btn btn-gold">Open dashboard →</a>
+  </div>
+</div>
+
+<div class="divider" id="features"><span>What AcadTrack does</span></div>
+
+<div class="features">
+  <div class="feat"><div class="feat-icon" style="background:#F5EBEB">📊</div><h3>GWA calculator</h3><p>Supports both 1.0-highest and 5.0-highest grading systems. GWA updates automatically as you log grades.</p></div>
+  <div class="feat"><div class="feat-icon" style="background:var(--gold-light)">🔗</div><h3>Prerequisite tracking</h3><p>Link subjects to their prerequisites. Get warned when a prereq hasn't been passed yet before you enroll.</p></div>
+  <div class="feat"><div class="feat-icon" style="background:var(--success-bg)">🗓</div><h3>Graduation estimate</h3><p>Based on remaining subjects and semester layout, AcadTrack estimates when you'll finish your degree.</p></div>
+  <div class="feat"><div class="feat-icon" style="background:#DBEAFE">📤</div><h3>Export & import</h3><p>Back up your data as a JSON file and restore it on any device. Useful for switching between phone and PC.</p></div>
+</div>
+
+<div class="divider"><span>How it works</span></div>
+<div class="features" style="grid-template-columns:repeat(3,1fr)">
+  <div class="feat" style="text-align:center;padding:1.25rem"><div class="feat-icon" style="background:var(--maroon-light);margin:0 auto 10px;font-size:20px;font-weight:700;color:var(--maroon)">1</div><h3>Set up your profile</h3><p style="font-size:11px">Enter your school, grading system, and target graduation date.</p></div>
+  <div class="feat" style="text-align:center;padding:1.25rem"><div class="feat-icon" style="background:var(--maroon-light);margin:0 auto 10px;font-size:20px;font-weight:700;color:var(--maroon)">2</div><h3>Load or add subjects</h3><p style="font-size:11px">Load a ready-made curriculum template, or add your own subjects manually.</p></div>
+  <div class="feat" style="text-align:center;padding:1.25rem"><div class="feat-icon" style="background:var(--maroon-light);margin:0 auto 10px;font-size:20px;font-weight:700;color:var(--maroon)">3</div><h3>Log grades as you go</h3><p style="font-size:11px">Mark subjects ongoing or passed, enter your grade, and see your progress update.</p></div>
+</div>
+
+<p class="sec-label" id="setup">Set up your tracker</p>
+<div class="setup">
+  <h2 class="setup-title">Let's get started</h2>
+  <p class="setup-sub">Takes about 2 minutes. You can edit everything later in settings.</p>
+  <div class="setup-card">
+    <div class="stepper">
+      <div class="step-item active" id="si1"><div class="step-dot">1</div><span>About you</span></div>
+      <div class="step-line"></div>
+      <div class="step-item" id="si2"><div class="step-dot">2</div><span>Grading</span></div>
+      <div class="step-line"></div>
+      <div class="step-item" id="si3"><div class="step-dot">3</div><span>Timeline</span></div>
+      <div class="step-line"></div>
+      <div class="step-item" id="si4"><div class="step-dot">4</div><span>Curriculum</span></div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="panel active" id="p1">
+      <div class="fg"><label>School / University <span class="req">*</span></label><input type="text" id="f-school" placeholder="e.g. Adamson University"></div>
+      <div class="fg"><label>Your name <span class="opt">(optional)</span></label><input type="text" id="f-name" placeholder="e.g. Juan dela Cruz"><div class="hint">Only used to personalize your dashboard.</div></div>
+      <div class="fg"><label>Course / Program <span class="opt">(optional)</span></label><input type="text" id="f-course" placeholder="e.g. BSBA Marketing Management"></div>
+      <div class="pactions"><span></span><button class="btn btn-primary" onclick="goStep(2)">Next: Grading →</button></div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="panel" id="p2">
+      <div class="fg">
+        <label>Grading system</label>
+        <div class="radio-group">
+          <label class="radio-opt selected" id="ropt1">
+            <input type="radio" name="gsys" value="1_highest" checked onchange="pickGS('1_highest')">
+            <div><div class="rt">1.0 is the highest grade</div><div class="rd">UP, Ateneo, La Salle, Adamson, UST, and most Philippine universities. Excellent = 1.0, Passing = 3.0, Failed = 5.0.</div></div>
+          </label>
+          <label class="radio-opt" id="ropt5">
+            <input type="radio" name="gsys" value="5_highest" onchange="pickGS('5_highest')">
+            <div><div class="rt">5.0 is the highest grade</div><div class="rd">Some schools use a 5-point scale where 5 = Excellent and 1 = Failed. Passing threshold varies by school.</div></div>
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Passing threshold</label><input type="text" id="f-passing" value="3.00"><div class="hint" id="passing-hint">Grades ≤ this are passing.</div></div>
+        <div class="fg"><label>Target GWA <span class="opt">(optional)</span></label><input type="text" id="f-targetgwa" placeholder="e.g. 1.75"></div>
+      </div>
+      <div class="pactions"><button class="btn btn-outline" onclick="goStep(1)">← Back</button><button class="btn btn-primary" onclick="goStep(3)">Next: Timeline →</button></div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="panel" id="p3">
+      <div class="form-row">
+        <div class="fg"><label>Current year level</label><select id="f-year"><option value="1">1st Year</option><option value="2">2nd Year</option><option value="3">3rd Year</option><option value="4">4th Year</option><option value="5">5th Year</option></select></div>
+        <div class="fg"><label>Current semester</label><select id="f-sem"><option value="1">1st Semester</option><option value="2">2nd Semester</option><option value="3">Summer / Midyear</option></select></div>
+      </div>
+      <div class="fg"><label>Total years in program</label><select id="f-prog-years"><option value="4">4 years (most BS/AB/BSBA programs)</option><option value="5">5 years (Architecture, Engineering, etc.)</option><option value="3">3 years (Associate / short programs)</option><option value="6">6 years (Law, Medicine pre-board)</option></select></div>
+      <div class="fg"><label>Target graduation date</label><input type="month" id="f-graddate"></div>
+      <div class="pactions"><button class="btn btn-outline" onclick="goStep(2)">← Back</button><button class="btn btn-primary" onclick="goStep(4)">Next: Curriculum →</button></div>
+    </div>
+
+    <!-- Step 4: Curriculum template -->
+    <div class="panel" id="p4">
+      <p style="font-size:13px;color:var(--gray);margin-bottom:14px">Load a pre-built curriculum to auto-populate all your subjects, units, and prerequisites. You can always add, edit, or remove subjects on your dashboard.</p>
+      <div class="tpl-grid" id="tpl-grid"></div>
+      <div class="tpl-note">💡 More templates will be added over time. If your school or course isn't listed, select "Start empty" and add subjects manually. You can also <a href="about.html" style="color:var(--maroon)">send a curriculum request</a>.</div>
+      <div class="pactions"><button class="btn btn-outline" onclick="goStep(3)">← Back</button><button class="btn btn-gold" onclick="createTracker()">Start tracking →</button></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>AcadTrack — A free college progress tracker for Filipino students. &nbsp;·&nbsp; <a href="about.html" style="color:var(--light)">About & feedback</a></p>
+  <p style="margin-top:4px;font-size:11px">Your data is saved only on your device. No account, no server, no tracking.</p>
+</footer>
+
+<script>
+const TEMPLATES=[{id:'adamson_bsba_mm_2022',name:'BSBA Marketing Management',school:'Adamson University',course:'B.S.B.A. Marketing Management',tag:'Curriculum Year 2022',subjects:[['NSTP1','NSTP1','NSTP 1',3,1,1,[]],['BE112','BE112','Basic Microeconomics',3,1,1,[]],['MK111','MK111','Essentials of Marketing',3,1,1,[]],['PE111C','PE111C','PATHFIT1: Movement Competency Training',2,1,1,[]],['EN110','EN110','Purposive Communication',3,1,1,[]],['HI112','HI112','Readings in Philippine History',3,1,1,[]],['TH111E','TH111E','Searching for God in the World Today',3,1,1,[]],['MG226','MG226','The Entrepreneurial Mind',3,1,1,[]],['HU311','HU311','Art Appreciation',3,1,2,[]],['PH114','PH114','Ethics',3,1,2,[]],['MH110','MH110','Mathematics in the Modern World',3,1,2,[]],['MG113','MG113','Modern Management & Labor Relations',3,1,2,[]],['PE121C','PE121C','PATHFIT2: Exercise-Based Fitness Activities',2,1,2,[]],['TH121E','TH121E',"Responding to God's Call by Becoming Fully Human",3,1,2,['TH111E']],['PC110','PC110','Science, Technology and Society',3,1,2,[]],['NSTP2','NSTP2','NSTP 2',3,1,2,[]],['TH211E','TH211E',"Celebrating God's Presence as a Christian Community",3,2,1,['TH121E']],['MK424','MK424','Distribution Management',3,2,1,['MG113','MK111']],['IT112','IT112','Living in an IT Era',3,2,1,[]],['MK422','MK422','Marketing Management',3,2,1,['MK111']],['PE211C','PE211C','PATHFIT3: Dance',2,2,1,[]],['MK410','MK410','Professional Salesmanship',3,2,1,['MK111']],['HI311','HI311',"Rizal's Life & Works",3,2,1,[]],['HI113','HI113','The Contemporary World',3,2,1,[]],['PY111','PY111','Understanding the Self',3,2,2,[]],['MK400E1','MK400','Marketing Management Elective 1',3,2,2,[]],['MK421A','MK421A','Advertising',3,2,2,['MK422']],['MG221','MG221','Good Governance & Social Responsibility',3,2,2,['MK422']],['BL311C','BL311C','Law on Obligations, Contracts & Basic Labor Laws',3,2,2,['MG113']],['PE221C','PE221C','PATHFIT4: Sports',2,2,2,[]],['CSE115','CSE115','Presentation and Graphics Application',3,2,2,[]],['TH221E','TH221E','Transforming the World with Vincent de Paul',3,2,2,['TH211E']],['MH226','MH226','Business Statistics',3,3,1,['MH110']],['TX411','TX411','Income Taxation',3,3,1,[]],['PS221B','PS221B','Politics & Governance with Philippine Constitution',3,3,1,[]],['MK316','MK316','Pricing Strategy',3,3,1,['MK111']],['MK323A','MK323A','Retail Management',3,3,1,['MK424','MK422']],['CSE329','CSE329','Strategic Business Communication & Presentation',3,3,1,['CSE115']],['MK400E2','MK400','Marketing Management Elective 2',3,3,1,[]],['MK400E3','MK400','Marketing Elective 3',3,3,2,[]],['CSE328','CSE328','Management Information System',3,3,2,['CSE115']],['MG311C','MG311C','Human Resource Management',3,3,2,['MG113']],['MK415','MK415','Marketing Research 1',3,3,2,['MH226','MG113','MK111']],['OM326A','OM326A','Operations Management TQM w/ Educational Tour',3,3,2,['MG221','MG113']],['EN220','EN220','Business Technical Writing',3,3,2,[]],['MK327','MK327','Product Management',3,3,2,['MK111']],['MG328','MG328','Business Analytics',3,4,1,['MK422']],['MK317','MK317','E-Commerce & Internet Marketing',3,4,1,['MK422']],['BE321A','BE321A','International Business and Trade',3,4,1,['MK422']],['MK418A','MK418A','Marketing Feasibility Study',3,4,1,['MG226','MK422','MG113']],['MK400E4','MK400','Marketing Management Elective 4',3,4,1,[]],['MK416','MK416','Marketing Research 2',3,4,1,['MK415']],['MG323','MG323','Strategic Management',3,4,1,['MG113','MK111']],['MK423','MK423','Marketing Practicum',6,4,2,['MK410','MK421A','MK316','MK323A']]]}];
+
+function expandTemplate(t){return t.subjects.map(s=>({id:s[0],code:s[1],name:s[2],units:s[3],year:s[4],sem:s[5],prereqs:s[6],status:'not_taken',grade:''}))}
+
+let curStep=1,selectedTemplate=null;
+
+function goStep(n){
+  if(n===2){const v=document.getElementById('f-school').value.trim();if(!v){const el=document.getElementById('f-school');el.classList.add('error');el.focus();el.addEventListener('input',()=>el.classList.remove('error'),{once:true});return;}}
+  if(n===4)buildTemplateGrid();
+  const prev=curStep;
+  document.getElementById('p'+prev).classList.remove('active');
+  const si=document.getElementById('si'+prev);si.classList.remove('active');
+  if(n>prev)si.classList.add('done');else si.classList.remove('done');
+  curStep=n;
+  document.getElementById('p'+n).classList.add('active');
+  document.getElementById('si'+n).classList.add('active');
+  document.getElementById('setup').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function buildTemplateGrid(){
+  const grid=document.getElementById('tpl-grid');
+  let html='';
+  TEMPLATES.forEach(t=>{
+    const cnt=t.subjects.length;
+    const u=t.subjects.reduce((a,s)=>a+s[3],0);
+    html+=`<label class="tpl-card" id="tc-${t.id}"><input type="radio" name="tpl" value="${t.id}" style="display:none" onchange="selectTpl('${t.id}')"><div class="tpl-head"><div><div class="tpl-school">${t.school}</div><div class="tpl-name">${t.name}</div></div><div class="tpl-badge">${t.tag}</div></div><div class="tpl-meta">${cnt} subjects &nbsp;·&nbsp; ${u} total units &nbsp;·&nbsp; 4-year program</div></label>`;
+  });
+  html+=`<label class="tpl-skip selected" id="tc-none"><input type="radio" name="tpl" value="none" checked onchange="selectTpl('none')"><span>Start empty — I'll add subjects manually on my dashboard</span></label>`;
+  grid.innerHTML=html;
+  selectedTemplate=null;
+}
+
+function selectTpl(id){
+  document.querySelectorAll('.tpl-card').forEach(el=>el.classList.remove('selected'));
+  document.getElementById('tc-none').classList.remove('selected');
+  selectedTemplate=id==='none'?null:id;
+  if(id==='none')document.getElementById('tc-none').classList.add('selected');
+  else document.getElementById('tc-'+id)?.classList.add('selected');
+}
+
+function pickGS(val){
+  document.getElementById('ropt1').classList.toggle('selected',val==='1_highest');
+  document.getElementById('ropt5').classList.toggle('selected',val==='5_highest');
+  const ph=document.getElementById('passing-hint');
+  if(val==='1_highest'){document.getElementById('f-passing').value='3.00';ph.textContent='Grades at or below this are passing.';}
+  else{document.getElementById('f-passing').value='3.00';ph.textContent='Grades at or above this are passing.';}
+}
+
+function createTracker(){
+  const school=document.getElementById('f-school').value.trim();
+  if(!school){goStep(1);return;}
+  let subjects=[],schoolVal=school,courseVal=document.getElementById('f-course').value.trim();
+  if(selectedTemplate){const tpl=TEMPLATES.find(t=>t.id===selectedTemplate);if(tpl){subjects=expandTemplate(tpl);if(!schoolVal)schoolVal=tpl.school;if(!courseVal)courseVal=tpl.course;}}
+  const data={school:schoolVal,name:document.getElementById('f-name').value.trim(),course:courseVal,gradeSystem:document.querySelector('input[name="gsys"]:checked').value,passingGrade:parseFloat(document.getElementById('f-passing').value)||3.00,targetGWA:document.getElementById('f-targetgwa').value.trim()||null,yearLevel:parseInt(document.getElementById('f-year').value),currentSem:parseInt(document.getElementById('f-sem').value),progYears:parseInt(document.getElementById('f-prog-years').value),targetDate:document.getElementById('f-graddate').value,subjects,created:new Date().toISOString()};
+  localStorage.setItem('acadtrack_data',JSON.stringify(data));
+  window.location.href='dashboard.html';
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const raw=localStorage.getItem('acadtrack_data');
+  if(raw){try{const d=JSON.parse(raw);document.getElementById('returning').style.display='block';document.getElementById('resume-btn').style.display='inline-flex';document.getElementById('ret-name').textContent=d.name?'Welcome back, '+d.name+'!':'Welcome back!';const sc=d.subjects.filter(s=>s.status==='passed').length;document.getElementById('ret-desc').textContent=d.school+(d.course?' · '+d.course:'')+' · '+sc+' subject'+(sc!==1?'s':'')+' passed';}catch{}}
+  const fut=new Date();fut.setFullYear(fut.getFullYear()+4);
+  document.getElementById('f-graddate').value=fut.getFullYear()+'-'+String(fut.getMonth()+1).padStart(2,'0');
+});
+</script>
+</body>
+</html>

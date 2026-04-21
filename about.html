@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — AcadTrack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --maroon:#7B1C1C;--maroon-hover:#9B2525;--maroon-light:#F5EBEB;
+  --gold:#B8960C;--gold-light:#FBF4DC;--gold-border:#E8D06A;
+  --cream:#FAF7F2;--border:#E5DDD4;--dark:#1C1917;--mid:#44403C;
+  --gray:#78716C;--light:#A8A29E;--white:#FFFFFF;
+  --success:#15803D;--success-bg:#DCFCE7;
+  --info:#1D4ED8;--info-bg:#DBEAFE;
+  --warn-bg:#FEF3C7;--warn:#92400E;
+  --radius:8px;--radius-lg:14px;
+}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.6}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0.875rem 2.5rem;background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-seal{width:34px;height:34px;border-radius:50%;background:var(--maroon);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:13px;font-weight:600;flex-shrink:0}
+.logo-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--maroon)}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-link{font-size:13px;color:var(--gray);text-decoration:none;padding:6px 12px;border-radius:var(--radius);transition:all 0.12s}
+.nav-link:hover,.nav-link.active{background:var(--maroon-light);color:var(--maroon)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius);font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;border:none;transition:all 0.15s}
+.btn-primary{background:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover)}
+.btn-outline{background:transparent;border:1.5px solid var(--maroon);color:var(--maroon)}.btn-outline:hover{background:var(--maroon);color:white}
+.btn-sm{padding:6px 14px;font-size:12px}
+
+/* PAGE LAYOUT */
+.page{max-width:740px;margin:0 auto;padding:3rem 2rem 5rem}
+.page-header{text-align:center;margin-bottom:3rem}
+.page-tag{font-size:11px;font-weight:600;color:var(--light);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.5rem);font-weight:600;line-height:1.2;margin-bottom:1rem}
+.page-title em{color:var(--maroon);font-style:italic}
+.page-desc{font-size:15px;color:var(--gray);max-width:520px;margin:0 auto}
+
+/* SECTION */
+.section{margin-bottom:3rem}
+.section-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.prose{font-size:14px;color:var(--mid);line-height:1.8}
+.prose p{margin-bottom:0.75rem}
+.prose p:last-child{margin-bottom:0}
+.prose a{color:var(--maroon);text-decoration:none}.prose a:hover{text-decoration:underline}
+.prose strong{font-weight:600;color:var(--dark)}
+
+/* FEATURE GRID */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:1rem}
+.feat-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem}
+.feat-item h4{font-size:13px;font-weight:600;margin-bottom:5px}
+.feat-item p{font-size:12px;color:var(--gray);line-height:1.6}
+
+/* STORAGE INFO CARD */
+.storage-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-top:1rem}
+.sc-row{display:flex;gap:14px;padding:1rem 1.25rem;border-bottom:1px solid var(--border);align-items:flex-start}
+.sc-row:last-child{border-bottom:none}
+.sc-icon{width:32px;height:32px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:2px}
+.sc-content h4{font-size:13px;font-weight:600;margin-bottom:3px}
+.sc-content p{font-size:12px;color:var(--gray);line-height:1.6}
+
+/* SYNC ALERT */
+.sync-alert{background:var(--warn-bg);border:1px solid #FCD34D;border-radius:var(--radius);padding:14px 16px;margin-top:1rem}
+.sync-alert-title{font-size:13px;font-weight:600;color:var(--warn);margin-bottom:6px}
+.sync-alert p{font-size:12px;color:#78350F;line-height:1.7}
+.sync-steps{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.sync-step{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:#78350F}
+.sync-num{width:20px;height:20px;border-radius:50%;background:#FCD34D;color:#78350F;font-weight:700;font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+
+/* FORM */
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;margin-top:1rem}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:5px}
+.fg .req{color:var(--maroon)}
+.fg .hint{font-size:11px;color:var(--light);margin-top:3px}
+input[type=text],input[type=email],select,textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.15s}
+input:focus,select:focus,textarea:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
+input::placeholder,textarea::placeholder{color:var(--light)}
+textarea{resize:vertical;min-height:100px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-submit{margin-top:1.25rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.form-note{font-size:11px;color:var(--light);line-height:1.6}
+.success-msg{background:var(--success-bg);border:1px solid #86EFAC;border-radius:var(--radius);padding:12px 16px;font-size:13px;color:var(--success);display:none}
+
+/* FORMSPREE NOTICE */
+.setup-notice{background:var(--info-bg);border:1px solid #93C5FD;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:var(--info);line-height:1.7;margin-bottom:1.25rem}
+.setup-notice strong{font-weight:600}
+.setup-notice code{background:rgba(29,78,216,0.1);padding:1px 5px;border-radius:4px;font-family:monospace;font-size:11px}
+
+/* CURRICULUM REQUEST */
+.tpl-request{background:var(--gold-light);border:1px solid var(--gold-border);border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#5A4206;line-height:1.7;margin-top:1rem}
+
+/* FOOTER */
+footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-top:1px solid var(--border);background:var(--white);margin-top:2rem}
+@media(max-width:520px){nav{padding:0.75rem 1.25rem}.page{padding:2rem 1.25rem 4rem}.form-row{grid-template-columns:1fr}.nav-link{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-seal">A</div>
+    <span class="logo-name">AcadTrack</span>
+  </a>
+  <div class="nav-links">
+    <a href="about.html" class="nav-link active">About</a>
+    <a href="index.html" class="btn btn-outline btn-sm">Get started →</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="page-header">
+    <div class="page-tag">About AcadTrack</div>
+    <h1 class="page-title">Built for Filipino students,<br><em>free and private</em></h1>
+    <p class="page-desc">AcadTrack helps you monitor your college progress — subjects, grades, prerequisites, and graduation timeline — all without needing an account.</p>
+  </div>
+
+  <!-- WHAT IT DOES -->
+  <div class="section">
+    <h2 class="section-title">What AcadTrack does</h2>
+    <div class="feat-grid">
+      <div class="feat-item">
+        <h4>📊 GWA computation</h4>
+        <p>Supports the Philippine 1.0-highest and 5.0-highest systems. GWA updates live as you log grades, with honor labels (Cum laude, etc.).</p>
+      </div>
+      <div class="feat-item">
+        <h4>🔗 Prerequisite tracking</h4>
+        <p>Link subjects together. Subjects with unmet prerequisites are flagged automatically so you know what to take first.</p>
+      </div>
+      <div class="feat-item">
+        <h4>📈 Progress tracking</h4>
+        <p>See your degree completion percentage based on earned units vs. total curriculum units — broken down by year and semester.</p>
+      </div>
+      <div class="feat-item">
+        <h4>🗓 Graduation estimate</h4>
+        <p>Based on remaining semester count and the Philippine academic calendar (5 months per sem), AcadTrack estimates your finish date.</p>
+      </div>
+      <div class="feat-item">
+        <h4>📚 Curriculum templates</h4>
+        <p>Load a pre-built curriculum to instantly populate all your subjects. Adamson BSBA Marketing Management (2022) is available now, with more coming.</p>
+      </div>
+      <div class="feat-item">
+        <h4>🔒 No account needed</h4>
+        <p>Everything is stored in your browser's local storage. Nothing is sent to any server. Your academic data is yours alone.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORAGE & SYNC -->
+  <div class="section">
+    <h2 class="section-title">Your data &amp; sync</h2>
+
+    <div class="storage-card">
+      <div class="sc-row">
+        <div class="sc-icon" style="background:var(--success-bg)">💾</div>
+        <div class="sc-content">
+          <h4>Where is my data saved?</h4>
+          <p>AcadTrack saves your data in your browser's <strong>localStorage</strong> — a built-in storage area in every modern browser. It stays on your device and is never uploaded anywhere.</p>
+        </div>
+      </div>
+      <div class="sc-row">
+        <div class="sc-icon" style="background:#FEE2E2">📵</div>
+        <div class="sc-content">
+          <h4>Does it sync between my phone and PC?</h4>
+          <p><strong>No — not automatically.</strong> localStorage is specific to the browser and device you're using. If you add subjects on your phone, those changes will not appear on your PC's browser, and vice versa.</p>
+          <p style="margin-top:6px">This also means: if you clear your browser data or use a different browser on the same device, your tracker data may be lost.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sync-alert">
+      <div class="sync-alert-title">⚡ How to use AcadTrack across multiple devices</div>
+      <p>Use the <strong>Export</strong> and <strong>Import</strong> feature (Settings → Data &amp; backup) to move your data between devices manually.</p>
+      <div class="sync-steps">
+        <div class="sync-step"><div class="sync-num">1</div><span>On your current device: open <strong>Settings ⚙</strong> on the dashboard and click <strong>Export to file</strong>. A .json file will download.</span></div>
+        <div class="sync-step"><div class="sync-num">2</div><span>Transfer the file to your other device — via Google Drive, email, Messenger, USB, or any method you prefer.</span></div>
+        <div class="sync-step"><div class="sync-num">3</div><span>On the new device: go to <strong>acadtrack</strong> in your browser, open <strong>Settings ⚙</strong>, and click <strong>Import from file</strong>. Select the .json file.</span></div>
+        <div class="sync-step"><div class="sync-num">4</div><span>Your tracker is now synced. Repeat whenever you make major updates on one device.</span></div>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:1rem">
+      <p><strong>Tip:</strong> Pick one primary device (e.g. your PC) for updating grades, and use Export/Import whenever you want to view it on your phone. Automatic cloud sync may be added in a future version.</p>
+    </div>
+  </div>
+
+  <!-- CURRICULUM REQUESTS -->
+  <div class="section">
+    <h2 class="section-title">Request a curriculum template</h2>
+    <div class="prose">
+      <p>Currently available: <strong>Adamson University — BSBA Marketing Management (Curriculum Year 2022)</strong>.</p>
+      <p>More templates will be added over time. If your school and course isn't available yet, you can request it using the feedback form below. Include your school name, course, and curriculum year and we'll add it in an upcoming update.</p>
+    </div>
+    <div class="tpl-request">
+      📋 <strong>Want your curriculum added?</strong> Send us your school name, course title, and curriculum year using the form below. Attach or paste your subject list and we'll build it for free.
+    </div>
+  </div>
+
+  <!-- FEEDBACK FORM -->
+  <div class="section">
+    <h2 class="section-title">Send feedback or report a bug</h2>
+
+    <div class="prose">
+      <p>Found a bug? Have a suggestion? Want to request a curriculum template? Send us a message — it helps make AcadTrack better for everyone.</p>
+    </div>
+
+    <!--
+      ════════════════════════════════════════════════════════════════
+      DEVELOPER SETUP INSTRUCTIONS:
+      
+      This form uses Formspree (https://formspree.io) — free, no backend needed.
+      
+      To activate:
+      1. Go to https://formspree.io and create a free account.
+         Use a dedicated email like: acadtrack.feedback@gmail.com
+      2. Create a new form. Copy the form endpoint URL, which looks like:
+         https://formspree.io/f/xyzabcde
+      3. Replace the action attribute below:
+         action="https://formspree.io/f/YOUR_FORM_ID_HERE"
+      4. That's it. Submissions will be forwarded to your email.
+      
+      Free tier: 50 submissions/month. No credit card required.
+      ════════════════════════════════════════════════════════════════
+    -->
+
+    <div class="form-card">
+      <div class="setup-notice">
+        <strong>📌 Developer note:</strong> Replace the <code>action</code> on the form below with your Formspree endpoint. Sign up free at <a href="https://formspree.io" target="_blank" style="color:var(--info)">formspree.io</a>, create a form, and paste the URL here. Use a dedicated email like <code>acadtrack.feedback@gmail.com</code> so feedback stays separate from your personal inbox.
+      </div>
+
+      <div class="success-msg" id="success-msg">
+        ✓ Thanks for your message! We'll review it and get back to you if needed.
+      </div>
+
+      <form
+        action="https://formspree.io/f/YOUR_FORM_ID_HERE"
+        method="POST"
+        id="feedback-form"
+        onsubmit="handleSubmit(event)"
+      >
+        <div class="form-row">
+          <div class="fg">
+            <label>Name <span class="req">*</span></label>
+            <input type="text" name="name" placeholder="Your name" required>
+          </div>
+          <div class="fg">
+            <label>Email <span style="color:var(--light);font-weight:400">(optional)</span></label>
+            <input type="email" name="email" placeholder="so we can follow up">
+            <div class="hint">We'll only use this to reply to you.</div>
+          </div>
+        </div>
+
+        <div class="fg">
+          <label>Type of feedback <span class="req">*</span></label>
+          <select name="type" required>
+            <option value="">— Select one —</option>
+            <option value="bug">🐛 Bug report — something isn't working correctly</option>
+            <option value="curriculum">📚 Curriculum request — add my school and course</option>
+            <option value="feature">💡 Feature suggestion — add or improve something</option>
+            <option value="other">💬 General feedback or question</option>
+          </select>
+        </div>
+
+        <div class="fg" id="curriculum-fields" style="display:none">
+          <label>School and course details</label>
+          <input type="text" name="curriculum_school" placeholder="School name · Course name · Curriculum year (e.g. 2022)" style="margin-bottom:6px">
+          <div class="hint">Include as much detail as you can. Attaching or pasting the full subject list in the message below will help us add it faster.</div>
+        </div>
+
+        <div class="fg">
+          <label>Your message <span class="req">*</span></label>
+          <textarea name="message" placeholder="Describe the issue or suggestion in detail. For bugs, please mention what you were doing and what went wrong." required></textarea>
+        </div>
+
+        <input type="hidden" name="_subject" value="AcadTrack Feedback">
+        <input type="text" name="_gotcha" style="display:none">
+
+        <div class="form-submit">
+          <button type="submit" class="btn btn-primary" id="submit-btn">Send message →</button>
+          <span class="form-note">Responses are typically reviewed within a few days.<br>For curriculum requests, allow 1–2 weeks for the template to be added.</span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ABOUT THE PROJECT -->
+  <div class="section">
+    <h2 class="section-title">About the project</h2>
+    <div class="prose">
+      <p>AcadTrack was built to help Filipino college students stay on top of their academic progress without needing to maintain messy spreadsheets or rely on school portals that can be hard to navigate.</p>
+      <p>It's designed to work for any Philippine university — whether you're in UP, Ateneo, La Salle, Adamson, UST, or any other school — as long as you can enter your curriculum. No account, no subscription, no data collection.</p>
+      <p>Your privacy matters. AcadTrack does not track your usage, collect analytics, show ads, or send your data anywhere. Everything lives in your browser.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>AcadTrack — A free college progress tracker for Filipino students.</p>
+  <p style="margin-top:4px;font-size:11px">No ads · No account · No data collection · <a href="index.html" style="color:var(--light)">Home</a> · <a href="dashboard.html" style="color:var(--light)">Dashboard</a></p>
+</footer>
+
+<script>
+// Show/hide curriculum fields based on type selection
+document.querySelector('select[name="type"]').addEventListener('change', function() {
+  document.getElementById('curriculum-fields').style.display = this.value === 'curriculum' ? 'block' : 'none';
+});
+
+// Handle form submission (works with Formspree's AJAX)
+async function handleSubmit(e) {
+  e.preventDefault();
+  const form = document.getElementById('feedback-form');
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    } else {
+      throw new Error('Form submission failed');
+    }
+  } catch {
+    btn.textContent = 'Send message →';
+    btn.disabled = false;
+    alert('Could not send message. Please try again, or email us directly at acadtrack.feedback@gmail.com');
+  }
+}
+</script>
+</body>
+</html>
