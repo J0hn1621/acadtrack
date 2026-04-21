@@ -139,6 +139,7 @@ input::placeholder{color:var(--light)}
     </div>
   </div>
   <div class="tb-right">
+    <div class="tb-gwa" id="tb-gwa" style="font-size:12px;font-weight:600;background:rgba(255,255,255,0.18);color:white;padding:4px 12px;border-radius:99px;white-space:nowrap">GWA —</div>
     <div class="tb-sep"></div>
     <button class="tb-link" onclick="openSettings()">Settings</button>
     <a href="about.html"           class="tb-link">About</a>
@@ -197,6 +198,18 @@ input::placeholder{color:var(--light)}
 <div class="overlay" id="subj-overlay">
   <div class="modal">
     <div class="modal-title" id="subj-modal-title">Add subject</div>
+    <div class="fg" id="m-curr-fg" style="display:none">
+      <label>Pick from your curriculum</label>
+      <select id="m-curr-pick" onchange="fillSubjectFromCurr()">
+        <option value="">— select a subject —</option>
+      </select>
+      <div class="hint">Selecting auto-fills the fields below. Only subjects not yet added are shown.</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px" id="m-curr-divider" style="display:none">
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+      <span style="font-size:11px;color:var(--light)">or fill manually</span>
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+    </div>
     <div class="form-row">
       <div class="fg"><label>Subject code</label><input type="text" id="m-code" placeholder="e.g. MK111"></div>
       <div class="fg"><label>Units <span class="req">*</span></label><input type="number" id="m-units" min="1" max="9" value="3"></div>
@@ -354,7 +367,7 @@ function render(){
   const gwa=computeGWA(subs);
   document.getElementById('s-gwa').textContent=gwa||'—';
   document.getElementById('s-honor').textContent=honorLabel(gwa);
-  document.getElementById('tb-gwa').textContent=gwa?'GWA '+gwa:'GWA —';
+  const gwaEl=document.getElementById('tb-gwa');if(gwaEl)gwaEl.textContent=gwa?'GWA '+gwa:'GWA —';
   const totalU=subs.reduce((a,s)=>a+s.units,0),earnedU=passed.reduce((a,s)=>a+s.units,0);
   document.getElementById('s-units').textContent=earnedU;
   document.getElementById('s-units-sub').textContent='of '+totalU+' in curriculum';
@@ -478,6 +491,28 @@ function buildRequiredBy(subjectId){
     </div>`).join('');
 }
 
+function getCurriculum(){
+  // Returns curriculum template. Falls back to existing subjects if no template stored.
+  if(D.curriculum&&D.curriculum.length) return D.curriculum;
+  return D.subjects.map(function(s){return {id:s.id,code:s.code,name:s.name,units:s.units,year:s.year,sem:s.sem,prereqs:s.prereqs};});
+}
+
+function fillSubjectFromCurr(){
+  var id = document.getElementById('m-curr-pick').value;
+  if(!id) return;
+  var curr = getCurriculum();
+  var s = curr.find(function(x){return x.id===id;});
+  if(!s) return;
+  document.getElementById('m-code').value = s.code||'';
+  document.getElementById('m-name').value = s.name||'';
+  document.getElementById('m-units').value = s.units||3;
+  document.getElementById('m-year').value = String(s.year||1);
+  document.getElementById('m-sem').value  = String(s.sem||1);
+  // Pre-fill prereqs
+  buildPrereqList(null, s.prereqs||[], s.year||1, s.sem||1);
+  buildRequiredBy(null);
+}
+
 function openAddModal(){
   editingId=null;
   document.getElementById('subj-modal-title').textContent='Add subject';
@@ -487,6 +522,39 @@ function openAddModal(){
   buildGradeOpts('');document.getElementById('m-grade').disabled=true;
   buildPrereqList(null,[],activeYear,1);
   buildRequiredBy(null);
+
+  // Populate curriculum picker
+  var curr = getCurriculum();
+  var existingCodes = D.subjects.map(function(s){return s.code;}).filter(Boolean);
+  var available = curr.filter(function(s){ return s.code ? !existingCodes.includes(s.code) : true; });
+  var fg = document.getElementById('m-curr-fg');
+  var divider = document.getElementById('m-curr-divider');
+  var picker = document.getElementById('m-curr-pick');
+  if(available.length){
+    fg.style.display='block';
+    divider.style.display='flex';
+    // Group by year/sem
+    var groups={};
+    var SL={1:'1st Sem',2:'2nd Sem',3:'Summer'};
+    available.forEach(function(s){
+      var k='Year '+(s.year||'?')+' — '+(SL[s.sem]||'Sem '+(s.sem||'?'));
+      if(!groups[k])groups[k]=[];
+      groups[k].push(s);
+    });
+    var opts='<option value="">— select a subject —</option>';
+    Object.keys(groups).sort().forEach(function(grp){
+      opts+='<optgroup label="'+grp+'">';
+      groups[grp].forEach(function(s){
+        opts+='<option value="'+s.id+'">'+(s.code?s.code+' — ':'')+s.name+'</option>';
+      });
+      opts+='</optgroup>';
+    });
+    picker.innerHTML=opts;
+  } else {
+    fg.style.display='none';
+    divider.style.display='none';
+  }
+
   document.getElementById('subj-overlay').classList.add('open');
   setTimeout(()=>document.getElementById('m-name').focus(),100);
 }
@@ -624,15 +692,19 @@ function dashImportCurriculum(e) {
 
 function dashApplyCurriculum() {
   if (!dashParsedSubjects || !dashParsedSubjects.length) return;
-  // Add subjects that don't already exist (match by code)
+  // Store as master curriculum template
+  D.curriculum = dashParsedSubjects.map(function(s){
+    return {id:s.id, code:s.code, name:s.name, units:s.units, year:s.year, sem:s.sem, prereqs:s.prereqs};
+  });
+  // Add subjects not already in the list
   var existingCodes = D.subjects.map(function(s){return s.code;}).filter(Boolean);
   var toAdd = dashParsedSubjects.filter(function(s){ return !existingCodes.includes(s.code); });
   var skipped = dashParsedSubjects.length - toAdd.length;
   D.subjects = D.subjects.concat(toAdd);
   save(); closeModal('settings-overlay'); render();
   activeYear = 1;
-  var msg = toAdd.length + ' subjects added';
-  if (skipped) msg += ' (' + skipped + ' skipped — already exist)';
+  var msg = toAdd.length + ' subjects added from curriculum';
+  if (skipped) msg += ' (' + skipped + ' skipped — already in list)';
   showToast(msg);
   dashParsedSubjects = null;
   document.getElementById('dash-curr-preview').style.display = 'none';
