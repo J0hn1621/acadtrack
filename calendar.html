@@ -121,6 +121,7 @@ input::placeholder{color:var(--light)}
 .ev-deadline{background:#FEF3C7;color:#92400E}
 .ev-event{background:var(--gp-bg);color:var(--gp)}
 .ev-holiday{background:var(--gn-bg);color:var(--gn)}
+.ev-passed{background:var(--gp-bg);color:var(--gp);font-weight:600}
 .toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:white;padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;z-index:999;transform:translateY(10px);opacity:0;transition:all 0.25s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .confirm-msg{font-size:14px;color:var(--mid);margin-bottom:1.25rem;line-height:1.6}
@@ -163,6 +164,7 @@ input::placeholder{color:var(--light)}
       <span class="legend-item"><span class="legend-dot" style="background:var(--prelim)"></span>Exam</span>
       <span class="legend-item"><span class="legend-dot" style="background:#B8960C"></span>Deadline</span>
       <span class="legend-item"><span class="legend-dot" style="background:var(--gp)"></span>Event</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--gp);border:2px solid var(--gp)"></span>Subject passed</span>
       <span class="legend-item"><span class="legend-block" style="background:var(--prelim-bg);border:1px solid var(--prelim-border)"></span>Prelim period</span>
       <span class="legend-item"><span class="legend-block" style="background:var(--midterm-bg);border:1px solid var(--midterm-border)"></span>Midterm</span>
       <span class="legend-item"><span class="legend-block" style="background:var(--finals-bg);border:1px solid var(--finals-border)"></span>Finals</span>
@@ -274,6 +276,34 @@ function loadS() {
 }
 function saveS() { localStorage.setItem(SKEY, JSON.stringify(S)); }
 
+// Load dashboard subjects for history display
+function getDashboardSubjects() {
+  try {
+    const d = JSON.parse(localStorage.getItem('acadtrack_data') || '{}');
+    return d.subjects || [];
+  } catch { return []; }
+}
+
+// Generate a pseudo-date for passed subjects based on year/sem
+// Philippine academic calendar: Sem1 = Aug–Dec, Sem2 = Jan–May, Summer = June–July
+function semEndDate(year, sem) {
+  const currentYear = new Date().getFullYear();
+  // Estimate which school year they were in based on enrollment year
+  try {
+    const d = JSON.parse(localStorage.getItem('acadtrack_data') || '{}');
+    const progYears = d.progYears || 4;
+    const currentYearLevel = d.yearLevel || 1;
+    // Rough estimate: work backwards from today
+    const baseYear = currentYear - (currentYearLevel - 1);
+    const schoolYear = baseYear + (year - 1);
+    if (sem === 1) return (schoolYear) + '-12-15';
+    if (sem === 2) return (schoolYear + 1) + '-05-15';
+    return (schoolYear + 1) + '-07-15';
+  } catch {
+    return currentYear + '-01-01';
+  }
+}
+
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
@@ -337,6 +367,10 @@ function renderCalendar() {
       const examPeriod = S.examPeriods.find(p => p.start && p.end && dateStr >= p.start && dateStr <= p.end);
       const epCls = examPeriod ? 'exam-period-' + examPeriod.id : '';
 
+      // Get passed subjects for this date (historical)
+      const allPassedSubs = getDashboardSubjects().filter(s => s.status === 'passed');
+      const passedOnThisDate = allPassedSubs.filter(s => semEndDate(s.year, s.sem) === dateStr);
+
       // Get events for this day
       const dayEvents = S.events.filter(e => {
         if (e.endDate) return dateStr >= e.date && dateStr <= e.endDate;
@@ -360,6 +394,12 @@ function renderCalendar() {
         const cls = S.classes.find(c => c.id === ex.classId);
         cellContent += `<div class="cell-event ev-exam">${esc(cls ? (cls.code || cls.name.slice(0,8)) : 'Exam')}</div>`;
       });
+
+      // Show passed subjects (history) as green chips
+      passedOnThisDate.slice(0,1).forEach(s => {
+        cellContent += `<div class="cell-event ev-passed" title="${esc(s.name)} — Grade ${s.grade||'—'}">${esc(s.code||s.name.slice(0,6))} ✓</div>`;
+      });
+      if (passedOnThisDate.length > 1) cellContent += `<div class="cell-more">+${passedOnThisDate.length-1} passed</div>`;
 
       // Show up to 2 events
       const shown = dayEvents.slice(0,2);
@@ -436,6 +476,22 @@ function renderSidePanel() {
         </div>
       </div>`;
     }).join('');
+  }
+
+  // History: passed subjects ending around this semester
+  const passedSubs = getDashboardSubjects().filter(s => s.status === 'passed');
+  const passedHere = passedSubs.filter(s => semEndDate(s.year, s.sem) === selectedDate);
+  if (passedHere.length) {
+    const histEl = document.createElement('div');
+    histEl.innerHTML = '<div class="sp-section-title">Passed subjects (this period)</div>' +
+      passedHere.map(s => `<div class="sp-class" style="background:var(--gp-bg);border-color:#86EFAC">
+        <div class="sp-dot" style="background:var(--gp)"></div>
+        <div>
+          <div class="sp-cls-name">${esc(s.code ? s.code+' — '+s.name : s.name)}</div>
+          <div class="sp-cls-meta">Grade: ${s.grade||'—'} &nbsp;·&nbsp; ${s.units} unit${s.units!==1?'s':''} &nbsp;·&nbsp; Year ${s.year}, Sem ${s.sem}</div>
+        </div>
+      </div>`).join('');
+    document.getElementById('sp-classes').after(histEl);
   }
 
   // Events
