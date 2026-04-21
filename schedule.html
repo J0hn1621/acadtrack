@@ -240,7 +240,7 @@ input::placeholder{color:var(--light)}
       <select id="curr-picker" onchange="fillFromCurriculum()">
         <option value="">— select a subject —</option>
       </select>
-      <div class="hint">Selecting a subject auto-fills the code and name below.</div>
+      <div class="hint">Only subjects marked <strong>Ongoing</strong> in the Dashboard are shown here. Mark a subject as Ongoing in the Dashboard first, then add it to your schedule.</div>
     </div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;color:var(--light);font-size:11px"><div style="flex:1;height:1px;background:var(--border)"></div><span>or fill manually</span><div style="flex:1;height:1px;background:var(--border)"></div></div>
     <div class="form-row">
@@ -675,8 +675,27 @@ let selectedColor = '#7B1C1C';
 function getCurriculumSubjects() {
   try {
     const d = JSON.parse(localStorage.getItem('acadtrack_data') || '{}');
-    return (d.subjects || []).filter(s => s.name);
+    // Only return subjects marked ongoing in the dashboard
+    return (d.subjects || []).filter(s => s.name && s.status === 'ongoing');
   } catch { return []; }
+}
+
+function markSubjectOngoing(code) {
+  // When a class is added to schedule, mark it ongoing in the dashboard data
+  if (!code) return;
+  try {
+    const raw = localStorage.getItem('acadtrack_data');
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    let changed = false;
+    (d.subjects || []).forEach(s => {
+      if (s.code === code && s.status === 'not_taken') {
+        s.status = 'ongoing';
+        changed = true;
+      }
+    });
+    if (changed) localStorage.setItem('acadtrack_data', JSON.stringify(d));
+  } catch {}
 }
 
 function fillFromCurriculum() {
@@ -779,7 +798,10 @@ function saveClass() {
     color: selectedColor
   };
   if (editClassId) S.classes = S.classes.map(c => c.id === editClassId ? cls : c);
-  else S.classes.push(cls);
+  else {
+    S.classes.push(cls);
+    markSubjectOngoing(cls.code); // sync status to dashboard
+  }
   saveS(); closeModal('class-overlay'); renderAll();
   showToast(editClassId ? 'Class updated' : 'Class added');
 }
