@@ -222,6 +222,14 @@ input::placeholder{color:var(--light)}
 <div class="overlay" id="class-overlay">
   <div class="modal">
     <div class="modal-title" id="class-modal-title">Add class</div>
+    <div class="fg" id="curr-picker-fg">
+      <label>Pick from your curriculum <span class="opt">(optional)</span></label>
+      <select id="curr-picker" onchange="fillFromCurriculum()">
+        <option value="">— select a subject —</option>
+      </select>
+      <div class="hint">Selecting a subject auto-fills the code and name below.</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;color:var(--light);font-size:11px"><div style="flex:1;height:1px;background:var(--border)"></div><span>or fill manually</span><div style="flex:1;height:1px;background:var(--border)"></div></div>
     <div class="form-row">
       <div class="fg"><label>Subject code</label><input type="text" id="c-code" placeholder="e.g. MK422"></div>
       <div class="fg"><label>Subject name <span class="req">*</span></label><input type="text" id="c-name" placeholder="e.g. Marketing Management"></div>
@@ -651,9 +659,59 @@ function toggleEP(id) {
 let editClassId = null;
 let selectedColor = '#7B1C1C';
 
+function getCurriculumSubjects() {
+  try {
+    const d = JSON.parse(localStorage.getItem('acadtrack_data') || '{}');
+    return (d.subjects || []).filter(s => s.name);
+  } catch { return []; }
+}
+
+function fillFromCurriculum() {
+  const id = document.getElementById('curr-picker').value;
+  if (!id) return;
+  const subs = getCurriculumSubjects();
+  const s = subs.find(x => x.id === id);
+  if (!s) return;
+  document.getElementById('c-code').value = s.code || '';
+  document.getElementById('c-name').value = s.name;
+  document.getElementById('c-name').focus();
+}
+
 function openClassModal(id) {
   editClassId = id || null;
   const cls = id ? S.classes.find(c => c.id === id) : null;
+
+  // Populate curriculum picker
+  const picker = document.getElementById('curr-picker');
+  const pickerFg = document.getElementById('curr-picker-fg');
+  const currSubs = getCurriculumSubjects();
+  if (currSubs.length && !cls) {
+    pickerFg.style.display = 'block';
+    // Group by year/sem
+    const groups = {};
+    const SL = {1:'1st Sem', 2:'2nd Sem', 3:'Summer'};
+    currSubs.forEach(s => {
+      const k = 'Year ' + s.year + ' — ' + (SL[s.sem] || 'Sem ' + s.sem);
+      if (!groups[k]) groups[k] = [];
+      groups[k].push(s);
+    });
+    // Filter out already-scheduled subjects
+    const scheduledCodes = S.classes.map(c => c.code).filter(Boolean);
+    let opts = '<option value="">— select a subject —</option>';
+    Object.entries(groups).forEach(([group, list]) => {
+      const available = list.filter(s => !scheduledCodes.includes(s.code));
+      if (!available.length) return;
+      opts += '<optgroup label="' + group + '">';
+      available.forEach(s => {
+        opts += '<option value="' + s.id + '">' + (s.code ? s.code + ' — ' : '') + s.name + '</option>';
+      });
+      opts += '</optgroup>';
+    });
+    picker.innerHTML = opts;
+  } else {
+    pickerFg.style.display = cls ? 'none' : 'none';
+    picker.innerHTML = '<option value="">— no curriculum loaded —</option>';
+  }
 
   document.getElementById('class-modal-title').textContent = cls ? 'Edit class' : 'Add class';
   document.getElementById('c-code').value = cls ? cls.code || '' : '';
