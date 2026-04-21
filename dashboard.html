@@ -127,7 +127,11 @@ input::placeholder{color:var(--light)}
       <div class="tb-seal">A</div>
       <span class="tb-name">AcadTrack</span>
     </a>
-    <div class="tb-school" id="tb-school"></div>
+    <div style="display:flex;align-items:center;gap:2px;margin-left:4px">
+      <a href="dashboard.html" style="font-size:12px;color:white;text-decoration:none;padding:5px 10px;border-radius:6px;background:rgba(255,255,255,0.18)">Dashboard</a>
+      <a href="schedule.html" style="font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;padding:5px 10px;border-radius:6px;transition:all 0.12s">Schedule</a>
+      <a href="calendar.html" style="font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;padding:5px 10px;border-radius:6px;transition:all 0.12s">Calendar</a>
+    </div>
   </div>
   <div class="tb-right">
     <div class="tb-gwa" id="tb-gwa">GWA —</div>
@@ -138,6 +142,16 @@ input::placeholder{color:var(--light)}
 </div>
 
 <div class="content">
+
+  <!-- TODAY STRIP -->
+  <div id="today-strip" style="background:var(--go-bg);border:1px solid #93C5FD;border-radius:var(--radius-lg);padding:12px 16px;margin-bottom:1.25rem;align-items:center;gap:12px;flex-wrap:wrap;display:none">
+    <span style="font-size:18px" id="ts-icon">🏫</span>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:11px;font-weight:700;color:var(--go);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:2px" id="ts-label">Right now</div>
+      <div style="font-size:14px;font-weight:600;color:var(--dark)" id="ts-main">—</div>
+    </div>
+    <a href="schedule.html" style="font-size:12px;color:var(--go);text-decoration:none;font-weight:500;padding:5px 12px;border:1px solid #93C5FD;border-radius:var(--radius);background:var(--white)">View schedule →</a>
+  </div>
   <div class="stats-row">
     <div class="stat-card stat-m"><div class="stat-label">GWA</div><div class="stat-val" id="s-gwa">—</div><div class="stat-sub" id="s-honor">No grades yet</div></div>
     <div class="stat-card stat-g"><div class="stat-label">Earned Units</div><div class="stat-val" id="s-units">0</div><div class="stat-sub" id="s-units-sub">of 0 in curriculum</div></div>
@@ -187,8 +201,13 @@ input::placeholder{color:var(--light)}
     </div>
     <div class="fg">
       <label>Prerequisites <span class="opt">(optional)</span></label>
-      <div class="prereq-list" id="prereq-list"><span style="font-size:12px;color:var(--light)">No other subjects yet.</span></div>
-      <div class="hint">Subjects that must be passed before taking this one.</div>
+      <div class="prereq-list" id="prereq-list"><span style="font-size:12px;color:var(--light)">No earlier subjects found.</span></div>
+      <div class="hint">Only subjects from earlier years/semesters are shown.</div>
+    </div>
+    <div class="fg" id="required-by-fg" style="display:none">
+      <label>Required by</label>
+      <div id="required-by-list" style="display:flex;flex-direction:column;gap:4px;border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;background:var(--cream)"></div>
+      <div class="hint">Subjects that require this one as a prerequisite.</div>
     </div>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('subj-overlay')">Cancel</button>
@@ -303,8 +322,10 @@ function prereqMet(s){return s.prereqs.every(pid=>{const p=D.subjects.find(x=>x.
 
 function render(){
   const subs=D.subjects,passed=subs.filter(s=>s.status==='passed');
-  document.getElementById('tb-school').textContent=D.course?D.school+' · '+D.course:D.school||'';
-  if(D.name)document.getElementById('tb-user').textContent=D.name;
+  const schoolEl=document.getElementById('tb-school');
+  if(schoolEl)schoolEl.textContent=D.course?D.school+' · '+D.course:D.school||'';
+  const userEl=document.getElementById('tb-user');
+  if(userEl)userEl.textContent=D.name||(D.course?D.school+' · '+D.course:D.school)||'';
   const gwa=computeGWA(subs);
   document.getElementById('s-gwa').textContent=gwa||'—';
   document.getElementById('s-honor').textContent=honorLabel(gwa);
@@ -383,12 +404,55 @@ function buildGradeOpts(sel){
   gTable().forEach(g=>opts.push(`<option value="${g.v}"${g.v===sel?' selected':''}>${g.v}${g.p!==null?' ('+g.p+'%)':''}</option>`));
   document.getElementById('m-grade').innerHTML=opts.join('');
 }
-function buildPrereqList(excId,selIds){
+function semOrder(year,sem){return year*10+sem;}
+
+function buildPrereqList(excId,selIds,curYear,curSem){
   const el=document.getElementById('prereq-list');
-  const others=D.subjects.filter(s=>s.id!==excId);
-  if(!others.length){el.innerHTML='<span style="font-size:12px;color:var(--light)">No other subjects yet.</span>';return;}
-  el.innerHTML=others.map(s=>`<label class="prereq-opt"><input type="checkbox" value="${s.id}"${selIds.includes(s.id)?' checked':''} style="accent-color:var(--maroon)"><span class="pc">${esc(s.code||'—')}</span><span>${esc(s.name)}</span></label>`).join('');
+  // Only show subjects from strictly earlier year/sem combinations
+  const earlier=D.subjects.filter(s=>{
+    if(s.id===excId)return false;
+    // Always include already-selected prereqs even if same year (edge case)
+    if(selIds.includes(s.id))return true;
+    return semOrder(s.year,s.sem)<semOrder(curYear||99,curSem||9);
+  });
+  if(!earlier.length){
+    el.innerHTML='<span style="font-size:12px;color:var(--light)">No earlier subjects found. Add subjects from prior semesters first.</span>';
+    return;
+  }
+  // Group by year+sem for readability
+  const groups={};
+  earlier.forEach(s=>{
+    const k=s.year+'-'+s.sem;
+    if(!groups[k])groups[k]=[];
+    groups[k].push(s);
+  });
+  const SL={1:'1st Sem',2:'2nd Sem',3:'Summer'};
+  let html='';
+  Object.entries(groups).sort(([a],[b])=>a.localeCompare(b)).forEach(([k,list])=>{
+    const[y,sm]=k.split('-');
+    html+=`<div style="font-size:10px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;padding:4px 0 2px">Year ${y} · ${SL[sm]}</div>`;
+    list.forEach(s=>{
+      html+=`<label class="prereq-opt"><input type="checkbox" value="${s.id}"${selIds.includes(s.id)?' checked':''} style="accent-color:var(--maroon)"><span class="pc">${esc(s.code||'—')}</span><span>${esc(s.name)}</span></label>`;
+    });
+  });
+  el.innerHTML=html;
 }
+
+function buildRequiredBy(subjectId){
+  const fg=document.getElementById('required-by-fg');
+  const list=document.getElementById('required-by-list');
+  if(!subjectId){fg.style.display='none';return;}
+  const dependents=D.subjects.filter(s=>s.id!==subjectId&&(s.prereqs||[]).includes(subjectId));
+  if(!dependents.length){fg.style.display='none';return;}
+  fg.style.display='block';
+  list.innerHTML=dependents.map(s=>`
+    <div style="display:flex;align-items:center;gap:8px;font-size:12px;padding:2px 0">
+      <span style="font-size:11px;font-weight:700;color:var(--maroon);min-width:52px">${esc(s.code||'—')}</span>
+      <span style="color:var(--mid)">${esc(s.name)}</span>
+      <span style="font-size:10px;color:var(--light);margin-left:auto">Year ${s.year} · Sem ${s.sem}</span>
+    </div>`).join('');
+}
+
 function openAddModal(){
   editingId=null;
   document.getElementById('subj-modal-title').textContent='Add subject';
@@ -396,7 +460,9 @@ function openAddModal(){
   document.getElementById('m-units').value='3';document.getElementById('m-year').value=String(activeYear);
   document.getElementById('m-sem').value='1';document.getElementById('m-status').value='not_taken';
   buildGradeOpts('');document.getElementById('m-grade').disabled=true;
-  buildPrereqList(null,[]);document.getElementById('subj-overlay').classList.add('open');
+  buildPrereqList(null,[],activeYear,1);
+  buildRequiredBy(null);
+  document.getElementById('subj-overlay').classList.add('open');
   setTimeout(()=>document.getElementById('m-name').focus(),100);
 }
 function openEditModal(id){
@@ -407,7 +473,9 @@ function openEditModal(id){
   document.getElementById('m-units').value=s.units;document.getElementById('m-year').value=String(s.year);
   document.getElementById('m-sem').value=String(s.sem);document.getElementById('m-status').value=s.status;
   buildGradeOpts(s.grade||'');document.getElementById('m-grade').disabled=s.status==='not_taken';
-  buildPrereqList(id,s.prereqs||[]);document.getElementById('subj-overlay').classList.add('open');
+  buildPrereqList(id,s.prereqs||[],s.year,s.sem);
+  buildRequiredBy(id);
+  document.getElementById('subj-overlay').classList.add('open');
 }
 function onStatusChange(){document.getElementById('m-grade').disabled=document.getElementById('m-status').value==='not_taken';}
 function saveSubject(){
@@ -483,6 +551,48 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 
 load();
 if(D){activeYear=D.yearLevel||1;render();}
+
+// Today strip from schedule data
+(function(){
+  try {
+    const sr = localStorage.getItem('acadtrack_sched');
+    if (!sr) return;
+    const S = JSON.parse(sr);
+    if (!S.classes || !S.classes.length) return;
+    const now = new Date();
+    const day = now.getDay();
+    const timeNum = now.getHours() * 100 + now.getMinutes();
+    const todayClasses = (S.classes||[]).filter(c => (c.days||[]).includes(day)).sort((a,b) => {
+      const ta = parseInt(a.start.replace(':',''));
+      const tb = parseInt(b.start.replace(':',''));
+      return ta - tb;
+    });
+    const toNum = t => { if(!t)return 0; const[h,m]=t.split(':').map(Number); return h*100+m; };
+    const fmt = t => { if(!t)return''; const[h,m]=t.split(':').map(Number); return ((h%12)||12)+':'+String(m).padStart(2,'0')+(h>=12?' PM':' AM'); };
+    const current = todayClasses.find(c => timeNum >= toNum(c.start) && timeNum < toNum(c.end));
+    const next = todayClasses.find(c => toNum(c.start) > timeNum);
+    const strip = document.getElementById('today-strip');
+    const icon = document.getElementById('ts-icon');
+    const label = document.getElementById('ts-label');
+    const main = document.getElementById('ts-main');
+    if (current) {
+      strip.style.display = 'flex';
+      strip.style.background = 'var(--gp-bg)';
+      strip.style.borderColor = '#86EFAC';
+      icon.textContent = '🏫';
+      label.style.color = 'var(--gp)';
+      label.textContent = 'You should be in class right now';
+      main.textContent = current.name + (current.room ? ' — Room ' + current.room + (current.building ? ', ' + current.building : '') : '') + ' until ' + fmt(current.end);
+      document.querySelector('#today-strip a').style.borderColor = '#86EFAC';
+      document.querySelector('#today-strip a').style.color = 'var(--gp)';
+    } else if (next) {
+      strip.style.display = 'flex';
+      icon.textContent = '⏰';
+      label.textContent = 'Next class today';
+      main.textContent = next.name + ' at ' + fmt(next.start) + (next.room ? ' — Room ' + next.room : '');
+    }
+  } catch {}
+})();
 </script>
 </body>
 </html>
