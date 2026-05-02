@@ -18,10 +18,12 @@
   --prelim:#C2410C;--prelim-bg:#FFF7ED;--prelim-border:#FED7AA;
   --midterm:#1D4ED8;--midterm-bg:#EFF6FF;--midterm-border:#BFDBFE;
   --finals:#7E22CE;--finals-bg:#FAF5FF;--finals-border:#DDD6FE;
+  --q4:#0F766E;--q4-bg:#CCFBF1;--q4-border:#5EEAD4;   /* 4th quarter — teal */
   --radius:8px;--radius-lg:14px;
 }
 body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.5;min-height:100vh}
-/* NAV */
+
+/* ── TOPBAR ── */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;height:54px;background:var(--maroon);gap:12px;position:sticky;top:0;z-index:100}
 .tb-left{display:flex;align-items:center;gap:0;flex-shrink:0}
 .tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:10px}
@@ -36,8 +38,11 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);li
 .tb-profile-btn{display:flex;align-items:center;gap:7px;padding:4px 12px 4px 5px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none;margin-left:4px}
 .tb-profile-btn:hover{background:rgba(255,255,255,0.24);color:white}
 .tb-avatar{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
+
+/* ── LAYOUT ── */
 .main{display:grid;grid-template-columns:1fr 320px;gap:1.5rem;max-width:1100px;margin:0 auto;padding:1.75rem 2rem 5rem;align-items:start}
-/* CALENDAR */
+
+/* ── CALENDAR ── */
 .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
 .cal-month{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600}
 .cal-nav{display:flex;gap:6px}
@@ -45,7 +50,8 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);li
 .nav-btn:hover{border-color:var(--maroon);color:var(--maroon)}
 .today-btn{font-size:12px;padding:6px 12px;border:1px solid var(--border);background:var(--white);border-radius:var(--radius);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.12s}
 .today-btn:hover{border-color:var(--maroon);color:var(--maroon)}
-/* GRID */
+
+/* ── GRID ── */
 .cal-grid{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
 .cal-days-header{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border)}
 .cal-day-label{padding:8px 0;text-align:center;font-size:11px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.06em}
@@ -59,21 +65,25 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);li
 .cal-cell.other-month{opacity:0.4}
 .cal-cell.today{background:var(--maroon-light)}
 .cal-cell.selected{background:rgba(123,28,28,0.08);outline:2px solid var(--maroon);outline-offset:-2px;border-radius:2px}
-.cal-cell.exam-period-prelim{background:var(--prelim-bg)}
-.cal-cell.exam-period-midterm{background:var(--midterm-bg)}
-.cal-cell.exam-period-finals{background:var(--finals-bg)}
+/* Exam period cell backgrounds — semestral */
+.cal-cell.ep-prelim {background:var(--prelim-bg)}
+.cal-cell.ep-midterm{background:var(--midterm-bg)}
+.cal-cell.ep-finals {background:var(--finals-bg)}
+.cal-cell.ep-q4     {background:var(--q4-bg)}
 .cell-num{font-size:12px;font-weight:600;color:var(--mid);margin-bottom:3px;line-height:1}
 .cal-cell.today .cell-num{color:var(--maroon);font-size:13px}
 .cell-event{font-size:10px;padding:1px 5px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;cursor:pointer}
 .cell-more{font-size:9px;color:var(--light);margin-top:1px}
 .cell-dot-row{display:flex;gap:2px;flex-wrap:wrap;margin-top:2px}
 .cell-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-/* LEGEND */
+
+/* ── LEGEND ── */
 .legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1rem}
 .legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)}
 .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .legend-block{width:12px;height:8px;border-radius:2px;flex-shrink:0}
-/* SIDE PANEL */
+
+/* ── SIDE PANEL ── */
 .side-panel{position:sticky;top:72px}
 .sp-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1rem}
 .sp-date{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;margin-bottom:12px}
@@ -89,14 +99,22 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);li
 .sp-ev-meta{font-size:11px;color:var(--gray)}
 .sp-ev-edit{font-size:11px;padding:2px 8px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;background:transparent;font-family:'Inter',sans-serif;margin-left:auto;flex-shrink:0}
 .sp-ev-edit:hover{border-color:var(--mid)}
-/* JOURNAL */
+
+/* ── EXAM PERIOD BANNER (side panel) ── */
+.ep-banner{font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:10px;display:inline-block}
+.ep-banner-prelim {background:var(--prelim-bg);color:var(--prelim);border:1px solid var(--prelim-border)}
+.ep-banner-midterm{background:var(--midterm-bg);color:var(--midterm);border:1px solid var(--midterm-border)}
+.ep-banner-finals {background:var(--finals-bg);color:var(--finals);border:1px solid var(--finals-border)}
+.ep-banner-q4     {background:var(--q4-bg);color:var(--q4);border:1px solid var(--q4-border)}
+
+/* ── JOURNAL ── */
 .note-area{width:100%;resize:none;min-height:80px;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Inter',sans-serif;outline:none;transition:border-color 0.12s;line-height:1.6;color:var(--dark);background:var(--white)}
 .note-area:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
 .note-area::placeholder{color:var(--light)}
 .save-ind{font-size:11px;color:var(--light);margin-top:4px;height:14px}
-/* EMPTY */
 .sp-empty{font-size:12px;color:var(--light)}
-/* MODALS */
+
+/* ── MODALS ── */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem}
 .overlay.open{display:flex}
 .modal{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;width:min(460px,100%);max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
@@ -115,16 +133,20 @@ input::placeholder{color:var(--light)}
 .btn-danger{border-color:#FCA5A5;color:var(--gf)}.btn-danger:hover{background:var(--gf-bg)}
 .btn-sm{padding:5px 12px;font-size:12px}
 .add-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius);background:var(--maroon);color:white;font-size:12px;font-weight:500;border:none;cursor:pointer;font-family:'Inter',sans-serif}
-/* TYPE COLORS */
-.ev-class{background:#F5EBEB;color:var(--maroon)}
-.ev-exam{background:var(--prelim-bg);color:var(--prelim)}
+
+/* ── EVENT TYPE COLOURS ── */
+.ev-class   {background:#F5EBEB;color:var(--maroon)}
+.ev-exam    {background:var(--prelim-bg);color:var(--prelim)}
 .ev-deadline{background:#FEF3C7;color:#92400E}
-.ev-event{background:var(--gp-bg);color:var(--gp)}
-.ev-holiday{background:var(--gn-bg);color:var(--gn)}
-.ev-passed{background:var(--gp-bg);color:var(--gp);font-weight:600}
+.ev-event   {background:var(--gp-bg);color:var(--gp)}
+.ev-holiday {background:#F5F5F4;color:#57534E}
+.ev-passed  {background:var(--gp-bg);color:var(--gp);font-weight:600}
+.ev-credited{background:#CCFBF1;color:#0F766E;font-weight:600}  /* credited — teal */
+
 .toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:white;padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;z-index:999;transform:translateY(10px);opacity:0;transition:all 0.25s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .confirm-msg{font-size:14px;color:var(--mid);margin-bottom:1.25rem;line-height:1.6}
+
 @media(max-width:780px){.main{grid-template-columns:1fr}.side-panel{position:static}.tb-link:not(.always){display:none}.cal-cell{min-height:60px}}
 </style>
 </head>
@@ -145,8 +167,8 @@ input::placeholder{color:var(--light)}
   <div class="tb-right">
     <div class="tb-sep"></div>
     <a href="dashboard.html" class="tb-link">Settings</a>
-    <a href="about.html"           class="tb-link">About</a>
-    <a href="about.html#feedback"  class="tb-link">Contact</a>
+    <a href="about.html"          class="tb-link">About</a>
+    <a href="about.html#feedback" class="tb-link">Contact</a>
     <a href="dashboard.html" class="tb-profile-btn" id="tb-profile-btn">
       <div class="tb-avatar" id="tb-avatar">?</div>
       <span id="tb-profile-label">Profile</span>
@@ -154,29 +176,22 @@ input::placeholder{color:var(--light)}
   </div>
 </div>
 
-</div>
-
 <div class="main">
-  <!-- CALENDAR -->
+
+  <!-- ── CALENDAR COLUMN ── -->
   <div>
-    <div class="legend">
-      <span class="legend-item"><span class="legend-dot" style="background:var(--maroon)"></span>Class</span>
-      <span class="legend-item"><span class="legend-dot" style="background:var(--prelim)"></span>Exam</span>
-      <span class="legend-item"><span class="legend-dot" style="background:#B8960C"></span>Deadline</span>
-      <span class="legend-item"><span class="legend-dot" style="background:var(--gp)"></span>Event</span>
-      <span class="legend-item"><span class="legend-dot" style="background:var(--gp);border:2px solid var(--gp)"></span>Subject passed</span>
-      <span class="legend-item"><span class="legend-block" style="background:var(--prelim-bg);border:1px solid var(--prelim-border)"></span>Prelim period</span>
-      <span class="legend-item"><span class="legend-block" style="background:var(--midterm-bg);border:1px solid var(--midterm-border)"></span>Midterm</span>
-      <span class="legend-item"><span class="legend-block" style="background:var(--finals-bg);border:1px solid var(--finals-border)"></span>Finals</span>
-    </div>
+    <!-- Legend — built dynamically to match active exam periods -->
+    <div class="legend" id="cal-legend"></div>
+
     <div class="cal-header">
-      <div class="cal-month" id="cal-month">April 2025</div>
+      <div class="cal-month" id="cal-month"></div>
       <div class="cal-nav">
         <button class="today-btn" onclick="goToday()">Today</button>
         <button class="nav-btn" onclick="changeMonth(-1)">‹</button>
         <button class="nav-btn" onclick="changeMonth(1)">›</button>
       </div>
     </div>
+
     <div class="cal-grid">
       <div class="cal-days-header">
         <div class="cal-day-label weekend">Sun</div>
@@ -191,11 +206,11 @@ input::placeholder{color:var(--light)}
     </div>
   </div>
 
-  <!-- SIDE PANEL -->
+  <!-- ── SIDE PANEL ── -->
   <div class="side-panel">
     <div class="sp-card">
       <div class="sp-date" id="sp-date">Select a date</div>
-      <div id="sp-exam-banner" style="display:none;font-size:11px;font-weight:600;padding:4px 10px;border-radius:99px;margin-bottom:10px;display:none"></div>
+      <div id="sp-exam-banner"></div>
 
       <div class="sp-section-title">Classes</div>
       <div id="sp-classes"><span class="sp-empty">Select a date to see classes.</span></div>
@@ -207,14 +222,14 @@ input::placeholder{color:var(--light)}
       <div id="sp-events"><span class="sp-empty">Select a date.</span></div>
 
       <div class="sp-section-title">Note</div>
-      <textarea class="note-area" id="day-note" placeholder="Write a note for this day..." style="display:none"></textarea>
+      <textarea class="note-area" id="day-note" placeholder="Write a note for this day…" style="display:none"></textarea>
       <div class="save-ind" id="note-save-ind"></div>
       <span class="sp-empty" id="note-placeholder">Select a date to write a note.</span>
     </div>
   </div>
 </div>
 
-<!-- EVENT MODAL -->
+<!-- ══ EVENT MODAL ════════════════════════════════════════════════════════════ -->
 <div class="overlay" id="event-overlay">
   <div class="modal">
     <div class="modal-title" id="ev-modal-title">Add event</div>
@@ -232,7 +247,7 @@ input::placeholder{color:var(--light)}
       <div class="fg"><label>Date</label><input type="date" id="ev-date"></div>
       <div class="fg"><label>End date <span class="opt">(optional)</span></label><input type="date" id="ev-end-date"><div style="font-size:11px;color:var(--light);margin-top:3px">For multi-day events</div></div>
     </div>
-    <div class="form-row" id="ev-time-row">
+    <div class="form-row">
       <div class="fg"><label>Time <span class="opt">(optional)</span></label><input type="time" id="ev-time"></div>
       <div class="fg"><label>End time <span class="opt">(optional)</span></label><input type="time" id="ev-end-time"></div>
     </div>
@@ -245,7 +260,7 @@ input::placeholder{color:var(--light)}
   </div>
 </div>
 
-<!-- CONFIRM MODAL -->
+<!-- ══ CONFIRM MODAL ═════════════════════════════════════════════════════════ -->
 <div class="overlay" id="confirm-overlay">
   <div class="modal" style="max-width:360px">
     <div class="modal-title" id="confirm-title">Confirm</div>
@@ -267,45 +282,76 @@ let S = null;
 function loadS() {
   try {
     const r = localStorage.getItem(SKEY);
-    S = r ? JSON.parse(r) : { classes:[], examPeriods:[], events:[], notes:{} };
-    if (!S.notes) S.notes = {};
-    if (!S.events) S.events = [];
-    if (!S.examPeriods) S.examPeriods = [];
-    if (!S.classes) S.classes = [];
+    S = r ? JSON.parse(r) : {};
+    if (!S.notes)      S.notes      = {};
+    if (!S.events)     S.events     = [];
+    if (!S.examPeriods)S.examPeriods= [];
+    if (!S.classes)    S.classes    = [];
   } catch { S = { classes:[], examPeriods:[], events:[], notes:{} }; }
 }
 function saveS() { localStorage.setItem(SKEY, JSON.stringify(S)); }
 
-// Load dashboard subjects for history display
+// ── DASHBOARD DATA HELPERS ────────────────────────────────────────────────────
+function getDashData() {
+  try { return JSON.parse(localStorage.getItem('acadtrack_data') || '{}'); } catch { return {}; }
+}
+function getCalType() { return getDashData().calendarType || 'semestral'; }
+
 function getDashboardSubjects() {
-  try {
-    const d = JSON.parse(localStorage.getItem('acadtrack_data') || '{}');
-    return d.subjects || [];
-  } catch { return []; }
+  return getDashData().subjects || [];
 }
 
-// Generate a pseudo-date for passed subjects based on year/sem
-// Philippine academic calendar: Sem1 = Aug–Dec, Sem2 = Jan–May, Summer = June–July
+// ── CALENDAR / SEM HELPERS ────────────────────────────────────────────────────
+const SEM_LABELS = {
+  semestral:     { 1:'1st Sem',  2:'2nd Sem',  3:'Summer'  },
+  trimestral:    { 1:'1st Term', 2:'2nd Term',  3:'3rd Term' },
+  quadrimestral: { 1:'1st Term', 2:'2nd Term',  3:'3rd Term', 4:'4th Term' }
+};
+
+function getSemLabel(sem) {
+  return (SEM_LABELS[getCalType()] || SEM_LABELS.semestral)[sem] || ('Term ' + sem);
+}
+
+// Estimated semester-end date based on calendar type.
+// Semestral:     Sem1→Dec 15, Sem2→May 15, Summer→Jul 15
+// Trimestral:    T1→Dec 01,   T2→Apr 01,   T3→Aug 01
+// Quadrimestral: T1→Oct 15,   T2→Jan 15,   T3→Apr 15,  T4→Jul 15
 function semEndDate(year, sem) {
-  const currentYear = new Date().getFullYear();
-  // Estimate which school year they were in based on enrollment year
   try {
-    const d = JSON.parse(localStorage.getItem('acadtrack_data') || '{}');
-    const progYears = d.progYears || 4;
-    const currentYearLevel = d.yearLevel || 1;
-    // Rough estimate: work backwards from today
-    const baseYear = currentYear - (currentYearLevel - 1);
+    const d = getDashData();
+    const currentYear = new Date().getFullYear();
+    const baseYear = currentYear - ((d.yearLevel || 1) - 1);
     const schoolYear = baseYear + (year - 1);
-    if (sem === 1) return (schoolYear) + '-12-15';
+    const cal = getCalType();
+
+    if (cal === 'trimestral') {
+      if (sem === 1) return schoolYear        + '-12-01';
+      if (sem === 2) return (schoolYear + 1)  + '-04-01';
+      return              (schoolYear + 1)    + '-08-01';
+    }
+    if (cal === 'quadrimestral') {
+      if (sem === 1) return schoolYear        + '-10-15';
+      if (sem === 2) return (schoolYear + 1)  + '-01-15';
+      if (sem === 3) return (schoolYear + 1)  + '-04-15';
+      return              (schoolYear + 1)    + '-07-15';
+    }
+    // Semestral (default)
+    if (sem === 1) return schoolYear       + '-12-15';
     if (sem === 2) return (schoolYear + 1) + '-05-15';
-    return (schoolYear + 1) + '-07-15';
+    return              (schoolYear + 1)   + '-07-15';
   } catch {
-    return currentYear + '-01-01';
+    return new Date().getFullYear() + '-01-01';
   }
 }
 
+// ── EXAM PERIOD THEMING ───────────────────────────────────────────────────────
+// Maps stored period IDs to CSS classes
+const EP_CELL_CLS   = { prelim:'ep-prelim', midterm:'ep-midterm', finals:'ep-finals', q4:'ep-q4' };
+const EP_BANNER_CLS = { prelim:'ep-banner-prelim', midterm:'ep-banner-midterm', finals:'ep-banner-finals', q4:'ep-banner-q4' };
+
+// ── MONTH / DATE HELPERS ──────────────────────────────────────────────────────
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
 function fmt12(t) {
   if (!t) return '';
@@ -313,37 +359,62 @@ function fmt12(t) {
   return ((h%12)||12) + ':' + String(m).padStart(2,'0') + (h>=12?' PM':' AM');
 }
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function toDateStr(y, m, d) { return y + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0'); }
-function todayStr() { const d = new Date(); return toDateStr(d.getFullYear(), d.getMonth(), d.getDate()); }
+function toDateStr(y,m,d){ return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'); }
+function todayStr(){ const d=new Date(); return toDateStr(d.getFullYear(),d.getMonth(),d.getDate()); }
+function hexToRgba(hex,alpha){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
-let viewYear = new Date().getFullYear();
-let viewMonth = new Date().getMonth(); // 0-indexed
+let viewYear     = new Date().getFullYear();
+let viewMonth    = new Date().getMonth();
 let selectedDate = todayStr();
-let editEventId = null;
+let editEventId  = null;
+
+// ── LEGEND ────────────────────────────────────────────────────────────────────
+function buildLegend() {
+  const cal = getCalType();
+  // Period legend labels from stored exam periods (use their stored labels)
+  const periodItems = S.examPeriods.map(ep => {
+    const clsMap = { prelim:'var(--prelim-bg)', midterm:'var(--midterm-bg)', finals:'var(--finals-bg)', q4:'var(--q4-bg)' };
+    const borderMap = { prelim:'var(--prelim-border)', midterm:'var(--midterm-border)', finals:'var(--finals-border)', q4:'var(--q4-border)' };
+    return `<span class="legend-item"><span class="legend-block" style="background:${clsMap[ep.id]||'#eee'};border:1px solid ${borderMap[ep.id]||'#ccc'}"></span>${esc(ep.label)}</span>`;
+  }).join('');
+
+  document.getElementById('cal-legend').innerHTML =
+    `<span class="legend-item"><span class="legend-dot" style="background:var(--maroon)"></span>Class</span>` +
+    `<span class="legend-item"><span class="legend-dot" style="background:var(--prelim)"></span>Exam</span>` +
+    `<span class="legend-item"><span class="legend-dot" style="background:#B8960C"></span>Deadline</span>` +
+    `<span class="legend-item"><span class="legend-dot" style="background:var(--gp)"></span>Event</span>` +
+    `<span class="legend-item"><span class="legend-dot" style="background:var(--gp);border:2px solid var(--gp)"></span>Passed</span>` +
+    `<span class="legend-item"><span class="legend-dot" style="background:var(--q4)"></span>Credited</span>` +
+    periodItems;
+}
 
 // ── CALENDAR RENDER ───────────────────────────────────────────────────────────
 function renderCalendar() {
   document.getElementById('cal-month').textContent = MONTHS[viewMonth] + ' ' + viewYear;
   const weeks = document.getElementById('cal-weeks');
   const today = todayStr();
-
-  // First day of month
   const first = new Date(viewYear, viewMonth, 1).getDay();
-  // Days in month
-  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
-  // Days in prev month
-  const daysInPrev = new Date(viewYear, viewMonth, 0).getDate();
+  const daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
+  const daysInPrev  = new Date(viewYear, viewMonth,   0).getDate();
+
+  const allPassedSubs   = getDashboardSubjects().filter(s => s.status === 'passed');
+  const allCreditedSubs = getDashboardSubjects().filter(s => s.status === 'credited');
 
   let html = '';
-  let day = 1 - first; // start from a negative offset if month doesn't start on Sunday
+  let day = 1 - first;
 
   for (let week = 0; week < 6; week++) {
     let hasAnyDay = false;
     let weekHtml = '<div class="cal-week">';
+
     for (let dow = 0; dow < 7; dow++) {
       let cellYear = viewYear, cellMonth = viewMonth, cellDay;
       let otherMonth = false;
+
       if (day < 1) {
         cellMonth = viewMonth - 1;
         if (cellMonth < 0) { cellMonth = 11; cellYear--; }
@@ -359,64 +430,66 @@ function renderCalendar() {
         hasAnyDay = true;
       }
 
-      const dateStr = toDateStr(cellYear, cellMonth, cellDay);
-      const isToday = dateStr === today;
+      const dateStr  = toDateStr(cellYear, cellMonth, cellDay);
+      const isToday  = dateStr === today;
       const isSelected = dateStr === selectedDate;
 
-      // Exam period highlight
+      // Find active exam period for this cell
       const examPeriod = S.examPeriods.find(p => p.start && p.end && dateStr >= p.start && dateStr <= p.end);
-      const epCls = examPeriod ? 'exam-period-' + examPeriod.id : '';
+      const epCls = examPeriod ? (EP_CELL_CLS[examPeriod.id] || '') : '';
 
-      // Get passed subjects for this date (historical)
-      const allPassedSubs = getDashboardSubjects().filter(s => s.status === 'passed');
-      const passedOnThisDate = allPassedSubs.filter(s => semEndDate(s.year, s.sem) === dateStr);
+      // Passed / credited subjects ending on this estimated date
+      const passedHere   = allPassedSubs.filter(s => semEndDate(s.year, s.sem) === dateStr);
+      const creditedHere = allCreditedSubs.filter(s => semEndDate(s.year, s.sem) === dateStr);
 
-      // Get events for this day
-      const dayEvents = S.events.filter(e => {
-        if (e.endDate) return dateStr >= e.date && dateStr <= e.endDate;
-        return e.date === dateStr;
-      });
+      // Events spanning this date
+      const dayEvents = S.events.filter(e => e.endDate ? (dateStr >= e.date && dateStr <= e.endDate) : e.date === dateStr);
 
-      // Get classes for this day's day-of-week
-      const dow2 = new Date(cellYear, cellMonth, cellDay).getDay();
-      const dayClasses = S.classes.filter(c => (c.days||[]).includes(dow2));
-
-      // Check exam overrides for this day
+      // Exam overrides for this date
       const examOverrides = [];
-      S.examPeriods.forEach(ep => {
-        if (ep.exams) ep.exams.filter(e => e.date === dateStr).forEach(e => examOverrides.push(e));
-      });
+      S.examPeriods.forEach(ep => { (ep.exams||[]).filter(e => e.date === dateStr).forEach(e => examOverrides.push(e)); });
 
-      let cellContent = `<div class="cell-num">${cellDay}</div>`;
+      // Classes on this day-of-week
+      const cellDow = new Date(cellYear, cellMonth, cellDay).getDay();
+      const dayClasses = S.classes.filter(c => (c.days||[]).includes(cellDow));
 
-      // Show exam override badges first
+      let content = `<div class="cell-num">${cellDay}</div>`;
+
+      // Exam override badges
       examOverrides.forEach(ex => {
         const cls = S.classes.find(c => c.id === ex.classId);
-        cellContent += `<div class="cell-event ev-exam">${esc(cls ? (cls.code || cls.name.slice(0,8)) : 'Exam')}</div>`;
+        content += `<div class="cell-event ev-exam">${esc(cls ? (cls.code||cls.name.slice(0,8)) : 'Exam')}</div>`;
       });
 
-      // Show passed subjects (history) as green chips
-      passedOnThisDate.slice(0,1).forEach(s => {
-        cellContent += `<div class="cell-event ev-passed" title="${esc(s.name)} — Grade ${s.grade||'—'}">${esc(s.code||s.name.slice(0,6))} ✓</div>`;
+      // Passed subjects (green chips)
+      passedHere.slice(0,1).forEach(s => {
+        content += `<div class="cell-event ev-passed" title="${esc(s.name)} — Grade ${s.grade||'—'}">${esc(s.code||s.name.slice(0,6))} ✓</div>`;
       });
-      if (passedOnThisDate.length > 1) cellContent += `<div class="cell-more">+${passedOnThisDate.length-1} passed</div>`;
+      if (passedHere.length > 1) content += `<div class="cell-more">+${passedHere.length-1} passed</div>`;
 
-      // Show up to 2 events
-      const shown = dayEvents.slice(0,2);
-      shown.forEach(e => {
-        const cls = 'ev-' + (e.type || 'event');
-        cellContent += `<div class="cell-event ${cls}" onclick="event.stopPropagation();openEventModal('${e.id}')">${esc(e.title)}</div>`;
+      // Credited subjects (teal chips)
+      creditedHere.slice(0,1).forEach(s => {
+        content += `<div class="cell-event ev-credited" title="${esc(s.name)} — Credited">${esc(s.code||s.name.slice(0,6))} ★</div>`;
       });
-      if (dayEvents.length > 2) cellContent += `<div class="cell-more">+${dayEvents.length - 2} more</div>`;
+      if (creditedHere.length > 1) content += `<div class="cell-more">+${creditedHere.length-1} credited</div>`;
 
-      // Class dots
+      // Events (up to 2)
+      dayEvents.slice(0,2).forEach(e => {
+        content += `<div class="cell-event ev-${e.type||'event'}" onclick="event.stopPropagation();openEventModal('${e.id}')">${esc(e.title)}</div>`;
+      });
+      if (dayEvents.length > 2) content += `<div class="cell-more">+${dayEvents.length-2} more</div>`;
+
+      // Class dots (only when no exam override)
       if (dayClasses.length && !examOverrides.length) {
-        cellContent += '<div class="cell-dot-row">' + dayClasses.slice(0,4).map(c => `<div class="cell-dot" style="background:${c.color||'#7B1C1C'}" title="${esc(c.name)}"></div>`).join('') + '</div>';
+        content += '<div class="cell-dot-row">' +
+          dayClasses.slice(0,4).map(c => `<div class="cell-dot" style="background:${c.color||'#7B1C1C'}" title="${esc(c.name)}"></div>`).join('') +
+          '</div>';
       }
 
-      weekHtml += `<div class="cal-cell${otherMonth ? ' other-month' : ''}${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}${epCls ? ' ' + epCls : ''}" onclick="selectDate('${dateStr}')">${cellContent}</div>`;
+      weekHtml += `<div class="cal-cell${otherMonth?' other-month':''}${isToday?' today':''}${isSelected?' selected':''}${epCls?' '+epCls:''}" onclick="selectDate('${dateStr}')">${content}</div>`;
       day++;
     }
+
     weekHtml += '</div>';
     if (hasAnyDay || week < 5) html += weekHtml;
     if (!hasAnyDay && week >= 5) break;
@@ -428,88 +501,88 @@ function renderCalendar() {
 let noteTimer;
 function renderSidePanel() {
   if (!selectedDate) return;
-
-  const [y, m, d] = selectedDate.split('-').map(Number);
-  const dateObj = new Date(y, m-1, d);
-  const dow = dateObj.getDay();
+  const [y,m,d] = selectedDate.split('-').map(Number);
+  const dateObj  = new Date(y, m-1, d);
+  const dow      = dateObj.getDay();
 
   document.getElementById('sp-date').textContent = DAYS[dow] + ', ' + MONTHS[m-1] + ' ' + d + ', ' + y;
   document.getElementById('add-event-btn').style.display = 'inline-flex';
 
   // Exam period banner
   const ep = S.examPeriods.find(p => p.start && p.end && selectedDate >= p.start && selectedDate <= p.end);
-  const banner = document.getElementById('sp-exam-banner');
+  const bannerEl = document.getElementById('sp-exam-banner');
   if (ep) {
-    banner.style.display = 'inline-block';
-    const colors = { prelim:'var(--prelim)', midterm:'var(--midterm)', finals:'var(--finals)' };
-    const bgs = { prelim:'var(--prelim-bg)', midterm:'var(--midterm-bg)', finals:'var(--finals-bg)' };
-    banner.style.background = bgs[ep.id] || 'var(--prelim-bg)';
-    banner.style.color = colors[ep.id] || 'var(--prelim)';
-    banner.textContent = '📋 ' + ep.label + ' Period';
+    bannerEl.innerHTML = `<div class="ep-banner ${EP_BANNER_CLS[ep.id]||'ep-banner-prelim'}">📋 ${esc(ep.label)} Period</div>`;
   } else {
-    banner.style.display = 'none';
+    bannerEl.innerHTML = '';
   }
+
+  // Exam overrides for today
+  const examOverrides = {};
+  S.examPeriods.forEach(p => {
+    (p.exams||[]).filter(e => e.date === selectedDate).forEach(e => { examOverrides[e.classId] = { exam:e, period:p }; });
+  });
 
   // Classes
   const classes = S.classes.filter(c => (c.days||[]).includes(dow));
-  // Check exam overrides
-  const examOverrides = {};
-  S.examPeriods.forEach(p => {
-    (p.exams||[]).filter(e => e.date === selectedDate).forEach(e => { examOverrides[e.classId] = { exam: e, period: p }; });
-  });
-
   const classEl = document.getElementById('sp-classes');
   if (!classes.length) {
-    classEl.innerHTML = '<span class="sp-empty">No classes on ' + DAYS[dow] + '.</span>';
+    classEl.innerHTML = `<span class="sp-empty">No classes on ${DAYS[dow]}.</span>`;
   } else {
     classEl.innerHTML = classes.map(c => {
-      const ov = examOverrides[c.id];
-      const room = ov ? (ov.exam.room || c.room) : c.room;
-      const bldg = ov ? (ov.exam.building || c.building) : c.building;
-      const start = ov ? ov.exam.start : c.start;
-      const end = ov ? ov.exam.end : c.end;
+      const ov   = examOverrides[c.id];
+      const room = ov ? (ov.exam.room||c.room) : c.room;
+      const bldg = ov ? (ov.exam.building||c.building) : c.building;
+      const start= ov ? ov.exam.start : c.start;
+      const end  = ov ? ov.exam.end   : c.end;
       return `<div class="sp-class" style="background:${hexToRgba(c.color||'#7B1C1C',0.06)};border-color:${hexToRgba(c.color||'#7B1C1C',0.2)}">
         <div class="sp-dot" style="background:${c.color||'#7B1C1C'}"></div>
         <div>
-          <div class="sp-cls-name">${esc(c.code ? c.code + ' — ' : '') + esc(c.name)}</div>
-          <div class="sp-cls-meta">${fmt12(start)} – ${fmt12(end)}${room ? ' · Room ' + esc(room) + (bldg ? ', ' + esc(bldg) : '') : ''}${ov ? ' · <span style="color:var(--prelim);font-weight:600">' + ov.period.label + ' Exam</span>' : ''}${c.instructor ? ' · ' + esc(c.instructor) : ''}</div>
+          <div class="sp-cls-name">${esc(c.code?c.code+' — ':'')+esc(c.name)}</div>
+          <div class="sp-cls-meta">${fmt12(start)} – ${fmt12(end)}${room?' · Room '+esc(room)+(bldg?', '+esc(bldg):''):''}${ov?' · <span style="color:var(--prelim);font-weight:600">'+esc(ov.period.label)+' Exam</span>':''}${c.instructor?' · '+esc(c.instructor):''}</div>
         </div>
       </div>`;
     }).join('');
   }
 
-  // History: passed subjects ending around this semester
-  const passedSubs = getDashboardSubjects().filter(s => s.status === 'passed');
-  const passedHere = passedSubs.filter(s => semEndDate(s.year, s.sem) === selectedDate);
-  if (passedHere.length) {
+  // Passed subjects history
+  const passedHere   = getDashboardSubjects().filter(s => s.status==='passed'   && semEndDate(s.year,s.sem)===selectedDate);
+  const creditedHere = getDashboardSubjects().filter(s => s.status==='credited' && semEndDate(s.year,s.sem)===selectedDate);
+  const histSubs = [...passedHere, ...creditedHere];
+
+  if (histSubs.length) {
     const histEl = document.createElement('div');
-    histEl.innerHTML = '<div class="sp-section-title">Passed subjects (this period)</div>' +
-      passedHere.map(s => `<div class="sp-class" style="background:var(--gp-bg);border-color:#86EFAC">
-        <div class="sp-dot" style="background:var(--gp)"></div>
-        <div>
-          <div class="sp-cls-name">${esc(s.code ? s.code+' — '+s.name : s.name)}</div>
-          <div class="sp-cls-meta">Grade: ${s.grade||'—'} &nbsp;·&nbsp; ${s.units} unit${s.units!==1?'s':''} &nbsp;·&nbsp; Year ${s.year}, Sem ${s.sem}</div>
-        </div>
-      </div>`).join('');
-    document.getElementById('sp-classes').after(histEl);
+    histEl.innerHTML = '<div class="sp-section-title">Subject history (est. end of this term)</div>' +
+      histSubs.map(s => {
+        const isCredited = s.status === 'credited';
+        const bg    = isCredited ? 'var(--q4-bg)'  : 'var(--gp-bg)';
+        const bc    = isCredited ? '#5EEAD4'        : '#86EFAC';
+        const color = isCredited ? 'var(--q4)'      : 'var(--gp)';
+        const label = isCredited ? '★ Credited'     : `Grade: ${s.grade||'—'}`;
+        return `<div class="sp-class" style="background:${bg};border-color:${bc}">
+          <div class="sp-dot" style="background:${color}"></div>
+          <div>
+            <div class="sp-cls-name">${esc(s.code?s.code+' — '+s.name:s.name)}</div>
+            <div class="sp-cls-meta">${label} &nbsp;·&nbsp; ${s.units} unit${s.units!==1?'s':''} &nbsp;·&nbsp; Year ${s.year}, ${getSemLabel(s.sem)}</div>
+          </div>
+        </div>`;
+      }).join('');
+    classEl.after(histEl);
   }
 
   // Events
-  const events = S.events.filter(e => {
-    if (e.endDate) return selectedDate >= e.date && selectedDate <= e.endDate;
-    return e.date === selectedDate;
-  });
-  const evEl = document.getElementById('sp-events');
+  const events = S.events.filter(e => e.endDate ? (selectedDate>=e.date&&selectedDate<=e.endDate) : e.date===selectedDate);
+  const evEl   = document.getElementById('sp-events');
+  const TYPE_COLORS = { event:'var(--gp)', exam:'var(--prelim)', deadline:'#B8960C', holiday:'var(--gn)' };
   if (!events.length) {
     evEl.innerHTML = '<span class="sp-empty">No events. Click "+ Add" to create one.</span>';
   } else {
-    const TYPE_COLORS = { event:'var(--gp)', exam:'var(--prelim)', deadline:'#B8960C', holiday:'var(--gn)' };
     evEl.innerHTML = events.map(e => `
       <div class="sp-event">
         <div class="sp-ev-dot" style="background:${TYPE_COLORS[e.type||'event']||'var(--gp)'}"></div>
         <div style="flex:1;min-width:0">
           <div class="sp-ev-name">${esc(e.title)}</div>
-          <div class="sp-ev-meta">${e.time ? fmt12(e.time) + (e.endTime ? ' – ' + fmt12(e.endTime) : '') + ' · ' : ''}${e.notes ? esc(e.notes) : ''}</div>
+          <div class="sp-ev-meta">${e.time?fmt12(e.time)+(e.endTime?' – '+fmt12(e.endTime):'')+(e.notes?' · ':''):''} ${e.notes?esc(e.notes):''}</div>
         </div>
         <button class="sp-ev-edit" onclick="openEventModal('${e.id}')">Edit</button>
       </div>`).join('');
@@ -517,9 +590,9 @@ function renderSidePanel() {
 
   // Journal note
   const noteArea = document.getElementById('day-note');
-  const notePlaceholder = document.getElementById('note-placeholder');
+  const notePH   = document.getElementById('note-placeholder');
   noteArea.style.display = 'block';
-  notePlaceholder.style.display = 'none';
+  notePH.style.display   = 'none';
   noteArea.value = S.notes[selectedDate] || '';
   noteArea.oninput = () => {
     S.notes[selectedDate] = noteArea.value;
@@ -543,33 +616,31 @@ function selectDate(dateStr) {
   renderCalendar();
   renderSidePanel();
 }
-
 function changeMonth(dir) {
   viewMonth += dir;
-  if (viewMonth < 0) { viewMonth = 11; viewYear--; }
-  if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+  if (viewMonth < 0) { viewMonth=11; viewYear--; }
+  if (viewMonth > 11){ viewMonth=0;  viewYear++; }
   renderCalendar();
 }
-
 function goToday() {
   const now = new Date();
-  viewYear = now.getFullYear(); viewMonth = now.getMonth();
-  selectedDate = todayStr();
+  viewYear=now.getFullYear(); viewMonth=now.getMonth();
+  selectedDate=todayStr();
   renderCalendar(); renderSidePanel();
 }
 
 // ── EVENT MODAL ───────────────────────────────────────────────────────────────
 function openEventModal(id) {
   editEventId = id || null;
-  const ev = id ? S.events.find(e => e.id === id) : null;
+  const ev = id ? S.events.find(e=>e.id===id) : null;
   document.getElementById('ev-modal-title').textContent = ev ? 'Edit event' : 'Add event';
-  document.getElementById('ev-title').value = ev ? ev.title : '';
-  document.getElementById('ev-type').value = ev ? ev.type || 'event' : 'event';
-  document.getElementById('ev-date').value = ev ? ev.date : (selectedDate || todayStr());
-  document.getElementById('ev-end-date').value = ev ? ev.endDate || '' : '';
-  document.getElementById('ev-time').value = ev ? ev.time || '' : '';
-  document.getElementById('ev-end-time').value = ev ? ev.endTime || '' : '';
-  document.getElementById('ev-notes').value = ev ? ev.notes || '' : '';
+  document.getElementById('ev-title').value    = ev ? ev.title  : '';
+  document.getElementById('ev-type').value     = ev ? ev.type||'event' : 'event';
+  document.getElementById('ev-date').value     = ev ? ev.date   : (selectedDate||todayStr());
+  document.getElementById('ev-end-date').value = ev ? ev.endDate||'' : '';
+  document.getElementById('ev-time').value     = ev ? ev.time||'' : '';
+  document.getElementById('ev-end-time').value = ev ? ev.endTime||'' : '';
+  document.getElementById('ev-notes').value    = ev ? ev.notes||'' : '';
   document.getElementById('del-ev-btn').style.display = ev ? 'inline-flex' : 'none';
   document.getElementById('event-overlay').classList.add('open');
   setTimeout(() => document.getElementById('ev-title').focus(), 100);
@@ -577,56 +648,60 @@ function openEventModal(id) {
 
 function saveEvent() {
   const title = document.getElementById('ev-title').value.trim();
-  const date = document.getElementById('ev-date').value;
-  if (!title || !date) { showToast('Title and date are required'); return; }
+  const date  = document.getElementById('ev-date').value;
+  if (!title||!date) { showToast('Title and date are required'); return; }
   const ev = {
-    id: editEventId || ('ev' + Date.now()),
+    id:      editEventId || ('ev'+Date.now()),
     title,
-    type: document.getElementById('ev-type').value,
+    type:    document.getElementById('ev-type').value,
     date,
     endDate: document.getElementById('ev-end-date').value || null,
-    time: document.getElementById('ev-time').value || null,
+    time:    document.getElementById('ev-time').value || null,
     endTime: document.getElementById('ev-end-time').value || null,
-    notes: document.getElementById('ev-notes').value.trim() || null
+    notes:   document.getElementById('ev-notes').value.trim() || null
   };
-  if (editEventId) S.events = S.events.map(e => e.id === editEventId ? ev : e);
+  if (editEventId) S.events = S.events.map(e=>e.id===editEventId?ev:e);
   else S.events.push(ev);
   saveS(); closeModal('event-overlay');
-  // Navigate to event date
-  const [y,m] = ev.date.split('-').map(Number);
-  viewYear = y; viewMonth = m-1; selectedDate = ev.date;
+  const [yr,mo] = ev.date.split('-').map(Number);
+  viewYear=yr; viewMonth=mo-1; selectedDate=ev.date;
   renderCalendar(); renderSidePanel();
   showToast(editEventId ? 'Event updated' : 'Event added');
 }
 
 function deleteEvent() {
-  showConfirm('Delete event?', 'This will permanently remove this event.',
-    () => { S.events = S.events.filter(e => e.id !== editEventId); saveS(); closeModal('event-overlay'); renderCalendar(); renderSidePanel(); showToast('Event deleted'); });
+  showConfirm('Delete event?','This will permanently remove this event.',()=>{
+    S.events = S.events.filter(e=>e.id!==editEventId);
+    saveS(); closeModal('event-overlay'); renderCalendar(); renderSidePanel();
+    showToast('Event deleted');
+  });
 }
 
 // ── MODAL HELPERS ─────────────────────────────────────────────────────────────
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-function showConfirm(title, msg, onOk) {
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function showConfirm(title,msg,onOk){
   document.getElementById('confirm-title').textContent = title;
-  document.getElementById('confirm-msg').textContent = msg;
-  document.getElementById('confirm-ok').onclick = () => { closeModal('confirm-overlay'); onOk(); };
+  document.getElementById('confirm-msg').textContent   = msg;
+  document.getElementById('confirm-ok').onclick = ()=>{ closeModal('confirm-overlay'); onOk(); };
   document.getElementById('confirm-overlay').classList.add('open');
 }
-document.querySelectorAll('.overlay').forEach(el => el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); }));
-document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.overlay.open').forEach(el => el.classList.remove('open')); });
+document.querySelectorAll('.overlay').forEach(el=>el.addEventListener('click',e=>{ if(e.target===el)el.classList.remove('open'); }));
+document.addEventListener('keydown',e=>{ if(e.key==='Escape')document.querySelectorAll('.overlay.open').forEach(el=>el.classList.remove('open')); });
 
 let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast'); t.textContent = msg;
+function showToast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg;
   t.classList.add('show'); clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2400);
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 loadS();
+buildLegend();
 renderCalendar();
 renderSidePanel();
 </script>
+
 <script>
 (function(){
   try{
@@ -638,6 +713,7 @@ renderSidePanel();
     if(av)av.textContent=init;
     if(lb)lb.textContent=name||'Profile';
   }catch(e){}
-})();</script>
+})();
+</script>
 </body>
 </html>
