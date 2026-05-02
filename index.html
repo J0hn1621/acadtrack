@@ -53,8 +53,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0.875r
 .setup-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;box-shadow:0 1px 6px rgba(0,0,0,0.04)}
 .stepper{display:flex;align-items:center;justify-content:center;margin-bottom:2rem;flex-wrap:wrap;row-gap:8px}
 .step-item{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:500;color:var(--light)}
-.step-item.active{color:var(--maroon)}
-.step-item.done{color:var(--success)}
+.step-item.active{color:var(--maroon)}.step-item.done{color:var(--success)}
 .step-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
 .step-item.done .step-dot{background:var(--success);border-color:var(--success);color:white}
 .step-item.active .step-dot{background:var(--maroon);border-color:var(--maroon);color:white}
@@ -67,7 +66,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0.875r
 input[type=text],input[type=month],select,input[type=number]{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.15s}
 input:focus,select:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
 input::placeholder{color:var(--light)}
-input.error{border-color:#B91C1C}
+input.error,select.error{border-color:#B91C1C}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .radio-group{display:flex;flex-direction:column;gap:8px}
 .radio-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all 0.12s}
@@ -77,7 +76,7 @@ input.error{border-color:#B91C1C}
 .radio-opt .rt{font-size:13px;font-weight:500}.radio-opt .rd{font-size:11px;color:var(--gray);margin-top:2px}
 .pactions{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
 .sec-label{font-size:10px;font-weight:600;color:var(--light);letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin:3rem 0 0.5rem}
-/* TEMPLATE STEP */
+/* TEMPLATE CARDS */
 .tpl-grid{display:flex;flex-direction:column;gap:10px}
 .tpl-card{border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:all 0.12s}
 .tpl-card:hover{border-color:var(--maroon);background:rgba(123,28,28,0.02)}
@@ -91,6 +90,24 @@ input.error{border-color:#B91C1C}
 .tpl-skip:hover{border-color:var(--light)}.tpl-skip.selected{border-color:var(--light);background:var(--cream)}
 .tpl-skip input{accent-color:var(--maroon)}
 .tpl-note{font-size:11px;color:var(--gray);background:var(--cream);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-top:12px;line-height:1.65}
+/* ── NEW: SCHOOL DROPDOWN ─────────────────────────────────────────────────── */
+.school-wrap{display:flex;flex-direction:column;gap:6px}
+.school-filter-row{position:relative}
+.school-filter-row input{padding-left:34px;font-size:12px}
+.school-filter-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--light);font-size:13px;pointer-events:none}
+/* Size-6 select acts as a listbox; style it to look like a card list */
+#f-school-select{padding:0;height:168px;border-radius:var(--radius);font-size:13px;cursor:pointer;background:var(--white)}
+#f-school-select option{padding:7px 11px}
+#f-school-select option:checked{background:var(--maroon-light);color:var(--maroon)}
+/* Hint banners */
+.school-hint{margin-top:6px;padding:9px 12px;border-radius:var(--radius);font-size:12px;line-height:1.6;display:none}
+.hint-benilde{background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8}
+.hint-dlsu{background:var(--gold-light);border:1px solid var(--gold-border);color:#78350F}
+/* ── NEW: CALENDAR BADGE PICKER ───────────────────────────────────────────── */
+.cal-picker{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.cal-pill{padding:7px 16px;border-radius:99px;font-size:12px;font-weight:600;border:1.5px solid var(--border);cursor:pointer;background:var(--white);color:var(--gray);font-family:'Inter',sans-serif;transition:all 0.15s;user-select:none}
+.cal-pill:hover{border-color:var(--maroon);color:var(--maroon)}
+.cal-pill.active{background:var(--maroon);border-color:var(--maroon);color:white}
 footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-top:1px solid var(--border);background:var(--white);margin-top:2rem}
 @media(max-width:520px){nav{padding:0.75rem 1.25rem}.hero{padding:3rem 1.25rem 2.5rem}.form-row{grid-template-columns:1fr}.setup{padding:0 1.25rem}.nav-link{display:none}}
 </style>
@@ -131,15 +148,15 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
 <div class="divider" id="features"><span>What AcadTrack does</span></div>
 
 <div class="features">
-  <div class="feat"><div class="feat-icon" style="background:#F5EBEB">📊</div><h3>GWA calculator</h3><p>Supports both 1.0-highest and 5.0-highest grading systems. GWA updates automatically as you log grades.</p></div>
+  <div class="feat"><div class="feat-icon" style="background:#F5EBEB">📊</div><h3>GWA calculator</h3><p>Supports 1.0-highest, 5.0-highest, and Benilde (4.0-highest) grading systems. GWA updates automatically as you log grades.</p></div>
   <div class="feat"><div class="feat-icon" style="background:var(--gold-light)">🔗</div><h3>Prerequisite tracking</h3><p>Link subjects to their prerequisites. Get warned when a prereq hasn't been passed yet before you enroll.</p></div>
-  <div class="feat"><div class="feat-icon" style="background:var(--success-bg)">🗓</div><h3>Graduation estimate</h3><p>Based on remaining subjects and semester layout, AcadTrack estimates when you'll finish your degree.</p></div>
+  <div class="feat"><div class="feat-icon" style="background:var(--success-bg)">🗓</div><h3>Graduation estimate</h3><p>Supports semestral, trimestral, and quadrimestral calendars. AcadTrack estimates when you'll finish your degree.</p></div>
   <div class="feat"><div class="feat-icon" style="background:#DBEAFE">📤</div><h3>Export & import</h3><p>Back up your data as a JSON file and restore it on any device. Useful for switching between phone and PC.</p></div>
 </div>
 
 <div class="divider"><span>How it works</span></div>
 <div class="features" style="grid-template-columns:repeat(3,1fr)">
-  <div class="feat" style="text-align:center;padding:1.25rem"><div class="feat-icon" style="background:var(--maroon-light);margin:0 auto 10px;font-size:20px;font-weight:700;color:var(--maroon)">1</div><h3>Set up your profile</h3><p style="font-size:11px">Enter your school, grading system, and target graduation date.</p></div>
+  <div class="feat" style="text-align:center;padding:1.25rem"><div class="feat-icon" style="background:var(--maroon-light);margin:0 auto 10px;font-size:20px;font-weight:700;color:var(--maroon)">1</div><h3>Set up your profile</h3><p style="font-size:11px">Choose your school, grading system, and calendar type.</p></div>
   <div class="feat" style="text-align:center;padding:1.25rem"><div class="feat-icon" style="background:var(--maroon-light);margin:0 auto 10px;font-size:20px;font-weight:700;color:var(--maroon)">2</div><h3>Load or add subjects</h3><p style="font-size:11px">Load a ready-made curriculum template, or add your own subjects manually.</p></div>
   <div class="feat" style="text-align:center;padding:1.25rem"><div class="feat-icon" style="background:var(--maroon-light);margin:0 auto 10px;font-size:20px;font-weight:700;color:var(--maroon)">3</div><h3>Log grades as you go</h3><p style="font-size:11px">Mark subjects ongoing or passed, enter your grade, and see your progress update.</p></div>
 </div>
@@ -159,48 +176,203 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
       <div class="step-item" id="si4"><div class="step-dot">4</div><span>Curriculum</span></div>
     </div>
 
-    <!-- Step 1 -->
+    <!-- ══ STEP 1: About you ══════════════════════════════════════════════ -->
     <div class="panel active" id="p1">
-      <div class="fg"><label>School / University <span class="req">*</span></label><input type="text" id="f-school" placeholder="e.g. Adamson University"></div>
-      <div class="fg"><label>Your name <span class="opt">(optional)</span></label><input type="text" id="f-name" placeholder="e.g. Juan dela Cruz"><div class="hint">Only used to personalize your dashboard.</div></div>
-      <div class="fg"><label>Course / Program <span class="opt">(optional)</span></label><input type="text" id="f-course" placeholder="e.g. BSBA Marketing Management"></div>
+
+      <div class="fg">
+        <label>School / University <span class="req">*</span></label>
+        <div class="school-wrap">
+          <!-- Instant search filter -->
+          <div class="school-filter-row">
+            <span class="school-filter-icon">🔍</span>
+            <input type="text" id="school-filter" placeholder="Filter schools…" oninput="filterSchools()" autocomplete="off">
+          </div>
+          <!-- Scrollable listbox of 50 schools -->
+          <select id="f-school-select" size="6" onchange="onSchoolSelect()">
+            <option value="">— Select your school —</option>
+            <optgroup label="Metro Manila (NCR)">
+              <option value="Adamson University"                                  data-g="1_highest">Adamson University</option>
+              <option value="AMA University"                                      data-g="1_highest">AMA University</option>
+              <option value="Arellano University"                                 data-g="1_highest">Arellano University</option>
+              <option value="Ateneo de Manila University"                         data-g="1_highest">Ateneo de Manila University</option>
+              <option value="Centro Escolar University (CEU)"                     data-g="1_highest">Centro Escolar University (CEU)</option>
+              <option value="Colegio de San Juan de Letran"                       data-g="1_highest">Colegio de San Juan de Letran</option>
+              <option value="De La Salle - College of Saint Benilde (CSB)"        data-g="benilde">De La Salle - College of Saint Benilde (CSB)</option>
+              <option value="De La Salle University (DLSU)"                       data-g="1_highest" data-cal="trimestral">De La Salle University (DLSU)</option>
+              <option value="Far Eastern University (FEU)"                        data-g="1_highest">Far Eastern University (FEU)</option>
+              <option value="FEATI University"                                    data-g="1_highest">FEATI University</option>
+              <option value="Jose Rizal University (JRU)"                         data-g="1_highest">Jose Rizal University (JRU)</option>
+              <option value="Lyceum of the Philippines University (LPU)"          data-g="1_highest">Lyceum of the Philippines University (LPU)</option>
+              <option value="Manuel L. Quezon University (MLQU)"                  data-g="1_highest">Manuel L. Quezon University (MLQU)</option>
+              <option value="Mapúa University"                                    data-g="1_highest">Mapúa University</option>
+              <option value="National University Philippines (NU)"                data-g="1_highest">National University Philippines (NU)</option>
+              <option value="Pamantasan ng Lungsod ng Maynila (PLM)"              data-g="1_highest">Pamantasan ng Lungsod ng Maynila (PLM)</option>
+              <option value="Philippine Christian University (PCU)"               data-g="1_highest">Philippine Christian University (PCU)</option>
+              <option value="Philippine Normal University (PNU)"                  data-g="1_highest">Philippine Normal University (PNU)</option>
+              <option value="Philippine Women's University (PWU)"                 data-g="1_highest">Philippine Women's University (PWU)</option>
+              <option value="Polytechnic University of the Philippines (PUP)"     data-g="1_highest">Polytechnic University of the Philippines (PUP)</option>
+              <option value="San Beda University"                                 data-g="1_highest">San Beda University</option>
+              <option value="Technological University of the Philippines (TUP)"   data-g="1_highest">Technological University of the Philippines (TUP)</option>
+              <option value="University of the East (UE)"                         data-g="1_highest">University of the East (UE)</option>
+              <option value="University of Santo Tomas (UST)"                     data-g="1_highest">University of Santo Tomas (UST)</option>
+              <option value="University of the Philippines Diliman (UP Diliman)"  data-g="1_highest">University of the Philippines Diliman (UP Diliman)</option>
+            </optgroup>
+            <optgroup label="Luzon">
+              <option value="Batangas State University (BatStateU)"               data-g="1_highest">Batangas State University (BatStateU)</option>
+              <option value="Benguet State University"                            data-g="1_highest">Benguet State University</option>
+              <option value="Cavite State University (CavSU)"                     data-g="1_highest">Cavite State University (CavSU)</option>
+              <option value="Central Luzon State University (CLSU)"               data-g="1_highest">Central Luzon State University (CLSU)</option>
+              <option value="Don Bosco Technical College"                         data-g="1_highest">Don Bosco Technical College</option>
+              <option value="Holy Angel University"                               data-g="1_highest">Holy Angel University (Pampanga)</option>
+              <option value="Laguna State Polytechnic University (LSPU)"          data-g="1_highest">Laguna State Polytechnic University (LSPU)</option>
+              <option value="Manuel S. Enverga University Foundation (MSEUF)"     data-g="1_highest">Manuel S. Enverga University Foundation (MSEUF)</option>
+              <option value="Our Lady of Fatima University"                       data-g="1_highest">Our Lady of Fatima University</option>
+              <option value="Saint Louis University - Baguio"                     data-g="1_highest">Saint Louis University - Baguio</option>
+              <option value="University of Baguio"                                data-g="1_highest">University of Baguio</option>
+              <option value="University of the Philippines Los Baños (UPLB)"      data-g="1_highest">University of the Philippines Los Baños (UPLB)</option>
+            </optgroup>
+            <optgroup label="Visayas">
+              <option value="Cebu Institute of Technology - University (CIT-U)"   data-g="1_highest">Cebu Institute of Technology - University (CIT-U)</option>
+              <option value="Cebu Normal University (CNU)"                        data-g="1_highest">Cebu Normal University (CNU)</option>
+              <option value="Silliman University"                                 data-g="1_highest">Silliman University (Dumaguete)</option>
+              <option value="University of San Carlos (USC)"                      data-g="1_highest">University of San Carlos (USC) - Cebu</option>
+              <option value="University of San Jose-Recoletos (USJ-R)"            data-g="1_highest">University of San Jose-Recoletos (USJ-R)</option>
+              <option value="University of the Philippines Visayas"               data-g="1_highest">University of the Philippines Visayas</option>
+              <option value="University of the Visayas (UV)"                      data-g="1_highest">University of the Visayas (UV)</option>
+            </optgroup>
+            <optgroup label="Mindanao">
+              <option value="Ateneo de Davao University"                          data-g="1_highest">Ateneo de Davao University</option>
+              <option value="Mindanao State University (MSU)"                     data-g="1_highest">Mindanao State University (MSU)</option>
+              <option value="Notre Dame University (Cotabato)"                    data-g="1_highest">Notre Dame University (Cotabato)</option>
+              <option value="University of Mindanao"                              data-g="1_highest">University of Mindanao</option>
+              <option value="University of Southeastern Philippines (USeP)"       data-g="1_highest">University of Southeastern Philippines (USeP)</option>
+              <option value="Xavier University - Ateneo de Cagayan"               data-g="1_highest">Xavier University - Ateneo de Cagayan</option>
+            </optgroup>
+            <option value="__other__">✏ Other — type my school name</option>
+          </select>
+          <!-- Shown only when "Other" is selected -->
+          <input type="text" id="f-school-other" placeholder="Enter your school or university name" style="display:none">
+          <!-- Contextual hints -->
+          <div class="school-hint hint-benilde" id="hint-benilde">
+            📘 <strong>Benilde (CSB) detected.</strong> Step 2 will pre-select the <strong>Benilde 4.0 grading system</strong>. You can still change it.
+          </div>
+          <div class="school-hint hint-dlsu" id="hint-dlsu">
+            🗓 <strong>DLSU detected.</strong> Step 2 will suggest <strong>Trimestral</strong> calendar. You can still change it.
+          </div>
+        </div>
+      </div>
+
+      <div class="fg">
+        <label>Your name <span class="opt">(optional)</span></label>
+        <input type="text" id="f-name" placeholder="e.g. Juan dela Cruz">
+        <div class="hint">Only used to personalize your dashboard.</div>
+      </div>
+      <div class="fg">
+        <label>Course / Program <span class="opt">(optional)</span></label>
+        <input type="text" id="f-course" placeholder="e.g. BSBA Marketing Management">
+      </div>
       <div class="pactions"><span></span><button class="btn btn-primary" onclick="goStep(2)">Next: Grading →</button></div>
     </div>
 
-    <!-- Step 2 -->
+    <!-- ══ STEP 2: Grading + Calendar ════════════════════════════════════ -->
     <div class="panel" id="p2">
+
       <div class="fg">
         <label>Grading system</label>
         <div class="radio-group">
           <label class="radio-opt selected" id="ropt1">
             <input type="radio" name="gsys" value="1_highest" checked onchange="pickGS('1_highest')">
-            <div><div class="rt">1.0 is the highest grade</div><div class="rd">UP, Ateneo, La Salle, Adamson, UST, and most Philippine universities. Excellent = 1.0, Passing = 3.0, Failed = 5.0.</div></div>
+            <div>
+              <div class="rt">1.0 is the highest grade</div>
+              <div class="rd">UP, Ateneo, La Salle, Adamson, UST, and most Philippine universities. Excellent = 1.0, Passing = 3.0, Failed = 5.0.</div>
+            </div>
           </label>
           <label class="radio-opt" id="ropt5">
             <input type="radio" name="gsys" value="5_highest" onchange="pickGS('5_highest')">
-            <div><div class="rt">5.0 is the highest grade</div><div class="rd">Some schools use a 5-point scale where 5 = Excellent and 1 = Failed. Passing threshold varies by school.</div></div>
+            <div>
+              <div class="rt">5.0 is the highest grade</div>
+              <div class="rd">Some schools use a 5-point scale where 5 = Excellent and 1 = Failed. Passing threshold varies by school.</div>
+            </div>
+          </label>
+          <!-- NEW: Benilde grading -->
+          <label class="radio-opt" id="roptB">
+            <input type="radio" name="gsys" value="benilde" onchange="pickGS('benilde')">
+            <div>
+              <div class="rt">4.0 is the highest grade &nbsp;<span style="font-size:10px;background:#DBEAFE;color:#1D4ED8;padding:2px 8px;border-radius:99px;font-weight:700">Benilde / CSB</span></div>
+              <div class="rd">GPA-style scale used by De La Salle – College of Saint Benilde. 4.0 = Excellent, 1.0 = Minimum passing, 0.0 = Failed. Passing threshold is 1.0.</div>
+            </div>
           </label>
         </div>
       </div>
+
       <div class="form-row">
-        <div class="fg"><label>Passing threshold</label><input type="text" id="f-passing" value="3.00"><div class="hint" id="passing-hint">Grades ≤ this are passing.</div></div>
-        <div class="fg"><label>Target GWA <span class="opt">(optional)</span></label><input type="text" id="f-targetgwa" placeholder="e.g. 1.75"></div>
+        <div class="fg">
+          <label>Passing threshold</label>
+          <input type="text" id="f-passing" value="3.00">
+          <div class="hint" id="passing-hint">Grades ≤ this are passing.</div>
+        </div>
+        <div class="fg">
+          <label>Target GWA <span class="opt">(optional)</span></label>
+          <input type="text" id="f-targetgwa" placeholder="e.g. 1.75">
+        </div>
       </div>
-      <div class="pactions"><button class="btn btn-outline" onclick="goStep(1)">← Back</button><button class="btn btn-primary" onclick="goStep(3)">Next: Timeline →</button></div>
+
+      <!-- NEW: Calendar / term system -->
+      <div class="fg">
+        <label>Calendar / term system</label>
+        <div class="cal-picker">
+          <span class="cal-pill active" id="cal-sem"  onclick="pickCal('semestral')">📅 Semestral</span>
+          <span class="cal-pill"        id="cal-tri"  onclick="pickCal('trimestral')">📅 Trimestral</span>
+          <span class="cal-pill"        id="cal-quad" onclick="pickCal('quadrimestral')">📅 Quadrimestral</span>
+        </div>
+        <div class="hint" id="cal-hint">Two semesters + optional summer/midyear per year. Used by most Philippine universities.</div>
+      </div>
+
+      <div class="pactions">
+        <button class="btn btn-outline" onclick="goStep(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goStep(3)">Next: Timeline →</button>
+      </div>
     </div>
 
-    <!-- Step 3 -->
+    <!-- ══ STEP 3: Timeline ═══════════════════════════════════════════════ -->
     <div class="panel" id="p3">
       <div class="form-row">
-        <div class="fg"><label>Current year level</label><select id="f-year"><option value="1">1st Year</option><option value="2">2nd Year</option><option value="3">3rd Year</option><option value="4">4th Year</option><option value="5">5th Year</option></select></div>
-        <div class="fg"><label>Current semester</label><select id="f-sem"><option value="1">1st Semester</option><option value="2">2nd Semester</option><option value="3">Summer / Midyear</option></select></div>
+        <div class="fg">
+          <label>Current year level</label>
+          <select id="f-year">
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+            <option value="5">5th Year</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Current term / semester</label>
+          <!-- Options populated dynamically by updateSemOptions() based on calendar type -->
+          <select id="f-sem"></select>
+        </div>
       </div>
-      <div class="fg"><label>Total years in program</label><select id="f-prog-years"><option value="4">4 years (most BS/AB/BSBA programs)</option><option value="5">5 years (Architecture, Engineering, etc.)</option><option value="3">3 years (Associate / short programs)</option><option value="6">6 years (Law, Medicine pre-board)</option></select></div>
-      <div class="fg"><label>Target graduation date</label><input type="month" id="f-graddate"></div>
-      <div class="pactions"><button class="btn btn-outline" onclick="goStep(2)">← Back</button><button class="btn btn-primary" onclick="goStep(4)">Next: Curriculum →</button></div>
+      <div class="fg">
+        <label>Total years in program</label>
+        <select id="f-prog-years">
+          <option value="4">4 years (most BS/AB/BSBA programs)</option>
+          <option value="5">5 years (Architecture, Engineering, etc.)</option>
+          <option value="3">3 years (Associate / short programs)</option>
+          <option value="6">6 years (Law, Medicine pre-board)</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Target graduation date</label>
+        <input type="month" id="f-graddate">
+      </div>
+      <div class="pactions">
+        <button class="btn btn-outline" onclick="goStep(2)">← Back</button>
+        <button class="btn btn-primary" onclick="goStep(4)">Next: Curriculum →</button>
+      </div>
     </div>
 
-    <!-- Step 4: Curriculum template -->
+    <!-- ══ STEP 4: Curriculum ══════════════════════════════════════════════ -->
     <div class="panel" id="p4">
       <p style="font-size:13px;color:var(--gray);margin-bottom:14px">Load a pre-built curriculum to auto-populate all your subjects, units, and prerequisites. You can always add, edit, or remove subjects on your dashboard.</p>
       <div class="tpl-grid" id="tpl-grid"></div>
@@ -221,18 +393,24 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
           <input type="file" id="curr-file-input" accept=".txt" style="display:none" onchange="parseCurriculumFile(event)">
         </label>
         <div id="parse-preview" style="display:none">
-          <div id="parse-stats" style="font-size:12px;color:var(--gp);font-weight:600;margin-bottom:8px"></div>
+          <div id="parse-stats"     style="font-size:12px;color:var(--success);font-weight:600;margin-bottom:8px"></div>
           <div id="parse-breakdown" style="font-size:11px;color:var(--gray);margin-bottom:10px"></div>
-          <div id="parse-error" style="font-size:12px;color:var(--gf);display:none"></div>
+          <div id="parse-error"     style="font-size:12px;color:#B91C1C;display:none"></div>
           <button class="btn btn-primary btn-sm" onclick="useUploadedCurriculum()" id="use-upload-btn">Use this curriculum →</button>
         </div>
       </div>
 
-      <div class="tpl-note" style="margin-top:12px">💡 More templates will be added over time. You can also <a href="about.html" style="color:var(--maroon)">send a curriculum request</a> and we'll add your school's program.</div>
-      <div class="pactions"><button class="btn btn-outline" onclick="goStep(3)">← Back</button><button class="btn btn-gold" onclick="createTracker()">Start tracking →</button></div>
+      <div class="tpl-note" style="margin-top:12px">
+        💡 More templates will be added over time. You can also <a href="about.html" style="color:var(--maroon)">send a curriculum request</a> and we'll add your school's program.
+      </div>
+      <div class="pactions">
+        <button class="btn btn-outline" onclick="goStep(3)">← Back</button>
+        <button class="btn btn-gold"    onclick="createTracker()">Start tracking →</button>
+      </div>
     </div>
-  </div>
-</div>
+
+  </div><!-- /.setup-card -->
+</div><!-- /.setup -->
 
 <footer>
   <p>AcadTrack — A free college progress tracker for Filipino students. &nbsp;·&nbsp; <a href="about.html" style="color:var(--light)">About & feedback</a></p>
@@ -240,82 +418,258 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
 </footer>
 
 <script>
+// ── CURRICULUM TEMPLATES ──────────────────────────────────────────────────────
 const TEMPLATES=[{id:'adamson_bsba_mm_2022',name:'BSBA Marketing Management',school:'Adamson University',course:'B.S.B.A. Marketing Management',tag:'Curriculum Year 2022',subjects:[['NSTP1','NSTP1','NSTP 1',3,1,1,[]],['BE112','BE112','Basic Microeconomics',3,1,1,[]],['MK111','MK111','Essentials of Marketing',3,1,1,[]],['PE111C','PE111C','PATHFIT1: Movement Competency Training',2,1,1,[]],['EN110','EN110','Purposive Communication',3,1,1,[]],['HI112','HI112','Readings in Philippine History',3,1,1,[]],['TH111E','TH111E','Searching for God in the World Today',3,1,1,[]],['MG226','MG226','The Entrepreneurial Mind',3,1,1,[]],['HU311','HU311','Art Appreciation',3,1,2,[]],['PH114','PH114','Ethics',3,1,2,[]],['MH110','MH110','Mathematics in the Modern World',3,1,2,[]],['MG113','MG113','Modern Management & Labor Relations',3,1,2,[]],['PE121C','PE121C','PATHFIT2: Exercise-Based Fitness Activities',2,1,2,[]],['TH121E','TH121E',"Responding to God's Call by Becoming Fully Human",3,1,2,['TH111E']],['PC110','PC110','Science, Technology and Society',3,1,2,[]],['NSTP2','NSTP2','NSTP 2',3,1,2,[]],['TH211E','TH211E',"Celebrating God's Presence as a Christian Community",3,2,1,['TH121E']],['MK424','MK424','Distribution Management',3,2,1,['MG113','MK111']],['IT112','IT112','Living in an IT Era',3,2,1,[]],['MK422','MK422','Marketing Management',3,2,1,['MK111']],['PE211C','PE211C','PATHFIT3: Dance',2,2,1,[]],['MK410','MK410','Professional Salesmanship',3,2,1,['MK111']],['HI311','HI311',"Rizal's Life & Works",3,2,1,[]],['HI113','HI113','The Contemporary World',3,2,1,[]],['PY111','PY111','Understanding the Self',3,2,2,[]],['MK400E1','MK400','Marketing Management Elective 1',3,2,2,[]],['MK421A','MK421A','Advertising',3,2,2,['MK422']],['MG221','MG221','Good Governance & Social Responsibility',3,2,2,['MK422']],['BL311C','BL311C','Law on Obligations, Contracts & Basic Labor Laws',3,2,2,['MG113']],['PE221C','PE221C','PATHFIT4: Sports',2,2,2,[]],['CSE115','CSE115','Presentation and Graphics Application',3,2,2,[]],['TH221E','TH221E','Transforming the World with Vincent de Paul',3,2,2,['TH211E']],['MH226','MH226','Business Statistics',3,3,1,['MH110']],['TX411','TX411','Income Taxation',3,3,1,[]],['PS221B','PS221B','Politics & Governance with Philippine Constitution',3,3,1,[]],['MK316','MK316','Pricing Strategy',3,3,1,['MK111']],['MK323A','MK323A','Retail Management',3,3,1,['MK424','MK422']],['CSE329','CSE329','Strategic Business Communication & Presentation',3,3,1,['CSE115']],['MK400E2','MK400','Marketing Management Elective 2',3,3,1,[]],['MK400E3','MK400','Marketing Elective 3',3,3,2,[]],['CSE328','CSE328','Management Information System',3,3,2,['CSE115']],['MG311C','MG311C','Human Resource Management',3,3,2,['MG113']],['MK415','MK415','Marketing Research 1',3,3,2,['MH226','MG113','MK111']],['OM326A','OM326A','Operations Management TQM w/ Educational Tour',3,3,2,['MG221','MG113']],['EN220','EN220','Business Technical Writing',3,3,2,[]],['MK327','MK327','Product Management',3,3,2,['MK111']],['MG328','MG328','Business Analytics',3,4,1,['MK422']],['MK317','MK317','E-Commerce & Internet Marketing',3,4,1,['MK422']],['BE321A','BE321A','International Business and Trade',3,4,1,['MK422']],['MK418A','MK418A','Marketing Feasibility Study',3,4,1,['MG226','MK422','MG113']],['MK400E4','MK400','Marketing Management Elective 4',3,4,1,[]],['MK416','MK416','Marketing Research 2',3,4,1,['MK415']],['MG323','MG323','Strategic Management',3,4,1,['MG113','MK111']],['MK423','MK423','Marketing Practicum',6,4,2,['MK410','MK421A','MK316','MK323A']]]}];
 
-function expandTemplate(t){return t.subjects.map(s=>({id:s[0],code:s[1],name:s[2],units:s[3],year:s[4],sem:s[5],prereqs:s[6],status:'not_taken',grade:''}))}
-
-let curStep=1,selectedTemplate=null;
-
-function goStep(n){
-  if(n===2){const v=document.getElementById('f-school').value.trim();if(!v){const el=document.getElementById('f-school');el.classList.add('error');el.focus();el.addEventListener('input',()=>el.classList.remove('error'),{once:true});return;}}
-  if(n===4)buildTemplateGrid();
-  const prev=curStep;
-  document.getElementById('p'+prev).classList.remove('active');
-  const si=document.getElementById('si'+prev);si.classList.remove('active');
-  if(n>prev)si.classList.add('done');else si.classList.remove('done');
-  curStep=n;
-  document.getElementById('p'+n).classList.add('active');
-  document.getElementById('si'+n).classList.add('active');
-  document.getElementById('setup').scrollIntoView({behavior:'smooth',block:'start'});
+function expandTemplate(t){
+  return t.subjects.map(s=>({id:s[0],code:s[1],name:s[2],units:s[3],year:s[4],sem:s[5],prereqs:s[6],status:'not_taken',grade:''}));
 }
 
-function buildTemplateGrid(){
-  const grid=document.getElementById('tpl-grid');
-  let html='';
-  TEMPLATES.forEach(t=>{
-    const cnt=t.subjects.length;
-    const u=t.subjects.reduce((a,s)=>a+s[3],0);
-    html+=`<label class="tpl-card" id="tc-${t.id}"><input type="radio" name="tpl" value="${t.id}" style="display:none" onchange="selectTpl('${t.id}')"><div class="tpl-head"><div><div class="tpl-school">${t.school}</div><div class="tpl-name">${t.name}</div></div><div class="tpl-badge">${t.tag}</div></div><div class="tpl-meta">${cnt} subjects &nbsp;·&nbsp; ${u} total units &nbsp;·&nbsp; 4-year program</div></label>`;
-  });
-  html+=`<label class="tpl-skip selected" id="tc-none"><input type="radio" name="tpl" value="none" checked onchange="selectTpl('none')"><span>Start empty — I'll add subjects manually on my dashboard</span></label>`;
-  grid.innerHTML=html;
-  selectedTemplate=null;
-}
-
-function selectTpl(id){
-  document.querySelectorAll('.tpl-card').forEach(el=>el.classList.remove('selected'));
-  document.getElementById('tc-none').classList.remove('selected');
-  selectedTemplate=id==='none'?null:id;
-  if(id==='none')document.getElementById('tc-none').classList.add('selected');
-  else document.getElementById('tc-'+id)?.classList.add('selected');
-}
-
-function pickGS(val){
-  document.getElementById('ropt1').classList.toggle('selected',val==='1_highest');
-  document.getElementById('ropt5').classList.toggle('selected',val==='5_highest');
-  const ph=document.getElementById('passing-hint');
-  if(val==='1_highest'){document.getElementById('f-passing').value='3.00';ph.textContent='Grades at or below this are passing.';}
-  else{document.getElementById('f-passing').value='3.00';ph.textContent='Grades at or above this are passing.';}
-}
-
-function createTracker(){
-  const school=document.getElementById('f-school').value.trim();
-  if(!school){goStep(1);return;}
-  let subjects=[],schoolVal=school,courseVal=document.getElementById('f-course').value.trim();
-  var curriculumTemplate=null;if(selectedTemplate==='__uploaded__'&&uploadedSubjects){subjects=uploadedSubjects;curriculumTemplate=uploadedSubjects.map(function(s){return {id:s.id,code:s.code,name:s.name,units:s.units,year:s.year,sem:s.sem,prereqs:s.prereqs};});}else if(selectedTemplate){const tpl=TEMPLATES.find(t=>t.id===selectedTemplate);if(tpl){subjects=expandTemplate(tpl);curriculumTemplate=tpl.subjects.map(function(s){return{id:s[0],code:s[1],name:s[2],units:s[3],year:s[4],sem:s[5],prereqs:s[6]};});if(!schoolVal)schoolVal=tpl.school;if(!courseVal)courseVal=tpl.course;}}
-  const data={school:schoolVal,name:document.getElementById('f-name').value.trim(),course:courseVal,curriculum:curriculumTemplate||[],gradeSystem:document.querySelector('input[name="gsys"]:checked').value,passingGrade:parseFloat(document.getElementById('f-passing').value)||3.00,targetGWA:document.getElementById('f-targetgwa').value.trim()||null,yearLevel:parseInt(document.getElementById('f-year').value),currentSem:parseInt(document.getElementById('f-sem').value),progYears:parseInt(document.getElementById('f-prog-years').value),targetDate:document.getElementById('f-graddate').value,subjects,created:new Date().toISOString()};
-  localStorage.setItem('acadtrack_data',JSON.stringify(data));
-  window.location.href='dashboard.html';
-}
-
-// ── CURRICULUM FILE PARSER ───────────────────────────────────────────────────
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let curStep = 1;
+let selectedTemplate = null;
+let selectedGS = '1_highest';   // grading system
+let selectedCal = 'semestral';  // calendar type
 let uploadedSubjects = null;
 
+// ── SCHOOL DROPDOWN ───────────────────────────────────────────────────────────
+function filterSchools() {
+  var q = document.getElementById('school-filter').value.toLowerCase().trim();
+  var sel = document.getElementById('f-school-select');
+  // Show/hide options based on filter query
+  var groups = sel.querySelectorAll('optgroup');
+  groups.forEach(function(grp) {
+    var anyVisible = false;
+    grp.querySelectorAll('option').forEach(function(opt) {
+      var match = !q || opt.text.toLowerCase().includes(q);
+      // CSS display on <option> is unreliable cross-browser; use a workaround
+      if (match) { opt.removeAttribute('disabled'); opt.style.display = ''; anyVisible = true; }
+      else        { opt.setAttribute('disabled','disabled'); opt.style.display = 'none'; }
+    });
+    // Collapse label for empty groups
+    grp.style.display = anyVisible ? '' : 'none';
+  });
+  // Always keep the "Other" standalone option visible
+  var otherOpt = sel.querySelector('option[value="__other__"]');
+  if (otherOpt) { otherOpt.removeAttribute('disabled'); otherOpt.style.display = ''; }
+}
+
+function onSchoolSelect() {
+  var sel = document.getElementById('f-school-select');
+  var val = sel.value;
+  var opt = sel.options[sel.selectedIndex];
+  var g   = opt ? opt.getAttribute('data-g')   : null;
+  var cal = opt ? opt.getAttribute('data-cal')  : null;
+
+  // Show / hide Other text input
+  var otherInput = document.getElementById('f-school-other');
+  otherInput.style.display = (val === '__other__') ? 'block' : 'none';
+  if (val === '__other__') { setTimeout(function(){ otherInput.focus(); }, 50); }
+
+  // Hide all hints first
+  document.getElementById('hint-benilde').style.display = 'none';
+  document.getElementById('hint-dlsu').style.display    = 'none';
+
+  // Auto-suggest grading / calendar based on selection
+  if (g === 'benilde') {
+    autoPickGS('benilde');
+    document.getElementById('hint-benilde').style.display = 'block';
+  } else if (g) {
+    autoPickGS(g);
+  }
+
+  if (cal === 'trimestral') {
+    autoPickCal('trimestral');
+    document.getElementById('hint-dlsu').style.display = 'block';
+  }
+}
+
+// Silent auto-pick (doesn't fire validation, just pre-selects)
+function autoPickGS(val) {
+  selectedGS = val;
+  // will be applied when user reaches step 2; just store it
+}
+function autoPickCal(val) {
+  selectedCal = val;
+}
+
+function getSchoolValue() {
+  var sel = document.getElementById('f-school-select');
+  if (!sel.value || sel.value === '') return '';
+  if (sel.value === '__other__') return document.getElementById('f-school-other').value.trim();
+  return sel.value;
+}
+
+// ── GRADING SYSTEM ────────────────────────────────────────────────────────────
+function pickGS(val) {
+  selectedGS = val;
+  ['ropt1','ropt5','roptB'].forEach(function(id){ document.getElementById(id).classList.remove('selected'); });
+  var map = { '1_highest':'ropt1', '5_highest':'ropt5', 'benilde':'roptB' };
+  if (map[val]) document.getElementById(map[val]).classList.add('selected');
+
+  var ph = document.getElementById('passing-hint');
+  var pf = document.getElementById('f-passing');
+  if (val === '1_highest') { pf.value = '3.00'; ph.textContent = 'Grades at or below this are passing.'; }
+  else if (val === '5_highest') { pf.value = '3.00'; ph.textContent = 'Grades at or above this are passing.'; }
+  else if (val === 'benilde')   { pf.value = '1.00'; ph.textContent = 'GPA scale: 1.00 is the minimum passing grade.'; }
+}
+
+// ── CALENDAR TYPE ─────────────────────────────────────────────────────────────
+var CAL_HINTS = {
+  semestral:      'Two semesters + optional summer/midyear per year. Used by most Philippine universities.',
+  trimestral:     'Three terms per year. No summer term. Used by some schools (e.g. DLSU, some programs).',
+  quadrimestral:  'Four terms per year. Less common; used by select universities.'
+};
+
+function pickCal(val) {
+  selectedCal = val;
+  ['cal-sem','cal-tri','cal-quad'].forEach(function(id){ document.getElementById(id).classList.remove('active'); });
+  var map = { semestral:'cal-sem', trimestral:'cal-tri', quadrimestral:'cal-quad' };
+  if (map[val]) document.getElementById(map[val]).classList.add('active');
+  document.getElementById('cal-hint').textContent = CAL_HINTS[val] || '';
+  updateSemOptions(); // refresh Step 3 sem dropdown
+}
+
+// ── SEMESTER OPTIONS (Step 3) ─────────────────────────────────────────────────
+var SEM_OPTS = {
+  semestral:     [{v:1,l:'1st Semester'},{v:2,l:'2nd Semester'},{v:3,l:'Summer / Midyear'}],
+  trimestral:    [{v:1,l:'1st Term'},{v:2,l:'2nd Term'},{v:3,l:'3rd Term'}],
+  quadrimestral: [{v:1,l:'1st Term'},{v:2,l:'2nd Term'},{v:3,l:'3rd Term'},{v:4,l:'4th Term'}]
+};
+
+function updateSemOptions() {
+  var sel  = document.getElementById('f-sem');
+  var prev = sel.value;
+  var opts = SEM_OPTS[selectedCal] || SEM_OPTS.semestral;
+  sel.innerHTML = opts.map(function(o){
+    return '<option value="'+o.v+'"'+(String(o.v)===String(prev)?' selected':'')+'>'+o.l+'</option>';
+  }).join('');
+}
+
+// ── STEPPER ───────────────────────────────────────────────────────────────────
+function goStep(n) {
+  // Validate before leaving Step 1
+  if (n === 2) {
+    var school = getSchoolValue();
+    if (!school) {
+      var sel = document.getElementById('f-school-select');
+      sel.classList.add('error');
+      sel.focus();
+      sel.addEventListener('change', function(){ sel.classList.remove('error'); }, { once:true });
+      return;
+    }
+  }
+  // When entering Step 2, apply any auto-detected grading / calendar
+  if (n === 2) {
+    pickGS(selectedGS);
+    pickCal(selectedCal);
+  }
+  // When entering Step 3, refresh sem options
+  if (n === 3) { updateSemOptions(); }
+  // When entering Step 4, build template grid
+  if (n === 4) { buildTemplateGrid(); }
+
+  var prev = curStep;
+  document.getElementById('p'+prev).classList.remove('active');
+  var si = document.getElementById('si'+prev);
+  si.classList.remove('active');
+  if (n > prev) si.classList.add('done'); else si.classList.remove('done');
+  curStep = n;
+  document.getElementById('p'+n).classList.add('active');
+  document.getElementById('si'+n).classList.add('active');
+  document.getElementById('setup').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+// ── TEMPLATE GRID ─────────────────────────────────────────────────────────────
+function buildTemplateGrid() {
+  var grid = document.getElementById('tpl-grid');
+  var html = '';
+  TEMPLATES.forEach(function(t) {
+    var cnt = t.subjects.length;
+    var u   = t.subjects.reduce(function(a,s){ return a+s[3]; }, 0);
+    html += '<label class="tpl-card" id="tc-'+t.id+'">'
+          + '<input type="radio" name="tpl" value="'+t.id+'" style="display:none" onchange="selectTpl(\''+t.id+'\')">'
+          + '<div class="tpl-head"><div><div class="tpl-school">'+t.school+'</div><div class="tpl-name">'+t.name+'</div></div>'
+          + '<div class="tpl-badge">'+t.tag+'</div></div>'
+          + '<div class="tpl-meta">'+cnt+' subjects &nbsp;·&nbsp; '+u+' total units &nbsp;·&nbsp; 4-year program</div></label>';
+  });
+  html += '<label class="tpl-skip selected" id="tc-none">'
+        + '<input type="radio" name="tpl" value="none" checked onchange="selectTpl(\'none\')">'
+        + '<span>Start empty — I\'ll add subjects manually on my dashboard</span></label>';
+  grid.innerHTML = html;
+  selectedTemplate = null;
+}
+
+function selectTpl(id) {
+  document.querySelectorAll('.tpl-card').forEach(function(el){ el.classList.remove('selected'); });
+  document.getElementById('tc-none').classList.remove('selected');
+  selectedTemplate = id === 'none' ? null : id;
+  if (id === 'none') document.getElementById('tc-none').classList.add('selected');
+  else { var el = document.getElementById('tc-'+id); if (el) el.classList.add('selected'); }
+}
+
+// ── CREATE TRACKER ────────────────────────────────────────────────────────────
+function createTracker() {
+  var school = getSchoolValue();
+  if (!school) { goStep(1); return; }
+
+  var subjects = [], schoolVal = school, courseVal = document.getElementById('f-course').value.trim();
+  var curriculumTemplate = null;
+
+  if (selectedTemplate === '__uploaded__' && uploadedSubjects) {
+    subjects = uploadedSubjects;
+    curriculumTemplate = uploadedSubjects.map(function(s){
+      return { id:s.id, code:s.code, name:s.name, units:s.units, year:s.year, sem:s.sem, prereqs:s.prereqs };
+    });
+  } else if (selectedTemplate) {
+    var tpl = TEMPLATES.find(function(t){ return t.id === selectedTemplate; });
+    if (tpl) {
+      subjects = expandTemplate(tpl);
+      curriculumTemplate = tpl.subjects.map(function(s){
+        return { id:s[0], code:s[1], name:s[2], units:s[3], year:s[4], sem:s[5], prereqs:s[6] };
+      });
+      if (!schoolVal) schoolVal = tpl.school;
+      if (!courseVal) courseVal = tpl.course;
+    }
+  }
+
+  var data = {
+    school:       schoolVal,
+    name:         document.getElementById('f-name').value.trim(),
+    course:       courseVal,
+    curriculum:   curriculumTemplate || [],
+    gradeSystem:  document.querySelector('input[name="gsys"]:checked').value,
+    calendarType: selectedCal,
+    passingGrade: parseFloat(document.getElementById('f-passing').value) || (selectedGS === 'benilde' ? 1.00 : 3.00),
+    targetGWA:    document.getElementById('f-targetgwa').value.trim() || null,
+    yearLevel:    parseInt(document.getElementById('f-year').value),
+    currentSem:   parseInt(document.getElementById('f-sem').value),
+    progYears:    parseInt(document.getElementById('f-prog-years').value),
+    targetDate:   document.getElementById('f-graddate').value,
+    subjects:     subjects,
+    created:      new Date().toISOString()
+  };
+
+  localStorage.setItem('acadtrack_data', JSON.stringify(data));
+  window.location.href = 'dashboard.html';
+}
+
+// ── CURRICULUM FILE PARSER ────────────────────────────────────────────────────
 function parseCurriculumFile(e) {
-  const file = e.target.files[0];
+  var file = e.target.files[0];
   if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
+  var reader = new FileReader();
+  reader.onload = function(ev) {
     try {
-      const subjects = parseCurriculumText(ev.target.result);
-      if (!subjects.length) throw new Error('No subjects found. Check the file format.');
-      uploadedSubjects = subjects;
-      showParsePreview(subjects);
+      var subs = parseCurriculumText(ev.target.result);
+      if (!subs.length) throw new Error('No subjects found. Check the file format.');
+      uploadedSubjects = subs;
+      showParsePreview(subs);
     } catch(err) {
       document.getElementById('parse-preview').style.display = 'block';
       document.getElementById('parse-stats').textContent = '';
       document.getElementById('parse-breakdown').textContent = '';
-      const errEl = document.getElementById('parse-error');
+      var errEl = document.getElementById('parse-error');
       errEl.style.display = 'block';
       errEl.textContent = '⚠ ' + err.message;
       document.getElementById('use-upload-btn').style.display = 'none';
@@ -326,101 +680,51 @@ function parseCurriculumFile(e) {
 }
 
 function parseCurriculumText(text) {
-  // Normalize line endings safely (avoid regex with special chars)
-  text = text.replace(/\r/g, '');
-  const lines = text.split('\n').map(function(l){ return l.trim(); });
-  const subjects = [];
+  text = text.replace(/\r/g,'');
+  var lines = text.split('\n').map(function(l){ return l.trim(); });
+  var subjects = [];
   var currentYear = 1, currentSem = 1;
-
   var YEAR_MAP = {'first':1,'second':2,'third':3,'fourth':4,'fifth':5,'1st':1,'2nd':2,'3rd':3,'4th':4,'5th':5};
   var SEM_MAP  = {'1st':1,'first':1,'2nd':2,'second':2,'summer':3,'midyear':3,'mid-year':3};
   var courseNumToId = {};
-
   for (var li = 0; li < lines.length; li++) {
     var line = lines[li];
     if (!line) continue;
-
-    // Detect "First Year, 1st Semester" or "Second Year, 2nd Semester"
     var ysm = line.match(/^(first|second|third|fourth|fifth|1st|2nd|3rd|4th|5th)\s+year[,\s]+(1st|2nd|summer|midyear|mid-year|first|second)/i);
-    if (ysm) {
-      currentYear = YEAR_MAP[ysm[1].toLowerCase()] || parseInt(ysm[1]) || currentYear;
-      currentSem  = SEM_MAP[ysm[2].toLowerCase()] || 1;
-      continue;
-    }
-
-    // Skip header/footer rows
+    if (ysm) { currentYear = YEAR_MAP[ysm[1].toLowerCase()]||parseInt(ysm[1])||currentYear; currentSem = SEM_MAP[ysm[2].toLowerCase()]||1; continue; }
     if (/^(course\s*no|description|total\s*units|elective|co-req)/i.test(line)) continue;
-
-    // Split on tabs OR multiple spaces (handle both formats)
-    var cols;
-    if (line.indexOf('\t') >= 0) {
-      cols = line.split('\t').map(function(c){ return c.trim(); });
-    } else {
-      cols = line.split(/\s{2,}/).map(function(c){ return c.trim(); });
-    }
+    var cols = line.indexOf('\t')>=0 ? line.split('\t').map(function(c){return c.trim();}) : line.split(/\s{2,}/).map(function(c){return c.trim();});
     if (cols.length < 3) continue;
-
-    var courseNo = cols[0] || '';
-    var code     = cols[1] || '';
-    var name     = cols[2] || '';
-    var units    = parseInt(cols[3]) || 3;
-    var prereqRaw = cols[4] ? cols[4].split(',').map(function(c){ return c.trim(); }).filter(Boolean) : [];
-
-    // Skip obviously non-subject rows
-    if (!name || name.length < 2) continue;
-    if (!/[A-Za-z]/.test(name)) continue;
-    if (!courseNo && code.length < 2) continue;
-
-    var id = 'u_' + (courseNo || code).replace(/\s/g,'') + '_' + (code || '').replace(/\s/g,'') + '_' + li;
-    if (courseNo) courseNumToId[courseNo] = id;
-    if (code)     courseNumToId[code]     = id;
-
-    // Normalize name to title case
-    var normName = name.split(' ').map(function(w) {
-      if (!w) return w;
-      var upper = w.toUpperCase();
-      // Keep short words and abbreviations uppercase
-      if (w.length <= 3 || /^[A-Z0-9]+$/.test(w)) return upper;
-      return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
-    }).join(' ');
-
-    subjects.push({ id:id, code:code, name:normName, units:units, year:currentYear, sem:currentSem, prereqs:prereqRaw, status:'not_taken', grade:'' });
+    var courseNo=cols[0]||'',code=cols[1]||'',name=cols[2]||'',units=parseInt(cols[3])||3;
+    var prereqRaw=cols[4]?cols[4].split(',').map(function(c){return c.trim();}).filter(Boolean):[];
+    if (!name||name.length<2||!/[A-Za-z]/.test(name)) continue;
+    if (!courseNo&&code.length<2) continue;
+    var id='u_'+(courseNo||code).replace(/\s/g,'')+'_'+(code||'').replace(/\s/g,'')+'_'+li;
+    if (courseNo) courseNumToId[courseNo]=id;
+    if (code)     courseNumToId[code]=id;
+    var normName=name.split(' ').map(function(w){if(!w)return w;if(w.length<=3||/^[A-Z0-9]+$/.test(w))return w.toUpperCase();return w.charAt(0).toUpperCase()+w.slice(1).toLowerCase();}).join(' ');
+    subjects.push({id:id,code:code,name:normName,units:units,year:currentYear,sem:currentSem,prereqs:prereqRaw,status:'not_taken',grade:''});
   }
-
   if (!subjects.length) throw new Error('Could not parse any subjects. Make sure the file uses tab-separated columns and has Year/Semester headers.');
-
-  // Resolve prereq course numbers/codes to subject IDs
-  subjects.forEach(function(s) {
-    s.prereqs = s.prereqs.map(function(num){ return courseNumToId[num]; }).filter(Boolean);
-  });
-
+  subjects.forEach(function(s){ s.prereqs=s.prereqs.map(function(num){return courseNumToId[num];}).filter(Boolean); });
   return subjects;
 }
 
 function showParsePreview(subjects) {
-  const preview = document.getElementById('parse-preview');
-  const stats   = document.getElementById('parse-stats');
-  const breakdown = document.getElementById('parse-breakdown');
-  const errEl   = document.getElementById('parse-error');
-  const btn     = document.getElementById('use-upload-btn');
-
+  var preview   = document.getElementById('parse-preview');
+  var stats     = document.getElementById('parse-stats');
+  var breakdown = document.getElementById('parse-breakdown');
+  var errEl     = document.getElementById('parse-error');
+  var btn       = document.getElementById('use-upload-btn');
   preview.style.display = 'block';
-  errEl.style.display = 'none';
-  btn.style.display = 'inline-flex';
-
-  const totalUnits = subjects.reduce((a,s) => a + s.units, 0);
-  stats.textContent = '✓ Found ' + subjects.length + ' subjects — ' + totalUnits + ' total units';
-
-  const byYear = {};
-  subjects.forEach(s => {
-    const k = 'Year ' + s.year;
-    if (!byYear[k]) byYear[k] = 0;
-    byYear[k]++;
-  });
-  breakdown.textContent = Object.entries(byYear).map(([k,v]) => k + ': ' + v + ' subj.').join('  ·  ');
-
-  // Deselect templates and mark upload as selected
-  document.querySelectorAll('.tpl-card').forEach(el => el.classList.remove('selected'));
+  errEl.style.display   = 'none';
+  btn.style.display     = 'inline-flex';
+  var totalUnits = subjects.reduce(function(a,s){return a+s.units;},0);
+  stats.textContent = '✓ Found '+subjects.length+' subjects — '+totalUnits+' total units';
+  var byYear = {};
+  subjects.forEach(function(s){ var k='Year '+s.year; if(!byYear[k])byYear[k]=0; byYear[k]++; });
+  breakdown.textContent = Object.entries(byYear).map(function(e){ return e[0]+': '+e[1]+' subj.'; }).join('  ·  ');
+  document.querySelectorAll('.tpl-card').forEach(function(el){ el.classList.remove('selected'); });
   document.getElementById('tc-none').classList.remove('selected');
   selectedTemplate = '__uploaded__';
 }
@@ -428,16 +732,30 @@ function showParsePreview(subjects) {
 function useUploadedCurriculum() {
   if (!uploadedSubjects) return;
   selectedTemplate = '__uploaded__';
-  const btn = document.getElementById('use-upload-btn');
+  var btn = document.getElementById('use-upload-btn');
   btn.textContent = '✓ Will use uploaded curriculum';
   btn.disabled = true;
 }
 
-window.addEventListener('DOMContentLoaded',()=>{
-  const raw=localStorage.getItem('acadtrack_data');
-  if(raw){try{const d=JSON.parse(raw);document.getElementById('returning').style.display='block';document.getElementById('resume-btn').style.display='inline-flex';document.getElementById('ret-name').textContent=d.name?'Welcome back, '+d.name+'!':'Welcome back!';const sc=d.subjects.filter(s=>s.status==='passed').length;document.getElementById('ret-desc').textContent=d.school+(d.course?' · '+d.course:'')+' · '+sc+' subject'+(sc!==1?'s':'')+' passed';}catch{}}
-  const fut=new Date();fut.setFullYear(fut.getFullYear()+4);
-  document.getElementById('f-graddate').value=fut.getFullYear()+'-'+String(fut.getMonth()+1).padStart(2,'0');
+// ── RETURNING USER BANNER ─────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function() {
+  var raw = localStorage.getItem('acadtrack_data');
+  if (raw) {
+    try {
+      var d = JSON.parse(raw);
+      document.getElementById('returning').style.display = 'block';
+      document.getElementById('resume-btn').style.display = 'inline-flex';
+      document.getElementById('ret-name').textContent = d.name ? 'Welcome back, '+d.name+'!' : 'Welcome back!';
+      var sc = d.subjects.filter(function(s){ return s.status==='passed'; }).length;
+      document.getElementById('ret-desc').textContent = d.school+(d.course?' · '+d.course:'')+'  ·  '+sc+' subject'+(sc!==1?'s':'')+' passed';
+    } catch(e){}
+  }
+  // Default graduation target: 4 years from now
+  var fut = new Date();
+  fut.setFullYear(fut.getFullYear()+4);
+  document.getElementById('f-graddate').value = fut.getFullYear()+'-'+String(fut.getMonth()+1).padStart(2,'0');
+  // Populate sem options with default (semestral)
+  updateSemOptions();
 });
 </script>
 </body>
