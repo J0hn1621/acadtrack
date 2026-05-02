@@ -17,9 +17,11 @@
   --gf:#B91C1C;--gf-bg:#FEE2E2;
   --go:#1D4ED8;--go-bg:#DBEAFE;
   --gn:#57534E;--gn-bg:#F5F5F4;
+  --gc:#0F766E;--gc-bg:#CCFBF1;    /* credited — teal */
   --radius:8px;--radius-lg:14px;
 }
 body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.5;min-height:100vh}
+/* ── TOPBAR ── */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;height:54px;background:var(--maroon);gap:12px;position:sticky;top:0;z-index:100}
 .tb-left{display:flex;align-items:center;gap:0;flex-shrink:0}
 .tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:10px}
@@ -34,8 +36,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);li
 .tb-profile-btn{display:flex;align-items:center;gap:7px;padding:4px 12px 4px 5px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none;margin-left:4px}
 .tb-profile-btn:hover{background:rgba(255,255,255,0.24);color:white}
 .tb-avatar{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
-.icon-btn{width:32px;height:32px;border-radius:var(--radius);border:none;background:rgba(255,255,255,0.15);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background 0.15s;text-decoration:none}
-.icon-btn:hover{background:rgba(255,255,255,0.25)}
+/* ── CONTENT ── */
 .content{max-width:1000px;margin:0 auto;padding:2rem 2rem 5rem}
 .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:1.5rem}
 .stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem 1.25rem}
@@ -43,6 +44,9 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);li
 .stat-val{font-size:1.6rem;font-weight:600;color:var(--dark);line-height:1;margin-bottom:4px}
 .stat-sub{font-size:11px;color:var(--gray)}
 .stat-m{border-top:3px solid var(--maroon)}.stat-g{border-top:3px solid var(--gold)}.stat-p{border-top:3px solid var(--gp)}.stat-b{border-top:3px solid var(--go)}
+/* Irregular badge */
+.irregular-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;background:#FEF3C7;color:#92400E;border:1px solid #FCD34D;margin-top:5px}
+/* ── PROGRESS ── */
 .prog-section{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
 .prog-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
 .prog-title{font-size:13px;font-weight:600;color:var(--mid)}
@@ -54,16 +58,20 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);li
 .prog-legend{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap}
 .prog-leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)}
 .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+/* ── ALERTS ── */
 .alert{border-radius:var(--radius);padding:10px 14px;font-size:12px;margin-bottom:1.5rem;display:flex;align-items:center;gap:8px}
 .alert.ok{background:var(--gp-bg);color:var(--gp);border:1px solid #86EFAC}
 .alert.warn{background:var(--gf-bg);color:var(--gf);border:1px solid #FCA5A5}
 .alert.info{background:var(--gold-light);color:var(--gold);border:1px solid var(--gold-border)}
+/* ── TABS ── */
 .tabs-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;gap:12px;flex-wrap:wrap}
 .tabs{display:flex;gap:4px;flex-wrap:wrap}
 .tab{padding:6px 16px;border-radius:var(--radius);font-size:13px;font-weight:500;border:1px solid var(--border);background:var(--white);color:var(--gray);cursor:pointer;transition:all 0.12s}
 .tab:hover{border-color:var(--maroon);color:var(--maroon)}
 .tab.active{background:var(--maroon);border-color:var(--maroon);color:white}
 .tab-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--go);margin-left:4px;vertical-align:middle}
+.tab-actions{display:flex;gap:8px}
+/* ── SUBJECT LIST ── */
 .sem-section{margin-bottom:1.75rem}
 .sem-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:7px;border-bottom:1px solid var(--border)}
 .sem-title{font-size:11px;font-weight:700;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase}
@@ -84,13 +92,17 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);li
 .st-failed{background:var(--gf-bg);color:var(--gf)}
 .st-ongoing{background:var(--go-bg);color:var(--go)}
 .st-not_taken{background:var(--gn-bg);color:var(--gn)}
+.st-credited{background:var(--gc-bg);color:var(--gc)}   /* NEW */
 .subj-btns{display:flex;gap:4px;flex-shrink:0}
 .row-btn{font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:var(--radius);background:transparent;cursor:pointer;color:var(--gray);font-family:'Inter',sans-serif;transition:all 0.1s}
 .row-btn:hover{border-color:var(--mid);color:var(--dark)}
 .row-btn.del:hover{border-color:var(--gf);color:var(--gf)}
 .add-btn{display:flex;align-items:center;gap:6px;padding:8px 18px;border-radius:var(--radius);background:var(--maroon);color:white;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.15s}
 .add-btn:hover{background:var(--maroon-hover,#9B2525)}
+.sim-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius);background:var(--white);color:var(--mid);font-size:13px;font-weight:500;border:1px solid var(--border);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s}
+.sim-btn:hover{border-color:var(--gold);color:var(--gold)}
 .year-empty{text-align:center;padding:3rem 1.5rem;color:var(--light);font-size:13px}
+/* ── MODALS ── */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem}
 .overlay.open{display:flex}
 .modal{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;width:min(520px,100%);max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
@@ -110,18 +122,31 @@ input::placeholder{color:var(--light)}
 .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--mid);transition:all 0.12s}
 .btn:hover{border-color:var(--mid);color:var(--dark)}
-.btn-primary{background:var(--maroon);border-color:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover,#9B2525);border-color:var(--maroon-hover,#9B2525)}
+.btn-primary{background:var(--maroon);border-color:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover,#9B2525);border-color:var(--maroon-hover)}
 .btn-danger{border-color:#FCA5A5;color:var(--gf)}.btn-danger:hover{background:var(--gf-bg)}
-.btn-green{background:var(--gp);border-color:var(--gp);color:white}.btn-green:hover{background:#166534}
+.btn-gold{background:var(--gold);border-color:var(--gold);color:white}.btn-gold:hover{background:#9A7D0A}
+.btn-sm{padding:6px 14px;font-size:12px}
 .stg-section{margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
 .stg-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
 .stg-section h4{font-size:13px;font-weight:600;margin-bottom:10px;color:var(--mid)}
 .io-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .io-note{font-size:11px;color:var(--light);margin-top:6px;line-height:1.6}
+/* ── SIMULATOR MODAL ── */
+.sim-subject-row{display:flex;align-items:center;gap:10px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:5px;background:var(--cream)}
+.sim-sub-info{flex:1;min-width:0}
+.sim-sub-name{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sim-sub-meta{font-size:11px;color:var(--light)}
+.sim-sub-grade{width:120px;flex-shrink:0}
+.sim-gwa-box{background:var(--maroon-light);border:1px solid #F5CECE;border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1.25rem;text-align:center}
+.sim-gwa-label{font-size:11px;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px}
+.sim-gwa-val{font-size:2.2rem;font-weight:700;color:var(--maroon);line-height:1}
+.sim-gwa-sub{font-size:12px;color:var(--gray);margin-top:4px}
+.sim-empty{font-size:13px;color:var(--light);text-align:center;padding:1.5rem 0}
+/* ── TOAST / CONFIRM ── */
 .toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:white;padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;z-index:999;transform:translateY(10px);opacity:0;transition:all 0.25s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .confirm-msg{font-size:14px;color:var(--mid);margin-bottom:1.25rem;line-height:1.6}
-@media(max-width:600px){.topbar{padding:0 1rem}.tb-school{display:none}.content{padding:1.25rem 1rem 4rem}.form-row{grid-template-columns:1fr}.subj-pct,.subj-btns{display:none}.stats-row{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.topbar{padding:0 1rem}.content{padding:1.25rem 1rem 4rem}.form-row{grid-template-columns:1fr}.subj-pct,.subj-btns{display:none}.stats-row{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -142,15 +167,13 @@ input::placeholder{color:var(--light)}
     <div class="tb-gwa" id="tb-gwa" style="font-size:12px;font-weight:600;background:rgba(255,255,255,0.18);color:white;padding:4px 12px;border-radius:99px;white-space:nowrap">GWA —</div>
     <div class="tb-sep"></div>
     <button class="tb-link" onclick="openSettings()">Settings</button>
-    <a href="about.html"           class="tb-link">About</a>
-    <a href="about.html#feedback"  class="tb-link">Contact</a>
+    <a href="about.html"          class="tb-link">About</a>
+    <a href="about.html#feedback" class="tb-link">Contact</a>
     <button class="tb-profile-btn" onclick="openSettings()" id="tb-profile-btn">
       <div class="tb-avatar" id="tb-avatar">?</div>
       <span id="tb-profile-label">Profile</span>
     </button>
   </div>
-</div>
-
 </div>
 
 <div class="content">
@@ -164,17 +187,26 @@ input::placeholder{color:var(--light)}
     </div>
     <a href="schedule.html" style="font-size:12px;color:var(--go);text-decoration:none;font-weight:500;padding:5px 12px;border:1px solid #93C5FD;border-radius:var(--radius);background:var(--white)">View schedule →</a>
   </div>
+
+  <!-- STAT CARDS -->
   <div class="stats-row">
-    <div class="stat-card stat-m"><div class="stat-label">GWA</div><div class="stat-val" id="s-gwa">—</div><div class="stat-sub" id="s-honor">No grades yet</div></div>
+    <div class="stat-card stat-m">
+      <div class="stat-label">GWA</div>
+      <div class="stat-val" id="s-gwa">—</div>
+      <div class="stat-sub" id="s-honor">No grades yet</div>
+      <div id="irregular-tag" class="irregular-tag" style="display:none">⚠ Irregular</div>
+    </div>
     <div class="stat-card stat-g"><div class="stat-label">Earned Units</div><div class="stat-val" id="s-units">0</div><div class="stat-sub" id="s-units-sub">of 0 in curriculum</div></div>
     <div class="stat-card stat-p"><div class="stat-label">Completion</div><div class="stat-val" id="s-prog">0%</div><div class="stat-sub" id="s-prog-sub">0 of 0 subjects passed</div></div>
     <div class="stat-card stat-b"><div class="stat-label">Est. Graduation</div><div class="stat-val" id="s-grad" style="font-size:1.05rem">—</div><div class="stat-sub" id="s-grad-sub">based on curriculum</div></div>
   </div>
+
+  <!-- PROGRESS BAR -->
   <div class="prog-section">
     <div class="prog-header">
       <span class="prog-title">Degree progress</span>
       <div class="prog-targets">
-        <span class="prog-target" id="pt-gwa" style="display:none">Target GWA: <strong id="pt-gwa-val"></strong></span>
+        <span class="prog-target" id="pt-gwa"  style="display:none">Target GWA: <strong id="pt-gwa-val"></strong></span>
         <span class="prog-target" id="pt-date" style="display:none">Target: <strong id="pt-date-val"></strong></span>
       </div>
     </div>
@@ -183,18 +215,26 @@ input::placeholder{color:var(--light)}
       <span class="prog-leg"><span class="leg-dot" style="background:var(--gp)"></span>Passed</span>
       <span class="prog-leg"><span class="leg-dot" style="background:var(--go)"></span>Ongoing</span>
       <span class="prog-leg"><span class="leg-dot" style="background:var(--gf)"></span>Failed</span>
+      <span class="prog-leg"><span class="leg-dot" style="background:var(--gc)"></span>Credited</span>
       <span class="prog-leg"><span class="leg-dot" style="background:var(--border)"></span>Not taken</span>
     </div>
   </div>
+
   <div class="alert info" id="track-alert" style="display:none"></div>
+
+  <!-- TABS + ACTION BUTTONS -->
   <div class="tabs-header">
     <div class="tabs" id="year-tabs"></div>
-    <button class="add-btn" onclick="openAddModal()">+ Add subject</button>
+    <div class="tab-actions">
+      <button class="sim-btn" onclick="openSimulator()">🔮 What-if Simulator</button>
+      <button class="add-btn" onclick="openAddModal()">+ Add subject</button>
+    </div>
   </div>
+
   <div id="subjects-area"></div>
 </div>
 
-<!-- ADD/EDIT MODAL -->
+<!-- ══ ADD / EDIT SUBJECT MODAL ══════════════════════════════════════════════ -->
 <div class="overlay" id="subj-overlay">
   <div class="modal">
     <div class="modal-title" id="subj-modal-title">Add subject</div>
@@ -203,9 +243,9 @@ input::placeholder{color:var(--light)}
       <select id="m-curr-pick" onchange="fillSubjectFromCurr()">
         <option value="">— select a subject —</option>
       </select>
-      <div class="hint">Selecting auto-fills the fields below. Only subjects not yet added are shown.</div>
+      <div class="hint">Only subjects not yet added are shown. Selecting auto-fills the fields below.</div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px" id="m-curr-divider" style="display:none">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px" id="m-curr-divider">
       <div style="flex:1;height:1px;background:var(--border)"></div>
       <span style="font-size:11px;color:var(--light)">or fill manually</span>
       <div style="flex:1;height:1px;background:var(--border)"></div>
@@ -217,11 +257,24 @@ input::placeholder{color:var(--light)}
     <div class="fg"><label>Subject name <span class="req">*</span></label><input type="text" id="m-name" placeholder="e.g. Essentials of Marketing"></div>
     <div class="form-row">
       <div class="fg"><label>Year level</label><select id="m-year"><option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option><option value="4">Year 4</option><option value="5">Year 5</option></select></div>
-      <div class="fg"><label>Semester</label><select id="m-sem"><option value="1">1st Semester</option><option value="2">2nd Semester</option><option value="3">Summer</option></select></div>
+      <div class="fg"><label>Term / Semester</label><select id="m-sem"><!-- filled dynamically --></select></div>
     </div>
     <div class="form-row">
-      <div class="fg"><label>Status</label><select id="m-status" onchange="onStatusChange()"><option value="not_taken">Not taken</option><option value="ongoing">Ongoing</option><option value="passed">Passed</option><option value="failed">Failed</option></select></div>
+      <div class="fg">
+        <label>Status</label>
+        <select id="m-status" onchange="onStatusChange()">
+          <option value="not_taken">Not taken</option>
+          <option value="ongoing">Ongoing</option>
+          <option value="passed">Passed</option>
+          <option value="failed">Failed</option>
+          <option value="credited">Credited ★</option>
+        </select>
+      </div>
       <div class="fg"><label>Grade</label><select id="m-grade"><option value="">— no grade —</option></select></div>
+    </div>
+    <!-- Credited info note -->
+    <div id="credited-note" style="display:none;font-size:11px;color:var(--gc);background:var(--gc-bg);border:1px solid #99F6E4;border-radius:var(--radius);padding:8px 10px;margin-bottom:1rem">
+      ★ <strong>Credited subjects</strong> count toward your earned units but are <strong>excluded from GWA computation</strong>. Use this for transferred, cross-enrolled, or advanced-credited courses.
     </div>
     <div class="fg">
       <label>Prerequisites <span class="opt">(optional)</span></label>
@@ -240,7 +293,7 @@ input::placeholder{color:var(--light)}
   </div>
 </div>
 
-<!-- SETTINGS MODAL -->
+<!-- ══ SETTINGS MODAL ════════════════════════════════════════════════════════ -->
 <div class="overlay" id="settings-overlay">
   <div class="modal" style="max-width:480px">
     <div class="modal-title">Settings</div>
@@ -254,27 +307,41 @@ input::placeholder{color:var(--light)}
     </div>
     <div class="stg-section">
       <h4>Grading preferences</h4>
-      <div class="fg"><label>Grading system</label><select id="st-gsys"><option value="1_highest">1.0 is highest (UP, Ateneo, Adamson, etc.)</option><option value="5_highest">5.0 is highest</option></select></div>
+      <div class="fg">
+        <label>Grading system</label>
+        <select id="st-gsys" onchange="onSettingsGSChange()">
+          <option value="1_highest">1.0 is highest (UP, Ateneo, Adamson, UST, etc.)</option>
+          <option value="5_highest">5.0 is highest</option>
+          <option value="benilde">4.0 is highest — Benilde / CSB</option>
+        </select>
+      </div>
       <div class="form-row">
         <div class="fg"><label>Passing threshold</label><input type="text" id="st-passing"></div>
         <div class="fg"><label>Target GWA <span class="opt">(optional)</span></label><input type="text" id="st-targetgwa"></div>
       </div>
     </div>
     <div class="stg-section">
+      <h4>Calendar / term system</h4>
+      <div class="fg">
+        <select id="st-caltype" onchange="onSettingsCalChange()">
+          <option value="semestral">Semestral (2 semesters + optional summer)</option>
+          <option value="trimestral">Trimestral (3 terms per year)</option>
+          <option value="quadrimestral">Quadrimestral (4 terms per year)</option>
+        </select>
+      </div>
+    </div>
+    <div class="stg-section">
       <h4>Timeline</h4>
       <div class="form-row">
         <div class="fg"><label>Current year level</label><select id="st-year"><option value="1">1st Year</option><option value="2">2nd Year</option><option value="3">3rd Year</option><option value="4">4th Year</option><option value="5">5th Year</option></select></div>
-        <div class="fg"><label>Current semester</label><select id="st-sem"><option value="1">1st Semester</option><option value="2">2nd Semester</option><option value="3">Summer</option></select></div>
+        <div class="fg"><label>Current term / semester</label><select id="st-sem"><!-- dynamic --></select></div>
       </div>
       <div class="fg"><label>Target graduation date</label><input type="month" id="st-graddate"></div>
     </div>
     <div class="stg-section">
       <h4>Curriculum</h4>
-      <p style="font-size:12px;color:var(--gray);margin-bottom:10px">Import a curriculum file to populate your subject list. Upload a <strong>.txt</strong> copy of your curriculum (tab-separated, with Year/Semester headers). This <em>adds</em> to your existing subjects — it won't delete anything.</p>
-      <label class="btn" style="cursor:pointer;margin-bottom:8px">
-        📂 Upload curriculum .txt
-        <input type="file" id="dash-curr-input" accept=".txt" style="display:none" onchange="dashImportCurriculum(event)">
-      </label>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:10px">Upload a <strong>.txt</strong> copy of your curriculum (tab-separated, with Year/Semester headers). This <em>adds</em> to your existing subjects — it won't delete anything.</p>
+      <label class="btn" style="cursor:pointer;margin-bottom:8px">📂 Upload curriculum .txt<input type="file" id="dash-curr-input" accept=".txt" style="display:none" onchange="dashImportCurriculum(event)"></label>
       <div id="dash-curr-preview" style="display:none;font-size:12px;margin-top:6px">
         <div id="dash-curr-stats" style="color:var(--gp);font-weight:600;margin-bottom:4px"></div>
         <div id="dash-curr-breakdown" style="color:var(--gray);margin-bottom:8px"></div>
@@ -284,12 +351,12 @@ input::placeholder{color:var(--light)}
     </div>
     <div class="stg-section">
       <h4>Data &amp; backup</h4>
-      <p style="font-size:12px;color:var(--gray);margin-bottom:10px">Your data is saved in this browser only. To use it on another device (e.g. switch from phone to PC), export and import it manually.</p>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:10px">Your data is saved in this browser only. Export to use on another device.</p>
       <div class="io-row">
         <button class="btn" onclick="exportData()">⬇ Export to file</button>
         <label class="btn" style="cursor:pointer">⬆ Import from file<input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)"></label>
       </div>
-      <div class="io-note">Export saves a .json file to your device. Import loads a previously exported file. Importing will replace your current data.</div>
+      <div class="io-note">Importing will replace your current data.</div>
     </div>
     <div class="stg-section">
       <h4 style="color:var(--gf)">Danger zone</h4>
@@ -302,7 +369,37 @@ input::placeholder{color:var(--light)}
   </div>
 </div>
 
-<!-- CONFIRM MODAL -->
+<!-- ══ WHAT-IF SIMULATOR MODAL ═══════════════════════════════════════════════ -->
+<div class="overlay" id="sim-overlay">
+  <div class="modal" style="max-width:540px">
+    <div class="modal-title">🔮 What-if GWA Simulator</div>
+    <p style="font-size:12px;color:var(--gray);margin-bottom:1.25rem;line-height:1.7">
+      Assign hypothetical grades to your remaining subjects and see your projected GWA in real time. Nothing is saved — this is for planning only.
+    </p>
+    <!-- Projected GWA display -->
+    <div class="sim-gwa-box">
+      <div class="sim-gwa-label">Projected GWA</div>
+      <div class="sim-gwa-val" id="sim-gwa-val">—</div>
+      <div class="sim-gwa-sub" id="sim-gwa-sub">Set grades below to calculate</div>
+    </div>
+    <!-- Current real GWA reference -->
+    <div style="font-size:12px;color:var(--gray);margin-bottom:10px;display:flex;gap:16px;flex-wrap:wrap">
+      <span>Current GWA: <strong id="sim-current-gwa" style="color:var(--dark)">—</strong></span>
+      <span>Subjects with grades: <strong id="sim-graded-count" style="color:var(--dark)">0</strong></span>
+      <span>Remaining: <strong id="sim-remaining-count" style="color:var(--dark)">0</strong></span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <span style="font-size:12px;font-weight:600;color:var(--mid)">Remaining subjects</span>
+      <button class="btn btn-sm" onclick="resetSimulator()">Clear all</button>
+    </div>
+    <div id="sim-subject-list"></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeModal('sim-overlay')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONFIRM MODAL ══════════════════════════════════════════════════════════ -->
 <div class="overlay" id="confirm-overlay">
   <div class="modal" style="max-width:380px">
     <div class="modal-title" id="confirm-title">Confirm</div>
@@ -317,108 +414,253 @@ input::placeholder{color:var(--light)}
 <div class="toast" id="toast"></div>
 
 <script>
-let D=null,editingId=null,activeYear=1;
-const KEY='acadtrack_data';
+let D = null, editingId = null, activeYear = 1;
+const KEY = 'acadtrack_data';
 
-function load(){
-  const raw=localStorage.getItem(KEY);
-  if(!raw){window.location.href='index.html';return;}
-  try{D=JSON.parse(raw);}catch{window.location.href='index.html';return;}
-  if(!D.subjects)D.subjects=[];
+function load() {
+  const raw = localStorage.getItem(KEY);
+  if (!raw) { window.location.href = 'index.html'; return; }
+  try { D = JSON.parse(raw); } catch { window.location.href = 'index.html'; return; }
+  if (!D.subjects) D.subjects = [];
+  if (!D.calendarType) D.calendarType = 'semestral';
 }
-function save(){localStorage.setItem(KEY,JSON.stringify(D));}
+function save() { localStorage.setItem(KEY, JSON.stringify(D)); }
 
-const GRADES_1H=[{v:'1.00',p:99},{v:'1.25',p:96},{v:'1.50',p:92},{v:'1.75',p:89},{v:'2.00',p:86},{v:'2.25',p:83},{v:'2.50',p:80},{v:'2.75',p:77},{v:'3.00',p:75},{v:'4.00',p:72},{v:'5.00',p:65},{v:'INC',p:null},{v:'DRP',p:null}];
-const GRADES_5H=[{v:'5.00',p:99},{v:'4.75',p:96},{v:'4.50',p:93},{v:'4.25',p:90},{v:'4.00',p:87},{v:'3.75',p:84},{v:'3.50',p:81},{v:'3.25',p:78},{v:'3.00',p:75},{v:'2.75',p:72},{v:'2.50',p:70},{v:'2.25',p:68},{v:'2.00',p:65},{v:'1.75',p:62},{v:'1.50',p:59},{v:'1.00',p:55},{v:'INC',p:null},{v:'DRP',p:null}];
-function gTable(){return D.gradeSystem==='5_highest'?GRADES_5H:GRADES_1H;}
-function g2pct(g){const r=gTable().find(x=>x.v===String(g));return r?r.p:null;}
-function isNum(g){return g&&!isNaN(parseFloat(g));}
-function isPassing(g){if(!isNum(g))return false;const n=parseFloat(g),p=D.passingGrade||3.00;return D.gradeSystem==='5_highest'?n>=p:n<=p;}
-function gColor(g){if(!isNum(g))return'var(--gray)';if(!isPassing(g))return'var(--gf)';const n=parseFloat(g),is1h=D.gradeSystem!=='5_highest';if(is1h){return n<=1.75?'var(--gp)':n<=2.50?'var(--go)':'var(--mid)';}else{return n>=4.5?'var(--gp)':n>=3.5?'var(--go)':'var(--mid)';}}
+// ── GRADE TABLES ──────────────────────────────────────────────────────────────
+const GRADES_1H = [
+  {v:'1.00',p:99},{v:'1.25',p:96},{v:'1.50',p:92},{v:'1.75',p:89},{v:'2.00',p:86},
+  {v:'2.25',p:83},{v:'2.50',p:80},{v:'2.75',p:77},{v:'3.00',p:75},{v:'4.00',p:72},
+  {v:'5.00',p:65},{v:'INC',p:null},{v:'DRP',p:null}
+];
+const GRADES_5H = [
+  {v:'5.00',p:99},{v:'4.75',p:96},{v:'4.50',p:93},{v:'4.25',p:90},{v:'4.00',p:87},
+  {v:'3.75',p:84},{v:'3.50',p:81},{v:'3.25',p:78},{v:'3.00',p:75},{v:'2.75',p:72},
+  {v:'2.50',p:70},{v:'2.25',p:68},{v:'2.00',p:65},{v:'1.75',p:62},{v:'1.50',p:59},
+  {v:'1.00',p:55},{v:'INC',p:null},{v:'DRP',p:null}
+];
+// Benilde / CSB — GPA-style, 4.0 is highest, 1.0 is minimum passing (D), 0.0 is Failed
+const GRADES_BENILDE = [
+  {v:'4.00',p:97},{v:'3.50',p:93},{v:'3.00',p:89},{v:'2.50',p:85},
+  {v:'2.00',p:80},{v:'1.50',p:75},{v:'1.00',p:70},{v:'0.00',p:null},
+  {v:'INC',p:null},{v:'DRP',p:null},{v:'W',p:null}
+];
 
-function computeGWA(subs){
-  const g=subs.filter(s=>s.status==='passed'&&isNum(s.grade));
-  if(!g.length)return null;
-  return(g.reduce((a,s)=>a+parseFloat(s.grade)*s.units,0)/g.reduce((a,s)=>a+s.units,0)).toFixed(2);
-}
-function honorLabel(gwa){
-  if(!gwa)return'No grades yet';
-  const n=parseFloat(gwa),is1h=D.gradeSystem!=='5_highest';
-  if(is1h){if(n<=1.20)return'Summa cum laude';if(n<=1.45)return'Magna cum laude';if(n<=1.75)return'Cum laude';if(n<=2.00)return'Good standing';if(n<=3.00)return'Passing';return'Below passing';}
-  else{if(n>=4.75)return'Summa cum laude';if(n>=4.25)return'Magna cum laude';if(n>=3.75)return'Cum laude';if(n>=3.00)return'Passing';return'Below passing';}
-}
-function estimateGrad(){
-  if(!D.subjects.length)return null;
-  const rem=new Set();
-  D.subjects.forEach(s=>{if(s.status!=='passed')rem.add(s.year+'-'+s.sem);});
-  if(!rem.size)return{label:'Done! 🎓',sub:'All subjects passed'};
-  const months=rem.size*5,est=new Date();
-  est.setMonth(est.getMonth()+months);
-  return{label:est.toLocaleString('default',{month:'long'})+' '+est.getFullYear(),sub:rem.size+' semester'+(rem.size>1?'s':'')+' remaining'};
-}
-function prereqMet(s){return s.prereqs.every(pid=>{const p=D.subjects.find(x=>x.id===pid);return p&&p.status==='passed';});}
-
-function render(){
-  const subs=D.subjects,passed=subs.filter(s=>s.status==='passed');
-  const schoolEl=document.getElementById('tb-school');
-  if(schoolEl)schoolEl.textContent=D.course?D.school+' · '+D.course:D.school||'';
-  const userEl=document.getElementById('tb-user');
-  if(userEl)userEl.textContent=D.name||(D.course?D.school+' · '+D.course:D.school)||'';
-  const gwa=computeGWA(subs);
-  document.getElementById('s-gwa').textContent=gwa||'—';
-  document.getElementById('s-honor').textContent=honorLabel(gwa);
-  const gwaEl=document.getElementById('tb-gwa');if(gwaEl)gwaEl.textContent=gwa?'GWA '+gwa:'GWA —';
-  const totalU=subs.reduce((a,s)=>a+s.units,0),earnedU=passed.reduce((a,s)=>a+s.units,0);
-  document.getElementById('s-units').textContent=earnedU;
-  document.getElementById('s-units-sub').textContent='of '+totalU+' in curriculum';
-  const pct=totalU?Math.round(earnedU/totalU*100):0;
-  document.getElementById('s-prog').textContent=pct+'%';
-  document.getElementById('s-prog-sub').textContent=passed.length+' of '+subs.length+' subjects passed';
-  document.getElementById('prog-fill').style.width=pct+'%';
-  const est=estimateGrad();
-  if(est){document.getElementById('s-grad').textContent=est.label;document.getElementById('s-grad-sub').textContent=est.sub;}
-  if(D.targetGWA){document.getElementById('pt-gwa').style.display='inline';document.getElementById('pt-gwa-val').textContent=D.targetGWA;}
-  if(D.targetDate){const[yr,mo]=D.targetDate.split('-');const ml=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];document.getElementById('pt-date').style.display='inline';document.getElementById('pt-date-val').textContent=ml[parseInt(mo)-1]+' '+yr;}
-  renderAlert(gwa,est);renderTabs();renderSubjects();
+function gTable() {
+  if (D.gradeSystem === '5_highest') return GRADES_5H;
+  if (D.gradeSystem === 'benilde')   return GRADES_BENILDE;
+  return GRADES_1H;
 }
 
-function renderAlert(gwa,est){
-  const el=document.getElementById('track-alert');const msgs=[];
-  if(D.targetGWA&&gwa){const tg=parseFloat(D.targetGWA),cg=parseFloat(gwa),is1h=D.gradeSystem!=='5_highest',onTrack=is1h?cg<=tg:cg>=tg;if(onTrack)msgs.push('✓ You are meeting your target GWA of '+D.targetGWA+'.');else msgs.push('Your current GWA ('+gwa+') is '+(is1h?'above':'below')+' your target of '+D.targetGWA+'.');}
-  if(msgs.length){el.style.display='flex';el.textContent=msgs.join(' ');el.className='alert '+(msgs.every(m=>m.startsWith('✓'))?'ok':'warn');}else el.style.display='none';
+function isNum(g) { return g && !isNaN(parseFloat(g)); }
+
+function isPassing(g) {
+  if (!isNum(g)) return false;
+  const n = parseFloat(g), p = D.passingGrade || 3.00;
+  // Benilde and 5_highest: higher = better, so passing means >= threshold
+  if (D.gradeSystem === '5_highest' || D.gradeSystem === 'benilde') return n >= p;
+  return n <= p;
 }
 
-function renderTabs(){
-  const container=document.getElementById('year-tabs');
-  const years=[...new Set(D.subjects.map(s=>s.year))].sort((a,b)=>a-b);
-  if(!years.length)years.push(D.yearLevel||1);
-  if(!years.includes(activeYear))activeYear=years[0];
-  container.innerHTML='';
-  years.forEach(y=>{
-    const hasOn=D.subjects.some(s=>s.year===y&&s.status==='ongoing');
-    const t=document.createElement('button');
-    t.className='tab'+(y===activeYear?' active':'');
-    t.innerHTML='Year '+y+(hasOn?'<span class="tab-dot"></span>':'');
-    t.onclick=()=>{activeYear=y;renderTabs();renderSubjects();};
+function gColor(g) {
+  if (!isNum(g)) return 'var(--gray)';
+  if (!isPassing(g)) return 'var(--gf)';
+  const n = parseFloat(g);
+  if (D.gradeSystem === 'benilde') {
+    return n >= 3.50 ? 'var(--gp)' : n >= 2.50 ? 'var(--go)' : 'var(--mid)';
+  }
+  if (D.gradeSystem === '5_highest') {
+    return n >= 4.50 ? 'var(--gp)' : n >= 3.50 ? 'var(--go)' : 'var(--mid)';
+  }
+  return n <= 1.75 ? 'var(--gp)' : n <= 2.50 ? 'var(--go)' : 'var(--mid)';
+}
+
+function g2pct(g) { const r = gTable().find(x => x.v === String(g)); return r ? r.p : null; }
+
+function computeGWA(subs) {
+  // Only passed subjects with numeric grades; credited subjects are EXCLUDED
+  const g = subs.filter(s => s.status === 'passed' && isNum(s.grade));
+  if (!g.length) return null;
+  return (g.reduce((a,s) => a + parseFloat(s.grade)*s.units, 0) / g.reduce((a,s) => a+s.units, 0)).toFixed(2);
+}
+
+function honorLabel(gwa) {
+  if (!gwa) return 'No grades yet';
+  const n = parseFloat(gwa);
+  if (D.gradeSystem === 'benilde') {
+    if (n >= 3.80) return 'Summa cum laude';
+    if (n >= 3.50) return 'Magna cum laude';
+    if (n >= 3.20) return 'Cum laude';
+    if (n >= 1.00) return 'Passing';
+    return 'Below passing';
+  }
+  if (D.gradeSystem === '5_highest') {
+    if (n >= 4.75) return 'Summa cum laude';
+    if (n >= 4.25) return 'Magna cum laude';
+    if (n >= 3.75) return 'Cum laude';
+    if (n >= 3.00) return 'Passing';
+    return 'Below passing';
+  }
+  // 1_highest (default)
+  if (n <= 1.20) return 'Summa cum laude';
+  if (n <= 1.45) return 'Magna cum laude';
+  if (n <= 1.75) return 'Cum laude';
+  if (n <= 2.00) return 'Good standing';
+  if (n <= 3.00) return 'Passing';
+  return 'Below passing';
+}
+
+// ── CALENDAR HELPERS ──────────────────────────────────────────────────────────
+const SEM_LABELS = {
+  semestral:     {1:'1st Semester', 2:'2nd Semester', 3:'Summer / Midyear'},
+  trimestral:    {1:'1st Term', 2:'2nd Term', 3:'3rd Term'},
+  quadrimestral: {1:'1st Term', 2:'2nd Term', 3:'3rd Term', 4:'4th Term'}
+};
+const MONTHS_PER_TERM = { semestral:5, trimestral:4, quadrimestral:3 };
+
+function getSemLabel(sem) {
+  const labels = SEM_LABELS[D.calendarType] || SEM_LABELS.semestral;
+  return labels[sem] || ('Term '+sem);
+}
+
+function getSemOptions() {
+  const labels = SEM_LABELS[D.calendarType] || SEM_LABELS.semestral;
+  return Object.entries(labels).map(([v,l]) => ({ v:parseInt(v), l }));
+}
+
+function estimateGrad() {
+  if (!D.subjects.length) return null;
+  const mpt = MONTHS_PER_TERM[D.calendarType] || 5;
+  const rem = new Set();
+  D.subjects.forEach(s => {
+    if (s.status !== 'passed' && s.status !== 'credited') rem.add(s.year+'-'+s.sem);
+  });
+  if (!rem.size) return { label:'Done! 🎓', sub:'All subjects passed' };
+  const months = rem.size * mpt;
+  const est = new Date();
+  est.setMonth(est.getMonth() + months);
+  return { label:est.toLocaleString('default',{month:'long'})+' '+est.getFullYear(), sub:rem.size+' term'+(rem.size>1?'s':'')+' remaining' };
+}
+
+// ── IRREGULAR DETECTION ───────────────────────────────────────────────────────
+function isIrregular() {
+  const ongoing = D.subjects.filter(s => s.status === 'ongoing');
+  if (!ongoing.length) return false;
+  const years = [...new Set(ongoing.map(s => s.year))];
+  // Irregular if ongoing subjects span more than one year level
+  // OR if any ongoing year doesn't match declared current year level
+  return years.some(y => y !== (D.yearLevel || 1));
+}
+
+function prereqMet(s) {
+  return s.prereqs.every(pid => {
+    const p = D.subjects.find(x => x.id === pid);
+    return p && (p.status === 'passed' || p.status === 'credited');
+  });
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render() {
+  const subs = D.subjects;
+  const passed   = subs.filter(s => s.status === 'passed');
+  const credited = subs.filter(s => s.status === 'credited');
+
+  const gwa = computeGWA(subs);
+  document.getElementById('s-gwa').textContent   = gwa || '—';
+  document.getElementById('s-honor').textContent = honorLabel(gwa);
+  const gwaEl = document.getElementById('tb-gwa');
+  if (gwaEl) gwaEl.textContent = gwa ? 'GWA '+gwa : 'GWA —';
+
+  // Irregular badge
+  document.getElementById('irregular-tag').style.display = isIrregular() ? 'inline-flex' : 'none';
+
+  // Earned units: passed + credited both count
+  const totalU  = subs.reduce((a,s) => a+s.units, 0);
+  const earnedU = [...passed, ...credited].reduce((a,s) => a+s.units, 0);
+  document.getElementById('s-units').textContent = earnedU;
+  document.getElementById('s-units-sub').textContent = 'of '+totalU+' in curriculum';
+
+  const pct = totalU ? Math.round(earnedU/totalU*100) : 0;
+  document.getElementById('s-prog').textContent = pct+'%';
+  document.getElementById('s-prog-sub').textContent = passed.length+' of '+subs.length+' subjects passed'+(credited.length ? ' · '+credited.length+' credited' : '');
+  document.getElementById('prog-fill').style.width = pct+'%';
+
+  const est = estimateGrad();
+  if (est) { document.getElementById('s-grad').textContent = est.label; document.getElementById('s-grad-sub').textContent = est.sub; }
+
+  if (D.targetGWA) { document.getElementById('pt-gwa').style.display='inline'; document.getElementById('pt-gwa-val').textContent=D.targetGWA; }
+  if (D.targetDate) {
+    const [yr,mo] = D.targetDate.split('-');
+    const ml=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    document.getElementById('pt-date').style.display='inline';
+    document.getElementById('pt-date-val').textContent=ml[parseInt(mo)-1]+' '+yr;
+  }
+
+  renderAlert(gwa);
+  renderTabs();
+  renderSubjects();
+
+  // Profile pill
+  const name = D.name||(D.school?D.school.split(' ')[0]:'');
+  const init = name?name.charAt(0).toUpperCase():'?';
+  const av = document.getElementById('tb-avatar');
+  const lb = document.getElementById('tb-profile-label');
+  if (av) av.textContent = init;
+  if (lb) lb.textContent = name||'Profile';
+}
+
+function renderAlert(gwa) {
+  const el = document.getElementById('track-alert');
+  const msgs = [];
+  if (D.targetGWA && gwa) {
+    const tg=parseFloat(D.targetGWA), cg=parseFloat(gwa);
+    const isBetter = D.gradeSystem==='benilde'||D.gradeSystem==='5_highest' ? cg>=tg : cg<=tg;
+    if (isBetter) msgs.push('✓ You are meeting your target GWA of '+D.targetGWA+'.');
+    else msgs.push('Your current GWA ('+gwa+') is not yet at your target of '+D.targetGWA+'.');
+  }
+  if (msgs.length) { el.style.display='flex'; el.textContent=msgs.join(' '); el.className='alert '+(msgs.every(m=>m.startsWith('✓'))?'ok':'warn'); }
+  else el.style.display='none';
+}
+
+function renderTabs() {
+  const container = document.getElementById('year-tabs');
+  const years = [...new Set(D.subjects.map(s=>s.year))].sort((a,b)=>a-b);
+  if (!years.length) years.push(D.yearLevel||1);
+  if (!years.includes(activeYear)) activeYear = years[0];
+  container.innerHTML = '';
+  years.forEach(y => {
+    const hasOn = D.subjects.some(s=>s.year===y&&s.status==='ongoing');
+    const t = document.createElement('button');
+    t.className = 'tab'+(y===activeYear?' active':'');
+    t.innerHTML = 'Year '+y+(hasOn?'<span class="tab-dot"></span>':'');
+    t.onclick = () => { activeYear=y; renderTabs(); renderSubjects(); };
     container.appendChild(t);
   });
 }
 
-function renderSubjects(){
-  const area=document.getElementById('subjects-area');
-  const subs=D.subjects.filter(s=>s.year===activeYear);
-  if(!subs.length){area.innerHTML='<div class="year-empty"><p>No subjects added for Year '+activeYear+' yet.</p></div>';return;}
-  const bySem={};[1,2,3].forEach(sem=>{const l=subs.filter(s=>s.sem===sem);if(l.length)bySem[sem]=l;});
-  const SL={1:'1st Semester',2:'2nd Semester',3:'Summer / Midyear'};
-  let html='';
-  Object.entries(bySem).forEach(([sem,list])=>{
-    const tu=list.reduce((a,s)=>a+s.units,0),pu=list.filter(s=>s.status==='passed').reduce((a,s)=>a+s.units,0);
-    html+=`<div class="sem-section"><div class="sem-header"><span class="sem-title">${SL[sem]}</span><span class="sem-meta">${list.length} subjects · ${tu} units · ${pu} earned</span></div><div class="subj-list">`;
-    list.forEach(s=>{
-      const unmet=s.prereqs.length>0&&!prereqMet(s)&&s.status==='not_taken';
-      const pct=g2pct(s.grade);
-      const prNames=s.prereqs.map(pid=>{const p=D.subjects.find(x=>x.id===pid);return p?(p.code||p.name):'?';}).join(', ');
-      html+=`<div class="subj-row${unmet?' dimmed':''}">
+function renderSubjects() {
+  const area = document.getElementById('subjects-area');
+  const subs = D.subjects.filter(s=>s.year===activeYear);
+  if (!subs.length) { area.innerHTML='<div class="year-empty"><p>No subjects added for Year '+activeYear+' yet.</p></div>'; return; }
+
+  const semOpts = getSemOptions();
+  const bySem = {};
+  semOpts.forEach(o => { const l=subs.filter(s=>s.sem===o.v); if(l.length) bySem[o.v]=l; });
+
+  let html = '';
+  Object.entries(bySem).forEach(([sem,list]) => {
+    const tu=list.reduce((a,s)=>a+s.units,0);
+    const eu=list.filter(s=>s.status==='passed'||s.status==='credited').reduce((a,s)=>a+s.units,0);
+    html += `<div class="sem-section">
+      <div class="sem-header">
+        <span class="sem-title">${getSemLabel(parseInt(sem))}</span>
+        <span class="sem-meta">${list.length} subjects · ${tu} units · ${eu} earned</span>
+      </div>
+      <div class="subj-list">`;
+    list.forEach(s => {
+      const unmet = s.prereqs.length>0 && !prereqMet(s) && s.status==='not_taken';
+      const pct = g2pct(s.grade);
+      const prNames = s.prereqs.map(pid=>{const p=D.subjects.find(x=>x.id===pid);return p?(p.code||p.name):'?';}).join(', ');
+      html += `<div class="subj-row${unmet?' dimmed':''}">
         <div class="subj-code">${esc(s.code||'—')}</div>
         <div class="subj-info">
           <div class="subj-name">${esc(s.name)}</div>
@@ -426,151 +668,130 @@ function renderSubjects(){
         </div>
         <div><div class="subj-grade" style="color:${s.grade?gColor(s.grade):'var(--light)'}">${esc(s.grade||'—')}</div><div class="subj-pct">${pct!==null?pct+'%':''}</div></div>
         <span class="badge st-${s.status}">${stLabel(s.status)}</span>
-        <div class="subj-btns"><button class="row-btn" onclick="openEditModal('${s.id}')">Edit</button><button class="row-btn del" onclick="confirmDelete('${s.id}')">×</button></div>
+        <div class="subj-btns">
+          <button class="row-btn" onclick="openEditModal('${s.id}')">Edit</button>
+          <button class="row-btn del" onclick="confirmDelete('${s.id}')">×</button>
+        </div>
       </div>`;
     });
-    html+=`</div></div>`;
+    html += `</div></div>`;
   });
-  area.innerHTML=html;
+  area.innerHTML = html;
 }
 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function stLabel(s){return{passed:'Passed',failed:'Failed',ongoing:'Ongoing',not_taken:'Not taken'}[s]||s;}
+function stLabel(s){return{passed:'Passed',failed:'Failed',ongoing:'Ongoing',not_taken:'Not taken',credited:'Credited'}[s]||s;}
 
-function buildGradeOpts(sel){
-  const opts=['<option value="">— no grade —</option>'];
-  gTable().forEach(g=>opts.push(`<option value="${g.v}"${g.v===sel?' selected':''}>${g.v}${g.p!==null?' ('+g.p+'%)':''}</option>`));
-  document.getElementById('m-grade').innerHTML=opts.join('');
+// ── GRADE OPTIONS ─────────────────────────────────────────────────────────────
+function buildGradeOpts(sel) {
+  const opts = ['<option value="">— no grade —</option>'];
+  gTable().forEach(g => opts.push(`<option value="${g.v}"${g.v===sel?' selected':''}>${g.v}${g.p!==null?' ('+g.p+'%)':''}</option>`));
+  document.getElementById('m-grade').innerHTML = opts.join('');
 }
+
+// ── SEMESTER OPTIONS (modal) ──────────────────────────────────────────────────
+function buildSemOpts(sel) {
+  const opts = getSemOptions();
+  document.getElementById('m-sem').innerHTML = opts.map(o=>`<option value="${o.v}"${String(o.v)===String(sel)?' selected':''}>${o.l}</option>`).join('');
+}
+
 function semOrder(year,sem){return year*10+sem;}
 
-function buildPrereqList(excId,selIds,curYear,curSem){
-  const el=document.getElementById('prereq-list');
-  // Only show subjects from strictly earlier year/sem combinations
-  const earlier=D.subjects.filter(s=>{
-    if(s.id===excId)return false;
-    // Always include already-selected prereqs even if same year (edge case)
-    if(selIds.includes(s.id))return true;
+function buildPrereqList(excId,selIds,curYear,curSem) {
+  const el = document.getElementById('prereq-list');
+  const earlier = D.subjects.filter(s => {
+    if (s.id===excId) return false;
+    if (selIds.includes(s.id)) return true;
     return semOrder(s.year,s.sem)<semOrder(curYear||99,curSem||9);
   });
-  if(!earlier.length){
-    el.innerHTML='<span style="font-size:12px;color:var(--light)">No earlier subjects found. Add subjects from prior semesters first.</span>';
-    return;
-  }
-  // Group by year+sem for readability
+  if (!earlier.length) { el.innerHTML='<span style="font-size:12px;color:var(--light)">No earlier subjects found.</span>'; return; }
   const groups={};
-  earlier.forEach(s=>{
-    const k=s.year+'-'+s.sem;
-    if(!groups[k])groups[k]=[];
-    groups[k].push(s);
-  });
-  const SL={1:'1st Sem',2:'2nd Sem',3:'Summer'};
+  earlier.forEach(s=>{const k=s.year+'-'+s.sem;if(!groups[k])groups[k]=[];groups[k].push(s);});
   let html='';
   Object.entries(groups).sort(([a],[b])=>a.localeCompare(b)).forEach(([k,list])=>{
     const[y,sm]=k.split('-');
-    html+=`<div style="font-size:10px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;padding:4px 0 2px">Year ${y} · ${SL[sm]}</div>`;
-    list.forEach(s=>{
-      html+=`<label class="prereq-opt"><input type="checkbox" value="${s.id}"${selIds.includes(s.id)?' checked':''} style="accent-color:var(--maroon)"><span class="pc">${esc(s.code||'—')}</span><span>${esc(s.name)}</span></label>`;
-    });
+    html+=`<div style="font-size:10px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;padding:4px 0 2px">Year ${y} · ${getSemLabel(parseInt(sm))}</div>`;
+    list.forEach(s=>{html+=`<label class="prereq-opt"><input type="checkbox" value="${s.id}"${selIds.includes(s.id)?' checked':''} style="accent-color:var(--maroon)"><span class="pc">${esc(s.code||'—')}</span><span>${esc(s.name)}</span></label>`;});
   });
   el.innerHTML=html;
 }
 
-function buildRequiredBy(subjectId){
-  const fg=document.getElementById('required-by-fg');
-  const list=document.getElementById('required-by-list');
+function buildRequiredBy(subjectId) {
+  const fg=document.getElementById('required-by-fg'),list=document.getElementById('required-by-list');
   if(!subjectId){fg.style.display='none';return;}
-  const dependents=D.subjects.filter(s=>s.id!==subjectId&&(s.prereqs||[]).includes(subjectId));
-  if(!dependents.length){fg.style.display='none';return;}
+  const deps=D.subjects.filter(s=>s.id!==subjectId&&(s.prereqs||[]).includes(subjectId));
+  if(!deps.length){fg.style.display='none';return;}
   fg.style.display='block';
-  list.innerHTML=dependents.map(s=>`
-    <div style="display:flex;align-items:center;gap:8px;font-size:12px;padding:2px 0">
-      <span style="font-size:11px;font-weight:700;color:var(--maroon);min-width:52px">${esc(s.code||'—')}</span>
-      <span style="color:var(--mid)">${esc(s.name)}</span>
-      <span style="font-size:10px;color:var(--light);margin-left:auto">Year ${s.year} · Sem ${s.sem}</span>
-    </div>`).join('');
+  list.innerHTML=deps.map(s=>`<div style="display:flex;align-items:center;gap:8px;font-size:12px;padding:2px 0"><span style="font-size:11px;font-weight:700;color:var(--maroon);min-width:52px">${esc(s.code||'—')}</span><span style="color:var(--mid)">${esc(s.name)}</span><span style="font-size:10px;color:var(--light);margin-left:auto">Year ${s.year} · ${getSemLabel(s.sem)}</span></div>`).join('');
 }
 
-function getCurriculum(){
-  // Returns curriculum template. Falls back to existing subjects if no template stored.
-  if(D.curriculum&&D.curriculum.length) return D.curriculum;
-  return D.subjects.map(function(s){return {id:s.id,code:s.code,name:s.name,units:s.units,year:s.year,sem:s.sem,prereqs:s.prereqs};});
-}
+function getCurriculum(){return D.curriculum&&D.curriculum.length?D.curriculum:D.subjects.map(s=>({id:s.id,code:s.code,name:s.name,units:s.units,year:s.year,sem:s.sem,prereqs:s.prereqs}));}
 
 function fillSubjectFromCurr(){
-  var id = document.getElementById('m-curr-pick').value;
-  if(!id) return;
-  var curr = getCurriculum();
-  var s = curr.find(function(x){return x.id===id;});
-  if(!s) return;
-  document.getElementById('m-code').value = s.code||'';
-  document.getElementById('m-name').value = s.name||'';
-  document.getElementById('m-units').value = s.units||3;
-  document.getElementById('m-year').value = String(s.year||1);
-  document.getElementById('m-sem').value  = String(s.sem||1);
-  // Pre-fill prereqs
-  buildPrereqList(null, s.prereqs||[], s.year||1, s.sem||1);
+  const id=document.getElementById('m-curr-pick').value;
+  if(!id)return;
+  const s=getCurriculum().find(x=>x.id===id);
+  if(!s)return;
+  document.getElementById('m-code').value=s.code||'';
+  document.getElementById('m-name').value=s.name||'';
+  document.getElementById('m-units').value=s.units||3;
+  document.getElementById('m-year').value=String(s.year||1);
+  buildSemOpts(s.sem||1);
+  buildPrereqList(null,s.prereqs||[],s.year||1,s.sem||1);
   buildRequiredBy(null);
 }
 
+// ── ADD / EDIT MODAL ──────────────────────────────────────────────────────────
 function openAddModal(){
   editingId=null;
   document.getElementById('subj-modal-title').textContent='Add subject';
   document.getElementById('m-code').value='';document.getElementById('m-name').value='';
   document.getElementById('m-units').value='3';document.getElementById('m-year').value=String(activeYear);
-  document.getElementById('m-sem').value='1';document.getElementById('m-status').value='not_taken';
+  buildSemOpts(1);
+  document.getElementById('m-status').value='not_taken';
   buildGradeOpts('');document.getElementById('m-grade').disabled=true;
-  buildPrereqList(null,[],activeYear,1);
-  buildRequiredBy(null);
+  document.getElementById('credited-note').style.display='none';
+  buildPrereqList(null,[],activeYear,1);buildRequiredBy(null);
 
-  // Populate curriculum picker
-  var curr = getCurriculum();
-  var existingCodes = D.subjects.map(function(s){return s.code;}).filter(Boolean);
-  var available = curr.filter(function(s){ return s.code ? !existingCodes.includes(s.code) : true; });
-  var fg = document.getElementById('m-curr-fg');
-  var divider = document.getElementById('m-curr-divider');
-  var picker = document.getElementById('m-curr-pick');
+  const curr=getCurriculum();
+  const existingCodes=D.subjects.map(s=>s.code).filter(Boolean);
+  const available=curr.filter(s=>s.code?!existingCodes.includes(s.code):true);
+  const fg=document.getElementById('m-curr-fg'),div=document.getElementById('m-curr-divider'),picker=document.getElementById('m-curr-pick');
   if(available.length){
-    fg.style.display='block';
-    divider.style.display='flex';
-    // Group by year/sem
-    var groups={};
-    var SL={1:'1st Sem',2:'2nd Sem',3:'Summer'};
-    available.forEach(function(s){
-      var k='Year '+(s.year||'?')+' — '+(SL[s.sem]||'Sem '+(s.sem||'?'));
-      if(!groups[k])groups[k]=[];
-      groups[k].push(s);
-    });
-    var opts='<option value="">— select a subject —</option>';
-    Object.keys(groups).sort().forEach(function(grp){
-      opts+='<optgroup label="'+grp+'">';
-      groups[grp].forEach(function(s){
-        opts+='<option value="'+s.id+'">'+(s.code?s.code+' — ':'')+s.name+'</option>';
-      });
-      opts+='</optgroup>';
-    });
+    fg.style.display='block';div.style.display='flex';
+    const groups={};
+    available.forEach(s=>{const k='Year '+(s.year||'?')+' — '+getSemLabel(s.sem||1);if(!groups[k])groups[k]=[];groups[k].push(s);});
+    let opts='<option value="">— select a subject —</option>';
+    Object.keys(groups).sort().forEach(grp=>{opts+='<optgroup label="'+grp+'">';groups[grp].forEach(s=>{opts+='<option value="'+s.id+'">'+(s.code?s.code+' — ':'')+s.name+'</option>';});opts+='</optgroup>';});
     picker.innerHTML=opts;
-  } else {
-    fg.style.display='none';
-    divider.style.display='none';
-  }
+  } else { fg.style.display='none';div.style.display='none'; }
 
   document.getElementById('subj-overlay').classList.add('open');
   setTimeout(()=>document.getElementById('m-name').focus(),100);
 }
+
 function openEditModal(id){
   const s=D.subjects.find(x=>x.id===id);if(!s)return;
   editingId=id;
   document.getElementById('subj-modal-title').textContent='Edit subject';
   document.getElementById('m-code').value=s.code||'';document.getElementById('m-name').value=s.name;
   document.getElementById('m-units').value=s.units;document.getElementById('m-year').value=String(s.year);
-  document.getElementById('m-sem').value=String(s.sem);document.getElementById('m-status').value=s.status;
-  buildGradeOpts(s.grade||'');document.getElementById('m-grade').disabled=s.status==='not_taken';
-  buildPrereqList(id,s.prereqs||[],s.year,s.sem);
-  buildRequiredBy(id);
+  buildSemOpts(s.sem);
+  document.getElementById('m-status').value=s.status;
+  buildGradeOpts(s.grade||'');
+  document.getElementById('m-grade').disabled=(s.status==='not_taken');
+  document.getElementById('credited-note').style.display=(s.status==='credited')?'block':'none';
+  buildPrereqList(id,s.prereqs||[],s.year,s.sem);buildRequiredBy(id);
+  document.getElementById('m-curr-fg').style.display='none';document.getElementById('m-curr-divider').style.display='none';
   document.getElementById('subj-overlay').classList.add('open');
 }
-function onStatusChange(){document.getElementById('m-grade').disabled=document.getElementById('m-status').value==='not_taken';}
+
+function onStatusChange(){
+  const v=document.getElementById('m-status').value;
+  document.getElementById('m-grade').disabled=(v==='not_taken');
+  document.getElementById('credited-note').style.display=(v==='credited')?'block':'none';
+}
+
 function saveSubject(){
   const name=document.getElementById('m-name').value.trim();
   if(!name){document.getElementById('m-name').focus();return;}
@@ -580,145 +801,133 @@ function saveSubject(){
   else{D.subjects.push(subj);activeYear=subj.year;}
   save();closeModal('subj-overlay');render();showToast(editingId?'Subject updated':'Subject added');
 }
+
 function confirmDelete(id){
   const s=D.subjects.find(x=>x.id===id);if(!s)return;
-  showConfirm('Delete subject?',`Remove "${s.name}"? This will also remove it from any prerequisite lists.`,()=>{D.subjects=D.subjects.filter(x=>x.id!==id).map(x=>({...x,prereqs:x.prereqs.filter(p=>p!==id)}));save();render();showToast('Subject deleted');});
+  showConfirm('Delete subject?',`Remove "${s.name}"? This will also remove it from any prerequisite lists.`,()=>{
+    D.subjects=D.subjects.filter(x=>x.id!==id).map(x=>({...x,prereqs:x.prereqs.filter(p=>p!==id)}));
+    save();render();showToast('Subject deleted');
+  });
 }
+
+// ── SETTINGS ─────────────────────────────────────────────────────────────────
+function buildSettingsSemOpts(calType, currentSem) {
+  const labels = SEM_LABELS[calType] || SEM_LABELS.semestral;
+  document.getElementById('st-sem').innerHTML = Object.entries(labels).map(([v,l])=>`<option value="${v}"${String(v)===String(currentSem)?' selected':''}>${l}</option>`).join('');
+}
+
+function onSettingsGSChange(){
+  const v=document.getElementById('st-gsys').value;
+  if(v==='benilde')document.getElementById('st-passing').value='1.00';
+  else if(v==='1_highest')document.getElementById('st-passing').value='3.00';
+  else document.getElementById('st-passing').value='3.00';
+}
+
+function onSettingsCalChange(){
+  buildSettingsSemOpts(document.getElementById('st-caltype').value, document.getElementById('st-sem').value||1);
+}
+
 function openSettings(){
-  document.getElementById('st-school').value=D.school||'';document.getElementById('st-name').value=D.name||'';
-  document.getElementById('st-course').value=D.course||'';document.getElementById('st-gsys').value=D.gradeSystem||'1_highest';
-  document.getElementById('st-passing').value=D.passingGrade||'3.00';document.getElementById('st-targetgwa').value=D.targetGWA||'';
-  document.getElementById('st-year').value=String(D.yearLevel||1);document.getElementById('st-sem').value=String(D.currentSem||1);
+  document.getElementById('st-school').value=D.school||'';
+  document.getElementById('st-name').value=D.name||'';
+  document.getElementById('st-course').value=D.course||'';
+  document.getElementById('st-gsys').value=D.gradeSystem||'1_highest';
+  document.getElementById('st-passing').value=D.passingGrade||'3.00';
+  document.getElementById('st-targetgwa').value=D.targetGWA||'';
+  document.getElementById('st-caltype').value=D.calendarType||'semestral';
+  document.getElementById('st-year').value=String(D.yearLevel||1);
+  buildSettingsSemOpts(D.calendarType||'semestral', D.currentSem||1);
   document.getElementById('st-graddate').value=D.targetDate||'';
   document.getElementById('settings-overlay').classList.add('open');
 }
+
 function saveSettings(){
   D.school=document.getElementById('st-school').value.trim()||D.school;
-  D.name=document.getElementById('st-name').value.trim();D.course=document.getElementById('st-course').value.trim();
-  D.gradeSystem=document.getElementById('st-gsys').value;D.passingGrade=parseFloat(document.getElementById('st-passing').value)||3.00;
+  D.name=document.getElementById('st-name').value.trim();
+  D.course=document.getElementById('st-course').value.trim();
+  D.gradeSystem=document.getElementById('st-gsys').value;
+  D.passingGrade=parseFloat(document.getElementById('st-passing').value)||3.00;
   D.targetGWA=document.getElementById('st-targetgwa').value.trim()||null;
-  D.yearLevel=parseInt(document.getElementById('st-year').value);D.currentSem=parseInt(document.getElementById('st-sem').value);
+  D.calendarType=document.getElementById('st-caltype').value;
+  D.yearLevel=parseInt(document.getElementById('st-year').value);
+  D.currentSem=parseInt(document.getElementById('st-sem').value);
   D.targetDate=document.getElementById('st-graddate').value;
   save();closeModal('settings-overlay');render();showToast('Settings saved');
 }
-function confirmReset(){showConfirm('Reset all data?','This will permanently delete all your subjects and settings. This cannot be undone.',()=>{localStorage.removeItem(KEY);window.location.href='index.html';});}
 
-// ── CURRICULUM IMPORT (dashboard) ────────────────────────────────────────────
-let dashParsedSubjects = null;
+function confirmReset(){
+  showConfirm('Reset all data?','This will permanently delete all your subjects and settings. This cannot be undone.',()=>{localStorage.removeItem(KEY);window.location.href='index.html';});
+}
 
-function parseCurriculumText(text) {
-  text = text.replace(/\r/g, '');
-  var rawLines = text.split('\n');
-  var lines = rawLines.map(function(l){ return l.trim(); });
-  var subjects = [];
-  var currentYear = 1, currentSem = 1;
-  var YEAR_MAP = {'first':1,'second':2,'third':3,'fourth':4,'fifth':5,'1st':1,'2nd':2,'3rd':3,'4th':4,'5th':5};
-  var SEM_MAP  = {'1st':1,'first':1,'2nd':2,'second':2,'summer':3,'midyear':3,'mid-year':3};
-  var courseNumToId = {};
+// ── CURRICULUM IMPORT ─────────────────────────────────────────────────────────
+let dashParsedSubjects=null;
 
-  for (var li = 0; li < lines.length; li++) {
-    var line = lines[li];
-    if (!line) continue;
-    var ysm = line.match(/^(first|second|third|fourth|fifth|1st|2nd|3rd|4th|5th)\s+year[,\s]+(1st|2nd|summer|midyear|mid-year|first|second)/i);
-    if (ysm) {
-      currentYear = YEAR_MAP[ysm[1].toLowerCase()] || parseInt(ysm[1]) || currentYear;
-      currentSem  = SEM_MAP[ysm[2].toLowerCase()] || 1;
-      continue;
-    }
-    if (/^(course\s*no|description|total\s*units|elective|co-req)/i.test(line)) continue;
-    var cols = line.indexOf('\t') >= 0 ? line.split('\t') : line.split(/\s{2,}/);
-    cols = cols.map(function(c){ return c.trim(); });
-    if (cols.length < 3) continue;
-    var courseNo = cols[0]||'', code = cols[1]||'', name = cols[2]||'';
-    var units = parseInt(cols[3])||3;
-    var prereqRaw = cols[4] ? cols[4].split(',').map(function(c){return c.trim();}).filter(Boolean) : [];
-    if (!name || name.length < 2 || !/[A-Za-z]/.test(name)) continue;
-    if (!courseNo && code.length < 2) continue;
-    var id = 'u_' + (courseNo||code).replace(/\s/g,'') + '_' + li;
-    if (courseNo) courseNumToId[courseNo] = id;
-    if (code) courseNumToId[code] = id;
-    var normName = name.split(' ').map(function(w){
-      if (!w) return w;
-      if (w.length <= 3 || /^[A-Z0-9]+$/.test(w)) return w.toUpperCase();
-      return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
-    }).join(' ');
-    subjects.push({id:id, code:code, name:normName, units:units, year:currentYear, sem:currentSem, prereqs:prereqRaw, status:'not_taken', grade:''});
+function parseCurriculumText(text){
+  text=text.replace(/\r/g,'');
+  const lines=text.split('\n').map(l=>l.trim());
+  const subjects=[];let currentYear=1,currentSem=1;
+  const YEAR_MAP={'first':1,'second':2,'third':3,'fourth':4,'fifth':5,'1st':1,'2nd':2,'3rd':3,'4th':4,'5th':5};
+  const SEM_MAP={'1st':1,'first':1,'2nd':2,'second':2,'summer':3,'midyear':3,'mid-year':3};
+  const courseNumToId={};
+  for(let li=0;li<lines.length;li++){
+    const line=lines[li];if(!line)continue;
+    const ysm=line.match(/^(first|second|third|fourth|fifth|1st|2nd|3rd|4th|5th)\s+year[,\s]+(1st|2nd|summer|midyear|mid-year|first|second)/i);
+    if(ysm){currentYear=YEAR_MAP[ysm[1].toLowerCase()]||parseInt(ysm[1])||currentYear;currentSem=SEM_MAP[ysm[2].toLowerCase()]||1;continue;}
+    if(/^(course\s*no|description|total\s*units|elective|co-req)/i.test(line))continue;
+    const cols=line.indexOf('\t')>=0?line.split('\t').map(c=>c.trim()):line.split(/\s{2,}/).map(c=>c.trim());
+    if(cols.length<3)continue;
+    const courseNo=cols[0]||'',code=cols[1]||'',name=cols[2]||'',units=parseInt(cols[3])||3;
+    const prereqRaw=cols[4]?cols[4].split(',').map(c=>c.trim()).filter(Boolean):[];
+    if(!name||name.length<2||!/[A-Za-z]/.test(name))continue;
+    if(!courseNo&&code.length<2)continue;
+    const id='u_'+(courseNo||code).replace(/\s/g,'')+'_'+li;
+    if(courseNo)courseNumToId[courseNo]=id;if(code)courseNumToId[code]=id;
+    const normName=name.split(' ').map(w=>{if(!w)return w;if(w.length<=3||/^[A-Z0-9]+$/.test(w))return w.toUpperCase();return w.charAt(0).toUpperCase()+w.slice(1).toLowerCase();}).join(' ');
+    subjects.push({id,code,name:normName,units,year:currentYear,sem:currentSem,prereqs:prereqRaw,status:'not_taken',grade:''});
   }
-  if (!subjects.length) throw new Error('No subjects found. Check the file has Year/Semester headers and tab-separated columns.');
-  subjects.forEach(function(s){
-    s.prereqs = s.prereqs.map(function(num){ return courseNumToId[num]; }).filter(Boolean);
-  });
+  if(!subjects.length)throw new Error('No subjects found. Check the file has Year/Semester headers and tab-separated columns.');
+  subjects.forEach(s=>{s.prereqs=s.prereqs.map(num=>courseNumToId[num]).filter(Boolean);});
   return subjects;
 }
 
-function dashImportCurriculum(e) {
-  var file = e.target.files[0];
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    var preview = document.getElementById('dash-curr-preview');
-    var statsEl = document.getElementById('dash-curr-stats');
-    var breakEl = document.getElementById('dash-curr-breakdown');
-    var errEl   = document.getElementById('dash-curr-error');
-    var applyBtn = document.getElementById('dash-curr-apply');
-    preview.style.display = 'block';
-    errEl.style.display = 'none';
-    try {
-      var subs = parseCurriculumText(ev.target.result);
-      dashParsedSubjects = subs;
-      var totalU = subs.reduce(function(a,s){return a+s.units;},0);
-      statsEl.textContent = '\u2713 Found ' + subs.length + ' subjects — ' + totalU + ' total units';
-      var byYear = {};
-      subs.forEach(function(s){
-        var k = 'Year '+s.year;
-        byYear[k] = (byYear[k]||0)+1;
-      });
-      breakEl.textContent = Object.keys(byYear).map(function(k){return k+': '+byYear[k]+' subj.';}).join('  ·  ');
-      applyBtn.style.display = 'inline-flex';
-      applyBtn.disabled = false;
-      applyBtn.textContent = 'Add these subjects \u2192';
-    } catch(err) {
-      dashParsedSubjects = null;
-      statsEl.textContent = '';
-      breakEl.textContent = '';
-      errEl.style.display = 'block';
-      errEl.textContent = '\u26a0 ' + err.message;
-      applyBtn.style.display = 'none';
-    }
-    e.target.value = '';
+function dashImportCurriculum(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const preview=document.getElementById('dash-curr-preview'),statsEl=document.getElementById('dash-curr-stats'),breakEl=document.getElementById('dash-curr-breakdown'),errEl=document.getElementById('dash-curr-error'),applyBtn=document.getElementById('dash-curr-apply');
+    preview.style.display='block';errEl.style.display='none';
+    try{
+      const subs=parseCurriculumText(ev.target.result);dashParsedSubjects=subs;
+      const totalU=subs.reduce((a,s)=>a+s.units,0);
+      statsEl.textContent='✓ Found '+subs.length+' subjects — '+totalU+' total units';
+      const byYear={};subs.forEach(s=>{const k='Year '+s.year;byYear[k]=(byYear[k]||0)+1;});
+      breakEl.textContent=Object.keys(byYear).map(k=>k+': '+byYear[k]+' subj.').join('  ·  ');
+      applyBtn.style.display='inline-flex';applyBtn.disabled=false;applyBtn.textContent='Add these subjects →';
+    }catch(err){dashParsedSubjects=null;statsEl.textContent='';breakEl.textContent='';errEl.style.display='block';errEl.textContent='⚠ '+err.message;applyBtn.style.display='none';}
+    e.target.value='';
   };
   reader.readAsText(file);
 }
 
-function dashApplyCurriculum() {
-  if (!dashParsedSubjects || !dashParsedSubjects.length) return;
-  // Store as master curriculum template
-  D.curriculum = dashParsedSubjects.map(function(s){
-    return {id:s.id, code:s.code, name:s.name, units:s.units, year:s.year, sem:s.sem, prereqs:s.prereqs};
-  });
-  // Add subjects not already in the list
-  var existingCodes = D.subjects.map(function(s){return s.code;}).filter(Boolean);
-  var toAdd = dashParsedSubjects.filter(function(s){ return !existingCodes.includes(s.code); });
-  var skipped = dashParsedSubjects.length - toAdd.length;
-  D.subjects = D.subjects.concat(toAdd);
-  save(); closeModal('settings-overlay'); render();
-  activeYear = 1;
-  var msg = toAdd.length + ' subjects added from curriculum';
-  if (skipped) msg += ' (' + skipped + ' skipped — already in list)';
-  showToast(msg);
-  dashParsedSubjects = null;
-  document.getElementById('dash-curr-preview').style.display = 'none';
+function dashApplyCurriculum(){
+  if(!dashParsedSubjects||!dashParsedSubjects.length)return;
+  D.curriculum=dashParsedSubjects.map(s=>({id:s.id,code:s.code,name:s.name,units:s.units,year:s.year,sem:s.sem,prereqs:s.prereqs}));
+  const existingCodes=D.subjects.map(s=>s.code).filter(Boolean);
+  const toAdd=dashParsedSubjects.filter(s=>!existingCodes.includes(s.code));
+  const skipped=dashParsedSubjects.length-toAdd.length;
+  D.subjects=D.subjects.concat(toAdd);
+  save();closeModal('settings-overlay');render();activeYear=1;
+  showToast(toAdd.length+' subjects added'+(skipped?' ('+skipped+' skipped)':''));
+  dashParsedSubjects=null;document.getElementById('dash-curr-preview').style.display='none';
 }
 
 // ── EXPORT / IMPORT ───────────────────────────────────────────────────────────
 function exportData(){
   const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
   const name=(D.school||'acadtrack').replace(/[^a-z0-9]/gi,'-').toLowerCase();
   a.href=url;a.download='acadtrack-'+name+'-'+new Date().toISOString().slice(0,10)+'.json';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
   showToast('Data exported');
 }
 function importData(e){
@@ -728,83 +937,113 @@ function importData(e){
     try{
       const parsed=JSON.parse(ev.target.result);
       if(!parsed.school||!Array.isArray(parsed.subjects))throw new Error('Invalid file');
-      showConfirm('Import and replace data?','This will replace your current tracker data with the imported file. This cannot be undone.',()=>{
-        D=parsed;save();closeModal('settings-overlay');render();showToast('Data imported successfully');
-      });
-    }catch{showToast('Invalid file — please use a valid AcadTrack export');}
+      showConfirm('Import and replace data?','This will replace your current tracker data.',()=>{D=parsed;if(!D.calendarType)D.calendarType='semestral';save();closeModal('settings-overlay');render();showToast('Data imported');});
+    }catch{showToast('Invalid file — use a valid AcadTrack export');}
     e.target.value='';
   };
   reader.readAsText(file);
 }
 
+// ── SIMULATOR ─────────────────────────────────────────────────────────────────
+// Stores hypothetical grades keyed by subject id
+let simGrades = {};
+
+function openSimulator() {
+  simGrades = {};
+  const gwa = computeGWA(D.subjects);
+  const graded = D.subjects.filter(s=>s.status==='passed'&&isNum(s.grade));
+  const remaining = D.subjects.filter(s=>s.status==='not_taken'||s.status==='failed');
+
+  document.getElementById('sim-current-gwa').textContent  = gwa||'—';
+  document.getElementById('sim-graded-count').textContent  = graded.length;
+  document.getElementById('sim-remaining-count').textContent = remaining.length;
+
+  renderSimSubjects(remaining);
+  updateSimGWA();
+  document.getElementById('sim-overlay').classList.add('open');
+}
+
+function renderSimSubjects(remaining) {
+  const list = document.getElementById('sim-subject-list');
+  if (!remaining.length) {
+    list.innerHTML = '<div class="sim-empty">No remaining subjects to simulate. All subjects have grades!</div>';
+    return;
+  }
+  const gradeOpts = ['<option value="">— skip —</option>'].concat(
+    gTable().filter(g=>g.p!==null).map(g=>`<option value="${g.v}">${g.v} (${g.p}%)</option>`)
+  ).join('');
+  list.innerHTML = remaining.map(s=>`
+    <div class="sim-subject-row">
+      <div class="sim-sub-info">
+        <div class="sim-sub-name">${esc(s.code?s.code+' — '+s.name:s.name)}</div>
+        <div class="sim-sub-meta">Year ${s.year} · ${getSemLabel(s.sem)} · ${s.units} unit${s.units!==1?'s':''}</div>
+      </div>
+      <select class="sim-sub-grade" data-id="${s.id}" data-units="${s.units}" onchange="onSimGradeChange(this)">
+        ${gradeOpts}
+      </select>
+    </div>`).join('');
+}
+
+function onSimGradeChange(el) {
+  const id=el.dataset.id, val=el.value;
+  if(val) simGrades[id]={grade:val,units:parseInt(el.dataset.units)};
+  else delete simGrades[id];
+  updateSimGWA();
+}
+
+function updateSimGWA() {
+  const passed = D.subjects.filter(s=>s.status==='passed'&&isNum(s.grade));
+  const hypo   = Object.values(simGrades).filter(x=>isNum(x.grade));
+  const all    = [...passed.map(s=>({grade:s.grade,units:s.units})), ...hypo];
+  const el     = document.getElementById('sim-gwa-val');
+  const sub    = document.getElementById('sim-gwa-sub');
+  if (!all.length) { el.textContent='—'; sub.textContent='Set grades below to calculate'; return; }
+  const gwa = (all.reduce((a,x)=>a+parseFloat(x.grade)*x.units,0)/all.reduce((a,x)=>a+x.units,0)).toFixed(2);
+  el.textContent = gwa;
+  const hl = honorLabel(gwa);
+  const count = Object.keys(simGrades).length;
+  sub.textContent = hl+(count?' · based on '+count+' hypothetical grade'+(count>1?'s':''):'');
+}
+
+function resetSimulator(){
+  simGrades={};
+  document.querySelectorAll('.sim-sub-grade').forEach(el=>{el.value='';});
+  updateSimGWA();
+}
+
+// ── MODAL HELPERS ─────────────────────────────────────────────────────────────
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 function showConfirm(title,msg,onOk){
   document.getElementById('confirm-title').textContent=title;document.getElementById('confirm-msg').textContent=msg;
   const btn=document.getElementById('confirm-ok-btn');btn.onclick=()=>{closeModal('confirm-overlay');onOk();};
   document.getElementById('confirm-overlay').classList.add('open');
 }
-document.querySelectorAll('.overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});});
+document.querySelectorAll('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.overlay.open').forEach(el=>el.classList.remove('open'));});
 
 let toastTimer;
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2400);}
 
-load();
-if(D){activeYear=D.yearLevel||1;render();}
-
-// Today strip from schedule data
-(function(){
-  try {
-    const sr = localStorage.getItem('acadtrack_sched');
-    if (!sr) return;
-    const S = JSON.parse(sr);
-    if (!S.classes || !S.classes.length) return;
-    const now = new Date();
-    const day = now.getDay();
-    const timeNum = now.getHours() * 100 + now.getMinutes();
-    const todayClasses = (S.classes||[]).filter(c => (c.days||[]).includes(day)).sort((a,b) => {
-      const ta = parseInt(a.start.replace(':',''));
-      const tb = parseInt(b.start.replace(':',''));
-      return ta - tb;
-    });
-    const toNum = t => { if(!t)return 0; const[h,m]=t.split(':').map(Number); return h*100+m; };
-    const fmt = t => { if(!t)return''; const[h,m]=t.split(':').map(Number); return ((h%12)||12)+':'+String(m).padStart(2,'0')+(h>=12?' PM':' AM'); };
-    const current = todayClasses.find(c => timeNum >= toNum(c.start) && timeNum < toNum(c.end));
-    const next = todayClasses.find(c => toNum(c.start) > timeNum);
-    const strip = document.getElementById('today-strip');
-    const icon = document.getElementById('ts-icon');
-    const label = document.getElementById('ts-label');
-    const main = document.getElementById('ts-main');
-    if (current) {
-      strip.style.display = 'flex';
-      strip.style.background = 'var(--gp-bg)';
-      strip.style.borderColor = '#86EFAC';
-      icon.textContent = '🏫';
-      label.style.color = 'var(--gp)';
-      label.textContent = 'You should be in class right now';
-      main.textContent = current.name + (current.room ? ' — Room ' + current.room + (current.building ? ', ' + current.building : '') : '') + ' until ' + fmt(current.end);
-      document.querySelector('#today-strip a').style.borderColor = '#86EFAC';
-      document.querySelector('#today-strip a').style.color = 'var(--gp)';
-    } else if (next) {
-      strip.style.display = 'flex';
-      icon.textContent = '⏰';
-      label.textContent = 'Next class today';
-      main.textContent = next.name + ' at ' + fmt(next.start) + (next.room ? ' — Room ' + next.room : '');
-    }
-  } catch {}
-})();
-</script>
-<script>
+// ── TODAY STRIP ───────────────────────────────────────────────────────────────
 (function(){
   try{
-    var d=JSON.parse(localStorage.getItem('acadtrack_data')||'{}');
-    var name=d.name||(d.school?d.school.split(' ')[0]:'');
-    var init=name?name.charAt(0).toUpperCase():'?';
-    var av=document.getElementById('tb-avatar');
-    var lb=document.getElementById('tb-profile-label');
-    if(av)av.textContent=init;
-    if(lb)lb.textContent=name||'Profile';
-  }catch(e){}
-})();</script>
+    const sr=localStorage.getItem('acadtrack_sched');if(!sr)return;
+    const S=JSON.parse(sr);if(!S.classes||!S.classes.length)return;
+    const now=new Date(),day=now.getDay(),timeNum=now.getHours()*100+now.getMinutes();
+    const todayClasses=(S.classes||[]).filter(c=>(c.days||[]).includes(day)).sort((a,b)=>parseInt(a.start.replace(':',''))-parseInt(b.start.replace(':','')));
+    const toNum=t=>{if(!t)return 0;const[h,m]=t.split(':').map(Number);return h*100+m;};
+    const fmt=t=>{if(!t)return'';const[h,m]=t.split(':').map(Number);return((h%12)||12)+':'+String(m).padStart(2,'0')+(h>=12?' PM':' AM');};
+    const current=todayClasses.find(c=>timeNum>=toNum(c.start)&&timeNum<toNum(c.end));
+    const next=todayClasses.find(c=>toNum(c.start)>timeNum);
+    const strip=document.getElementById('today-strip');
+    if(current){strip.style.display='flex';strip.style.background='var(--gp-bg)';strip.style.borderColor='#86EFAC';document.getElementById('ts-icon').textContent='🏫';document.getElementById('ts-label').style.color='var(--gp)';document.getElementById('ts-label').textContent='You should be in class right now';document.getElementById('ts-main').textContent=current.name+(current.room?' — Room '+current.room+(current.building?', '+current.building:''):'')+' until '+fmt(current.end);}
+    else if(next){strip.style.display='flex';document.getElementById('ts-icon').textContent='⏰';document.getElementById('ts-label').textContent='Next class today';document.getElementById('ts-main').textContent=next.name+' at '+fmt(next.start)+(next.room?' — Room '+next.room:'');}
+  }catch{}
+})();
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+load();
+if(D){activeYear=D.yearLevel||1;render();}
+</script>
 </body>
 </html>
