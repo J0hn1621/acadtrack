@@ -18,138 +18,215 @@
   --prelim:#C2410C;--prelim-bg:#FFF7ED;--prelim-border:#FED7AA;
   --midterm:#1D4ED8;--midterm-bg:#EFF6FF;--midterm-border:#BFDBFE;
   --finals:#7E22CE;--finals-bg:#FAF5FF;--finals-border:#DDD6FE;
-  --q4:#0F766E;--q4-bg:#CCFBF1;--q4-border:#5EEAD4;   /* 4th quarter — teal */
+  --q4:#0F766E;--q4-bg:#CCFBF1;--q4-border:#5EEAD4;
   --radius:8px;--radius-lg:14px;
 }
 body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.5;min-height:100vh}
+
 /* ── TOPBAR ── */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;height:54px;background:var(--maroon);gap:12px;position:sticky;top:0;z-index:100}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;height:54px;background:var(--maroon);gap:10px;position:sticky;top:0;z-index:200}
 .tb-left{display:flex;align-items:center;gap:0;flex-shrink:0}
-.tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:10px}
-.tb-seal{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:12px;flex-shrink:0}
+.tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.tb-seal{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:11px;flex-shrink:0}
 .tb-name{font-family:'Playfair Display',serif;font-size:15px;color:white;font-weight:600;white-space:nowrap}
-.tb-nav{display:flex;align-items:center;gap:1px}
-.tb-link{font-size:12px;color:rgba(255,255,255,0.72);text-decoration:none;padding:6px 11px;border-radius:6px;transition:all 0.12s;white-space:nowrap;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;line-height:1}
+.tb-nav{display:flex;align-items:center;gap:1px;margin-left:8px}
+.tb-link{font-size:12px;color:rgba(255,255,255,0.72);text-decoration:none;padding:5px 10px;border-radius:6px;transition:all 0.12s;white-space:nowrap;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;line-height:1}
 .tb-link:hover{background:rgba(255,255,255,0.15);color:white}
 .tb-link.active{background:rgba(255,255,255,0.2);color:white;font-weight:500}
-.tb-right{display:flex;align-items:center;gap:1px;flex-shrink:0}
-.tb-sep{width:1px;height:18px;background:rgba(255,255,255,0.2);margin:0 8px;flex-shrink:0}
-.tb-profile-btn{display:flex;align-items:center;gap:7px;padding:4px 12px 4px 5px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none;margin-left:4px}
+.tb-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.tb-sep{width:1px;height:18px;background:rgba(255,255,255,0.2);margin:0 2px;flex-shrink:0}
+.tb-profile-btn{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none}
 .tb-profile-btn:hover{background:rgba(255,255,255,0.24);color:white}
-.tb-avatar{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
+.tb-avatar{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0}
+
+/* ── HAMBURGER ── */
+.ham-btn{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:36px;height:36px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;border-radius:var(--radius);padding:6px;flex-shrink:0}
+.ham-line{display:block;width:16px;height:2px;background:white;border-radius:2px;transition:all 0.25s;transform-origin:center}
+.ham-btn.open .ham-line:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham-btn.open .ham-line:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham-btn.open .ham-line:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ── MOBILE DRAWER ── */
+.mobile-nav{display:none;position:fixed;top:54px;left:0;right:0;background:var(--maroon);z-index:199;padding:0.5rem 1rem 1rem;flex-direction:column;gap:2px;box-shadow:0 8px 24px rgba(0,0,0,0.25)}
+.mobile-nav.open{display:flex}
+.mob-link{font-size:14px;font-weight:500;color:rgba(255,255,255,0.85);text-decoration:none;padding:11px 14px;border-radius:var(--radius);display:block;transition:all 0.12s;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;text-align:left;width:100%}
+.mob-link:hover{background:rgba(255,255,255,0.15);color:white}
+.mob-divider{height:1px;background:rgba(255,255,255,0.15);margin:4px 0}
+.mob-link.highlight{background:rgba(255,255,255,0.18);color:white;font-weight:600;margin-top:4px}
+.nav-overlay{display:none;position:fixed;inset:0;top:54px;background:rgba(0,0,0,0.3);z-index:198}
+.nav-overlay.open{display:block}
+
 /* ── CONTENT ── */
-.content{max-width:1040px;margin:0 auto;padding:1.75rem 2rem 5rem}
+.content{max-width:1040px;margin:0 auto;padding:1.5rem 1.25rem 5rem}
+
 /* ── RIGHT NOW BANNER ── */
-.rightnow{border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid}
+.rightnow{border-radius:var(--radius-lg);padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid}
 .rightnow.status-current{background:var(--gp-bg);border-color:#86EFAC}
 .rightnow.status-upcoming{background:var(--go-bg);border-color:#93C5FD}
 .rightnow.status-exam-current{background:var(--prelim-bg);border-color:var(--prelim-border)}
 .rightnow.status-exam-upcoming{background:var(--midterm-bg);border-color:var(--midterm-border)}
 .rightnow.status-none{background:var(--cream);border-color:var(--border)}
-.rn-icon{font-size:28px;flex-shrink:0}
+.rn-icon{font-size:26px;flex-shrink:0}
 .rn-body{flex:1;min-width:0}
-.rn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;opacity:0.7}
-.rn-main{font-size:18px;font-weight:600;line-height:1.3}
-.rn-sub{font-size:13px;opacity:0.8;margin-top:3px}
-.rn-time{font-size:13px;font-weight:600;text-align:right;white-space:nowrap}
+.rn-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;opacity:0.7}
+.rn-main{font-size:16px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rn-sub{font-size:12px;opacity:0.8;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rn-time{font-size:12px;font-weight:600;text-align:right;white-space:nowrap;flex-shrink:0}
+
 /* ── TODAY ROW ── */
-.today-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1.75rem}
-.today-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem}
-.tc-title{font-size:12px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
-.class-chip{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius);margin-bottom:6px;border:1px solid var(--border)}
-.chip-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.today-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1.5rem}
+.today-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem}
+.tc-title{font-size:11px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.class-chip{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--radius);margin-bottom:5px;border:1px solid var(--border)}
+.chip-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 .chip-body{flex:1;min-width:0}
 .chip-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chip-meta{font-size:11px;color:var(--gray)}
-.chip-time{font-size:11px;font-weight:600;color:var(--gray);white-space:nowrap}
-.chip-status{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px}
+.chip-time{font-size:11px;font-weight:600;color:var(--gray);white-space:nowrap;flex-shrink:0}
+.chip-status{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;flex-shrink:0}
 .cs-current{background:var(--gp-bg);color:var(--gp)}
 .cs-upcoming{background:var(--go-bg);color:var(--go)}
 .cs-done{background:var(--gn-bg);color:var(--gn);opacity:0.7}
 .cs-exam{background:var(--prelim-bg);color:var(--prelim)}
+
 /* ── JOURNAL ── */
-.journal-area{resize:none;width:100%;min-height:90px;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.12s;line-height:1.6}
+.journal-area{resize:none;width:100%;min-height:80px;font-size:14px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.12s;line-height:1.6;-webkit-appearance:none}
 .journal-area:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
 .journal-area::placeholder{color:var(--light)}
-.save-indicator{font-size:11px;color:var(--light);margin-top:4px;height:14px}
-/* ── SECTION ── */
-.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;gap:12px}
-.sec-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600}
+.save-indicator{font-size:11px;color:var(--light);margin-top:3px;height:14px}
+
+/* ── SECTION HEADER ── */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;gap:10px;flex-wrap:wrap}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600}
+
 /* ── WEEK GRID ── */
-.week-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:2rem}
-.day-col{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;min-height:100px}
-.day-header{padding:8px 10px 6px;border-bottom:1px solid var(--border);background:var(--cream)}
-.day-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray)}
+.week-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:1.75rem}
+.day-col{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;min-height:80px}
+.day-header{padding:7px 8px 5px;border-bottom:1px solid var(--border);background:var(--cream)}
+.day-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray)}
 .day-header.today-col .day-name{color:var(--maroon)}
 .day-header.today-col{background:var(--maroon-light)}
-.day-classes{padding:8px}
-.sched-block{border-radius:var(--radius);padding:7px 8px;margin-bottom:5px;cursor:pointer;transition:opacity 0.1s;border:1px solid transparent}
-.sched-block:hover{opacity:0.85}
-.sb-code{font-size:10px;font-weight:700;margin-bottom:2px}
-.sb-name{font-size:11px;font-weight:500;line-height:1.3;margin-bottom:3px}
-.sb-meta{font-size:10px;opacity:0.8}
-.no-class{font-size:11px;color:var(--light);padding:8px;text-align:center}
-/* ── EXAM PERIODS ── */
-.exam-section{margin-bottom:2rem}
-.exam-period-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:10px;overflow:hidden}
-.epc-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none;gap:12px}
-.epc-header:hover{background:var(--cream)}
-.epc-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.day-classes{padding:6px}
+.sched-block{border-radius:var(--radius);padding:6px 7px;margin-bottom:4px;cursor:pointer;transition:opacity 0.1s;border:1px solid transparent;-webkit-tap-highlight-color:transparent}
+.sched-block:hover,.sched-block:active{opacity:0.8}
+.sb-code{font-size:9px;font-weight:700;margin-bottom:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-name{font-size:10px;font-weight:500;line-height:1.3;margin-bottom:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.sb-meta{font-size:9px;opacity:0.8}
+.no-class{font-size:10px;color:var(--light);padding:6px;text-align:center}
+
+/* ── EXAM PERIOD CARDS ── */
+.exam-section{margin-bottom:1.75rem}
+.exam-period-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:8px;overflow:hidden}
+.epc-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;user-select:none;gap:10px;-webkit-tap-highlight-color:transparent}
+.epc-header:hover,.epc-header:active{background:var(--cream)}
+.epc-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap;flex-shrink:0}
 .ep-prelim  .epc-badge{background:var(--prelim-bg);color:var(--prelim);border:1px solid var(--prelim-border)}
 .ep-midterm .epc-badge{background:var(--midterm-bg);color:var(--midterm);border:1px solid var(--midterm-border)}
 .ep-finals  .epc-badge{background:var(--finals-bg);color:var(--finals);border:1px solid var(--finals-border)}
 .ep-q4      .epc-badge{background:var(--q4-bg);color:var(--q4);border:1px solid var(--q4-border)}
-.epc-info{flex:1}
-.epc-title{font-size:14px;font-weight:600}
-.epc-dates{font-size:12px;color:var(--gray);margin-top:2px}
-.epc-arrow{font-size:12px;color:var(--light);transition:transform 0.2s}
+.epc-info{flex:1;min-width:0}
+.epc-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.epc-dates{font-size:11px;color:var(--gray);margin-top:1px}
+.epc-arrow{font-size:11px;color:var(--light);transition:transform 0.2s;flex-shrink:0}
 .epc-arrow.open{transform:rotate(180deg)}
-.epc-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border)}
+.epc-body{display:none;padding:0 14px 14px;border-top:1px solid var(--border)}
 .epc-body.open{display:block}
-.exam-entry{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;background:var(--cream)}
+.epc-action-row{display:flex;gap:8px;align-items:center;margin:10px 0 8px;flex-wrap:wrap}
+.exam-entry{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:5px;background:var(--cream)}
 .ee-info{flex:1;min-width:0}
-.ee-subject{font-size:13px;font-weight:500}
+.ee-subject{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ee-meta{font-size:11px;color:var(--gray);margin-top:2px}
-.ee-date{font-size:11px;font-weight:600;color:var(--mid);white-space:nowrap}
-/* ── MODALS ── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem}
-.overlay.open{display:flex}
-.modal{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;width:min(520px,100%);max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
-.modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;margin-bottom:1.5rem}
-.fg{margin-bottom:1rem}
-.fg label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:4px}
-.fg .hint{font-size:11px;color:var(--light);margin-top:3px}
-.fg .req{color:var(--maroon)}.fg .opt{color:var(--light);font-weight:400}
-input[type=text],input[type=time],input[type=date],input[type=color],select,textarea{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.12s}
-input:focus,select:focus,textarea:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
-input::placeholder{color:var(--light)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.days-picker{display:flex;gap:6px;flex-wrap:wrap}
-.day-pill{padding:5px 12px;border-radius:99px;font-size:12px;font-weight:500;border:1.5px solid var(--border);cursor:pointer;user-select:none;transition:all 0.12s;background:var(--white);color:var(--gray)}
-.day-pill.selected{background:var(--maroon);border-color:var(--maroon);color:white}
-.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--mid);transition:all 0.12s}
+.ee-date{font-size:11px;font-weight:600;color:var(--mid);white-space:nowrap;flex-shrink:0}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:var(--radius);font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--mid);transition:all 0.12s;min-height:40px}
 .btn:hover{border-color:var(--mid);color:var(--dark)}
-.btn-primary{background:var(--maroon);border-color:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover,#9B2525)}
+.btn-primary{background:var(--maroon);border-color:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover)}
 .btn-danger{border-color:#FCA5A5;color:var(--gf)}.btn-danger:hover{background:var(--gf-bg)}
-.btn-sm{padding:5px 12px;font-size:12px}
-.add-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius);background:var(--maroon);color:white;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'Inter',sans-serif}
-.add-btn:hover{background:var(--maroon-hover,#9B2525)}
+.btn-sm{padding:6px 12px;font-size:12px;min-height:34px}
+.add-btn{display:flex;align-items:center;gap:5px;padding:8px 14px;border-radius:var(--radius);background:var(--maroon);color:white;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;min-height:38px}
+.add-btn:hover{background:var(--maroon-hover)}
+
+/* ── EMPTY STATE ── */
+.empty-week{text-align:center;padding:2rem 1rem;color:var(--light);font-size:13px;grid-column:1/-1}
+.empty-week p{margin-bottom:10px}
+
+/* ── MODALS ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:flex-end;justify-content:center;z-index:300;padding:0}
+.overlay.open{display:flex}
+.modal{background:var(--white);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:1.25rem;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;box-shadow:0 -4px 32px rgba(0,0,0,0.15);animation:slideUp 0.25s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:40px;height:4px;background:var(--border);border-radius:99px;margin:0 auto 1.1rem}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;margin-bottom:1.1rem}
+.fg{margin-bottom:0.875rem}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:4px}
+.fg .hint{font-size:11px;color:var(--light);margin-top:3px;line-height:1.5}
+.fg .req{color:var(--maroon)}.fg .opt{color:var(--light);font-weight:400}
+input[type=text],input[type=time],input[type=date],select,textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.12s;-webkit-appearance:none;appearance:none}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A8A29E' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+input:focus,select:focus,textarea:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
+input::placeholder,textarea::placeholder{color:var(--light)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* ── DAY PILLS ── */
+.days-picker{display:flex;gap:6px;flex-wrap:wrap}
+.day-pill{padding:8px 12px;border-radius:99px;font-size:13px;font-weight:500;border:1.5px solid var(--border);cursor:pointer;user-select:none;transition:all 0.12s;background:var(--white);color:var(--gray);min-height:38px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent}
+.day-pill.selected{background:var(--maroon);border-color:var(--maroon);color:white}
+
 /* ── COLOR SWATCHES ── */
 .color-swatches{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
-.swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all 0.12s}
+.swatch{width:30px;height:30px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all 0.12s;-webkit-tap-highlight-color:transparent}
 .swatch.selected{border-color:var(--dark);transform:scale(1.1)}
-/* ── TOAST / CONFIRM ── */
-.toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:white;padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;z-index:999;transform:translateY(10px);opacity:0;transition:all 0.25s;pointer-events:none}
-.toast.show{transform:translateY(0);opacity:1}
-.confirm-msg{font-size:14px;color:var(--mid);margin-bottom:1.25rem;line-height:1.6}
-.empty-week{text-align:center;padding:2.5rem;color:var(--light);font-size:13px;grid-column:1/-1}
-.empty-week p{margin-bottom:12px}
-@media(max-width:700px){.week-grid{grid-template-columns:repeat(3,1fr)}.today-row{grid-template-columns:1fr}.tb-link:not(.always){display:none}.form-row{grid-template-columns:1fr}}
+
+/* ── MODAL ACTIONS ── */
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--border)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark);color:white;padding:10px 18px;border-radius:99px;font-size:13px;font-weight:500;z-index:999;opacity:0;transition:all 0.25s;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.confirm-msg{font-size:14px;color:var(--mid);margin-bottom:1rem;line-height:1.6}
+
+/* ══ RESPONSIVE ═══════════════════════════════════════════════════════════════ */
+@media(min-width:601px){
+  .overlay{align-items:center;padding:1rem}
+  .modal{border-radius:var(--radius-lg);animation:none;max-width:520px}
+  .modal-handle{display:none}
+}
+@media(max-width:768px){
+  .tb-nav,.tb-sep,.tb-profile-btn{display:none}
+  .ham-btn{display:flex}
+  .week-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:600px){
+  .content{padding:1rem 0.875rem 5rem}
+  .today-row{grid-template-columns:1fr}
+  .rightnow{padding:0.875rem 1rem;gap:0.75rem}
+  .rn-icon{font-size:22px}
+  .rn-main{font-size:14px}
+  .sec-header{flex-wrap:wrap;gap:8px}
+  .form-row{grid-template-columns:1fr}
+  .days-picker{gap:5px}
+  .day-pill{flex:1;min-width:42px;justify-content:center;padding:9px 6px;font-size:12px}
+  .modal-actions{flex-direction:column-reverse;gap:8px}
+  .modal-actions .btn{width:100%;justify-content:center}
+  .modal-actions .btn-primary{flex:unset}
+  .epc-action-row{flex-direction:column;align-items:flex-start}
+  .epc-action-row .btn{width:100%;justify-content:center}
+}
+@media(max-width:420px){
+  .topbar{padding:0 0.75rem}
+  .tb-name{font-size:14px}
+  .week-grid{grid-template-columns:repeat(3,1fr);gap:5px}
+  .day-col{min-height:60px}
+  .sb-name{-webkit-line-clamp:1}
+  .rightnow{flex-wrap:nowrap}
+  .rn-time{display:none}
+}
 </style>
 </head>
 <body>
 
+<!-- ── TOPBAR ── -->
 <div class="topbar">
   <div class="tb-left">
     <a href="index.html" class="tb-logo">
@@ -171,8 +248,27 @@ input::placeholder{color:var(--light)}
       <div class="tb-avatar" id="tb-avatar">?</div>
       <span id="tb-profile-label">Profile</span>
     </a>
+    <button class="ham-btn" id="ham-btn" aria-label="Menu" onclick="toggleNav()">
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+    </button>
   </div>
 </div>
+
+<!-- Mobile drawer -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="dashboard.html" class="mob-link">📊 Dashboard</a>
+  <a href="schedule.html"  class="mob-link" style="color:white;font-weight:600">🗓 Schedule</a>
+  <a href="calendar.html"  class="mob-link">📅 Calendar</a>
+  <div class="mob-divider"></div>
+  <a href="dashboard.html" class="mob-link">⚙ Settings</a>
+  <a href="about.html"          class="mob-link">ℹ About</a>
+  <a href="about.html#feedback" class="mob-link">✉ Contact</a>
+  <div class="mob-divider"></div>
+  <button class="mob-link highlight" onclick="openClassModal();closeNav()">+ Add class</button>
+</div>
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 
 <div class="content">
 
@@ -201,7 +297,7 @@ input::placeholder{color:var(--light)}
         <span>📝 Today's note</span>
         <span class="save-indicator" id="save-ind"></span>
       </div>
-      <textarea class="journal-area" id="journal-input" placeholder="Write a quick note for today — upcoming quiz, assignment due, reminders..."></textarea>
+      <textarea class="journal-area" id="journal-input" placeholder="Quick note for today…"></textarea>
     </div>
   </div>
 
@@ -215,7 +311,7 @@ input::placeholder{color:var(--light)}
   </div>
 
   <!-- EXAM PERIODS -->
-  <div class="sec-header" style="margin-top:0.5rem">
+  <div class="sec-header" style="margin-top:0.25rem">
     <span class="sec-title">Exam periods</span>
     <span style="font-size:12px;color:var(--gray)" id="exam-period-count-label">Set dates and room overrides</span>
   </div>
@@ -224,22 +320,22 @@ input::placeholder{color:var(--light)}
 </div>
 
 <!-- ══ ADD / EDIT CLASS MODAL ═════════════════════════════════════════════════ -->
-<div class="overlay" id="class-overlay">
+<div class="overlay" id="class-overlay" onclick="overlayClose(event,'class-overlay')">
   <div class="modal">
+    <div class="modal-handle"></div>
     <div class="modal-title" id="class-modal-title">Add class</div>
+
     <div class="fg" id="curr-picker-fg">
       <label>Pick from your curriculum <span class="opt">(optional)</span></label>
-      <select id="curr-picker" onchange="fillFromCurriculum()">
-        <option value="">— select a subject —</option>
-      </select>
-      <div class="hint">Only subjects marked <strong>Ongoing</strong> in the Dashboard are shown. Mark a subject as Ongoing there first, then add it here.</div>
+      <select id="curr-picker" onchange="fillFromCurriculum()"><option value="">— select a subject —</option></select>
+      <div class="hint">Only subjects marked <strong>Ongoing</strong> in the Dashboard are shown.</div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;color:var(--light);font-size:11px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;color:var(--light);font-size:11px">
       <div style="flex:1;height:1px;background:var(--border)"></div><span>or fill manually</span><div style="flex:1;height:1px;background:var(--border)"></div>
     </div>
     <div class="form-row">
       <div class="fg"><label>Subject code</label><input type="text" id="c-code" placeholder="e.g. MK422"></div>
-      <div class="fg"><label>Subject name <span class="req">*</span></label><input type="text" id="c-name" placeholder="e.g. Marketing Management"></div>
+      <div class="fg"><label>Subject name <span class="req">*</span></label><input type="text" id="c-name" placeholder="e.g. Marketing Mgmt"></div>
     </div>
     <div class="fg">
       <label>Days</label>
@@ -258,7 +354,7 @@ input::placeholder{color:var(--light)}
     </div>
     <div class="form-row">
       <div class="fg"><label>Room</label><input type="text" id="c-room" placeholder="e.g. 301"></div>
-      <div class="fg"><label>Building</label><input type="text" id="c-bldg" placeholder="e.g. Main Building"></div>
+      <div class="fg"><label>Building</label><input type="text" id="c-bldg" placeholder="e.g. Main Bldg"></div>
     </div>
     <div class="fg"><label>Instructor <span class="opt">(optional)</span></label><input type="text" id="c-instructor" placeholder="e.g. Prof. Santos"></div>
     <div class="fg">
@@ -282,24 +378,22 @@ input::placeholder{color:var(--light)}
   </div>
 </div>
 
-<!-- ══ ADD / EDIT EXAM OVERRIDE MODAL ════════════════════════════════════════ -->
-<div class="overlay" id="exam-overlay">
+<!-- ══ EXAM OVERRIDE MODAL ════════════════════════════════════════════════════ -->
+<div class="overlay" id="exam-overlay" onclick="overlayClose(event,'exam-overlay')">
   <div class="modal" style="max-width:440px">
+    <div class="modal-handle"></div>
     <div class="modal-title" id="exam-modal-title">Add exam schedule</div>
-    <div class="fg">
-      <label>Subject</label>
-      <select id="ex-class"><option value="">— select subject —</option></select>
-    </div>
+    <div class="fg"><label>Subject</label><select id="ex-class"><option value="">— select subject —</option></select></div>
     <div class="fg"><label>Exam date</label><input type="date" id="ex-date"></div>
     <div class="form-row">
       <div class="fg"><label>Start time</label><input type="time" id="ex-start" value="08:00"></div>
       <div class="fg"><label>End time</label><input type="time" id="ex-end" value="10:00"></div>
     </div>
     <div class="form-row">
-      <div class="fg"><label>Exam room</label><input type="text" id="ex-room" placeholder="e.g. Gym / Room 201"></div>
+      <div class="fg"><label>Exam room</label><input type="text" id="ex-room" placeholder="e.g. Gym / Rm 201"></div>
       <div class="fg"><label>Building</label><input type="text" id="ex-bldg" placeholder="e.g. Main Building"></div>
     </div>
-    <div class="fg"><label>Notes <span class="opt">(optional)</span></label><input type="text" id="ex-notes" placeholder="e.g. Bring blue ballpen, calculator allowed"></div>
+    <div class="fg"><label>Notes <span class="opt">(optional)</span></label><input type="text" id="ex-notes" placeholder="e.g. Bring blue ballpen"></div>
     <div class="modal-actions">
       <button class="btn btn-danger" id="delete-exam-btn" style="display:none;margin-right:auto" onclick="deleteExam()">Delete</button>
       <button class="btn" onclick="closeModal('exam-overlay')">Cancel</button>
@@ -308,9 +402,10 @@ input::placeholder{color:var(--light)}
   </div>
 </div>
 
-<!-- ══ SET EXAM PERIOD DATES MODAL ═══════════════════════════════════════════ -->
-<div class="overlay" id="epdates-overlay">
+<!-- ══ EXAM PERIOD DATES MODAL ════════════════════════════════════════════════ -->
+<div class="overlay" id="epdates-overlay" onclick="overlayClose(event,'epdates-overlay')">
   <div class="modal" style="max-width:380px">
+    <div class="modal-handle"></div>
     <div class="modal-title" id="epd-title">Set exam period dates</div>
     <input type="hidden" id="epd-id">
     <div class="form-row">
@@ -319,19 +414,20 @@ input::placeholder{color:var(--light)}
     </div>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('epdates-overlay')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveEPDates()">Save dates</button>
+      <button class="btn btn-primary" onclick="saveEPDates()" style="flex:1">Save dates</button>
     </div>
   </div>
 </div>
 
 <!-- ══ CONFIRM MODAL ══════════════════════════════════════════════════════════ -->
-<div class="overlay" id="confirm-overlay">
-  <div class="modal" style="max-width:360px">
+<div class="overlay" id="confirm-overlay" onclick="overlayClose(event,'confirm-overlay')">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-handle"></div>
     <div class="modal-title" id="confirm-title">Confirm</div>
     <div class="confirm-msg" id="confirm-msg"></div>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('confirm-overlay')">Cancel</button>
-      <button class="btn btn-danger" id="confirm-ok">Confirm</button>
+      <button class="btn btn-danger" id="confirm-ok" style="flex:1">Confirm</button>
     </div>
   </div>
 </div>
@@ -339,216 +435,111 @@ input::placeholder{color:var(--light)}
 <div class="toast" id="toast"></div>
 
 <script>
+// ── NAV TOGGLE ────────────────────────────────────────────────────────────────
+function toggleNav(){
+  var btn=document.getElementById('ham-btn'),drawer=document.getElementById('mobile-nav'),ov=document.getElementById('nav-overlay');
+  var open=drawer.classList.toggle('open');
+  btn.classList.toggle('open',open);ov.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeNav(){
+  document.getElementById('ham-btn').classList.remove('open');
+  document.getElementById('mobile-nav').classList.remove('open');
+  document.getElementById('nav-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeNav();document.querySelectorAll('.overlay.open').forEach(el=>el.classList.remove('open'));}});
+
 // ── DATA ──────────────────────────────────────────────────────────────────────
-const SKEY = 'acadtrack_sched';
-let S = null;
+const SKEY='acadtrack_sched';let S=null;
 
-// ── CALENDAR HELPERS (reads acadtrack_data) ───────────────────────────────────
-function getDashData() {
-  try { return JSON.parse(localStorage.getItem('acadtrack_data') || '{}'); } catch { return {}; }
+function getDashData(){try{return JSON.parse(localStorage.getItem('acadtrack_data')||'{}');}catch{return{};}}
+function getCalType(){return getDashData().calendarType||'semestral';}
+
+function getSemLabel(sem){
+  const labels={semestral:{1:'1st Sem',2:'2nd Sem',3:'Summer'},trimestral:{1:'1st Term',2:'2nd Term',3:'3rd Term'},quadrimestral:{1:'1st Term',2:'2nd Term',3:'3rd Term',4:'4th Term'}};
+  return(labels[getCalType()]||labels.semestral)[sem]||'Term '+sem;
 }
-function getCalType() { return getDashData().calendarType || 'semestral'; }
 
-function getSemLabel(sem) {
-  const labels = {
-    semestral:     {1:'1st Sem', 2:'2nd Sem', 3:'Summer'},
-    trimestral:    {1:'1st Term', 2:'2nd Term', 3:'3rd Term'},
-    quadrimestral: {1:'1st Term', 2:'2nd Term', 3:'3rd Term', 4:'4th Term'}
+function getExamPeriodConfig(){
+  const cal=getCalType();
+  const configs={
+    semestral:[{id:'prelim',label:'Prelim'},{id:'midterm',label:'Midterm'},{id:'finals',label:'Finals'}],
+    trimestral:[{id:'prelim',label:'1st Term Exam'},{id:'midterm',label:'2nd Term Exam'},{id:'finals',label:'3rd Term Exam'}],
+    quadrimestral:[{id:'prelim',label:'1st Quarter Exam'},{id:'midterm',label:'2nd Quarter Exam'},{id:'finals',label:'3rd Quarter Exam'},{id:'q4',label:'4th Quarter Exam'}]
   };
-  return (labels[getCalType()]||labels.semestral)[sem] || 'Term '+sem;
+  return configs[cal]||configs.semestral;
 }
 
-// ── EXAM PERIOD CONFIG ────────────────────────────────────────────────────────
-// Returns the canonical period list for the current calendar type.
-// Labels update on each page load; stored start/end/exams data is preserved by ID.
-function getExamPeriodConfig() {
-  const cal = getCalType();
-  const configs = {
-    semestral: [
-      { id:'prelim',  label:'Prelim'         },
-      { id:'midterm', label:'Midterm'        },
-      { id:'finals',  label:'Finals'         }
-    ],
-    trimestral: [
-      { id:'prelim',  label:'1st Term Exam'  },
-      { id:'midterm', label:'2nd Term Exam'  },
-      { id:'finals',  label:'3rd Term Exam'  }
-    ],
-    quadrimestral: [
-      { id:'prelim',  label:'1st Quarter Exam' },
-      { id:'midterm', label:'2nd Quarter Exam' },
-      { id:'finals',  label:'3rd Quarter Exam' },
-      { id:'q4',      label:'4th Quarter Exam' }
-    ]
-  };
-  return configs[cal] || configs.semestral;
+const EP_COLOR_CLS={prelim:'ep-prelim',midterm:'ep-midterm',finals:'ep-finals',q4:'ep-q4'};
+
+function loadS(){
+  try{
+    const r=localStorage.getItem(SKEY);S=r?JSON.parse(r):{};
+    if(!S.notes)S.notes={};if(!S.events)S.events=[];if(!S.classes)S.classes=[];
+    const config=getExamPeriodConfig(),stored=Array.isArray(S.examPeriods)?S.examPeriods:[];
+    S.examPeriods=config.map(cfg=>{const ex=stored.find(p=>p.id===cfg.id);if(ex)return Object.assign({},ex,{label:cfg.label});return{id:cfg.id,label:cfg.label,start:'',end:'',exams:[]};});
+  }catch{S={classes:[],examPeriods:getExamPeriodConfig().map(c=>({id:c.id,label:c.label,start:'',end:'',exams:[]})),events:[],notes:{}};}
 }
-
-// CSS class for exam period card theming
-const EP_COLOR_CLS = { prelim:'ep-prelim', midterm:'ep-midterm', finals:'ep-finals', q4:'ep-q4' };
-
-// ── LOAD / SAVE ───────────────────────────────────────────────────────────────
-function loadS() {
-  try {
-    const r = localStorage.getItem(SKEY);
-    S = r ? JSON.parse(r) : {};
-    if (!S.notes)   S.notes   = {};
-    if (!S.events)  S.events  = [];
-    if (!S.classes) S.classes = [];
-
-    // Merge stored exam periods with calendar-type defaults.
-    // Labels always reflect current calendar type; start/end/exams are preserved.
-    const config = getExamPeriodConfig();
-    const stored = Array.isArray(S.examPeriods) ? S.examPeriods : [];
-    S.examPeriods = config.map(function(cfg) {
-      const existing = stored.find(function(p){ return p.id === cfg.id; });
-      if (existing) {
-        // Update label to match current calendar type; keep all other fields
-        return Object.assign({}, existing, { label: cfg.label });
-      }
-      return { id: cfg.id, label: cfg.label, start: '', end: '', exams: [] };
-    });
-  } catch {
-    S = { classes:[], examPeriods: getExamPeriodConfig().map(function(c){ return {id:c.id,label:c.label,start:'',end:'',exams:[]}; }), events:[], notes:{} };
-  }
-}
-function saveS() { localStorage.setItem(SKEY, JSON.stringify(S)); }
+function saveS(){localStorage.setItem(SKEY,JSON.stringify(S));}
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
-const DAYS      = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const DAYS_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const MONTHS    = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-
-function fmt12(t) {
-  if (!t) return '';
-  const [h,m] = t.split(':').map(Number);
-  return ((h%12)||12) + ':' + String(m).padStart(2,'0') + ' ' + (h>=12?'PM':'AM');
-}
-function timeToNum(t) {
-  if (!t) return 0;
-  const [h,m] = t.split(':').map(Number);
-  return h*100+m;
-}
-function nowTimeStr() {
-  const n=new Date();
-  return String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
-}
-function todayStr() {
-  const d=new Date();
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-}
-function fmtDate(str) {
-  if (!str) return '';
-  const [y,m,d]=str.split('-');
-  return MONTHS[parseInt(m)-1].slice(0,3)+' '+parseInt(d)+', '+y;
-}
-function hexToRgba(hex,alpha){
-  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
-  return `rgba(${r},${g},${b},${alpha})`;
-}
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],DAYS_FULL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function fmt12(t){if(!t)return'';const[h,m]=t.split(':').map(Number);return((h%12)||12)+':'+String(m).padStart(2,'0')+' '+(h>=12?'PM':'AM');}
+function timeToNum(t){if(!t)return 0;const[h,m]=t.split(':').map(Number);return h*100+m;}
+function nowTimeStr(){const n=new Date();return String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}
+function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function fmtDate(str){if(!str)return'';const[y,m,d]=str.split('-');return MONTHS[parseInt(m)-1].slice(0,3)+' '+parseInt(d)+', '+y;}
+function hexToRgba(hex,alpha){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return`rgba(${r},${g},${b},${alpha})`;}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 // ── RIGHT NOW ─────────────────────────────────────────────────────────────────
-function getRightNow() {
+function getRightNow(){
   const now=new Date(),day=now.getDay(),timeNum=timeToNum(nowTimeStr()),today=todayStr();
-  // Check exam periods first
-  for (const ep of S.examPeriods) {
-    if (ep.start && ep.end && today>=ep.start && today<=ep.end) {
-      const exam=ep.exams.find(e=>e.date===today);
-      if (exam) {
-        const cls=S.classes.find(c=>c.id===exam.classId);
-        const s=timeToNum(exam.start),e=timeToNum(exam.end);
-        if (timeNum>=s&&timeNum<e) return {type:'exam-current',cls,exam,period:ep};
-        if (timeNum<s)             return {type:'exam-upcoming',cls,exam,period:ep};
-      }
-      return {type:'exam-period',period:ep};
-    }
-  }
-  // Regular classes
-  const todayClasses=S.classes.filter(c=>(c.days||[]).includes(day)).sort((a,b)=>timeToNum(a.start)-timeToNum(b.start));
-  const current=todayClasses.find(c=>timeNum>=timeToNum(c.start)&&timeNum<timeToNum(c.end));
-  if (current) return {type:'current',cls:current};
-  const next=todayClasses.find(c=>timeToNum(c.start)>timeNum);
-  if (next)    return {type:'upcoming',cls:next};
-  if (todayClasses.length) return {type:'done'};
-  return {type:'none'};
+  for(const ep of S.examPeriods){if(ep.start&&ep.end&&today>=ep.start&&today<=ep.end){const exam=(ep.exams||[]).find(e=>e.date===today);if(exam){const cls=S.classes.find(c=>c.id===exam.classId);const s=timeToNum(exam.start),e=timeToNum(exam.end);if(timeNum>=s&&timeNum<e)return{type:'exam-current',cls,exam,period:ep};if(timeNum<s)return{type:'exam-upcoming',cls,exam,period:ep};}return{type:'exam-period',period:ep};}}
+  const tc=S.classes.filter(c=>(c.days||[]).includes(day)).sort((a,b)=>timeToNum(a.start)-timeToNum(b.start));
+  const current=tc.find(c=>timeNum>=timeToNum(c.start)&&timeNum<timeToNum(c.end));if(current)return{type:'current',cls:current};
+  const next=tc.find(c=>timeToNum(c.start)>timeNum);if(next)return{type:'upcoming',cls:next};
+  if(tc.length)return{type:'done'};return{type:'none'};
 }
 
-function renderRightNow() {
-  const rn=document.getElementById('rightnow');
-  const icon=document.getElementById('rn-icon'),label=document.getElementById('rn-label'),main=document.getElementById('rn-main'),sub=document.getElementById('rn-sub'),time=document.getElementById('rn-time');
-  const now=getRightNow();
-  const nowTime=new Date().toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'});
+function renderRightNow(){
+  const rn=document.getElementById('rightnow'),icon=document.getElementById('rn-icon'),label=document.getElementById('rn-label'),main=document.getElementById('rn-main'),sub=document.getElementById('rn-sub'),time=document.getElementById('rn-time');
+  const now=getRightNow(),nowTime=new Date().toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'});
   rn.className='rightnow';
-
-  if (now.type==='current') {
-    rn.classList.add('status-current');
-    icon.textContent='🏫';label.textContent='You should be in class right now';
-    main.textContent=(now.cls.room?'Room '+now.cls.room+(now.cls.building?', '+now.cls.building:''):'')+' — '+now.cls.name;
-    sub.textContent='Until '+fmt12(now.cls.end)+(now.cls.instructor?' · '+now.cls.instructor:'');
-    time.textContent=nowTime;
-  } else if (now.type==='upcoming') {
-    const mins=Math.round((timeToNum(now.cls.start)-timeToNum(nowTimeStr()))/100*60);
-    rn.classList.add('status-upcoming');
-    icon.textContent='⏰';label.textContent='Upcoming class';
-    main.textContent=now.cls.name+' at '+fmt12(now.cls.start);
-    sub.textContent=(now.cls.room?'Room '+now.cls.room+(now.cls.building?', '+now.cls.building:''):'')+' · in ~'+Math.max(0,mins)+' min';
-    time.textContent=nowTime;
-  } else if (now.type==='exam-current') {
-    rn.classList.add('status-exam-current');
-    icon.textContent='📝';label.textContent=now.period.label.toUpperCase()+' — happening now';
-    main.textContent=now.cls?now.cls.name:'Exam';
-    sub.textContent=(now.exam.room?'Exam room: '+now.exam.room+(now.exam.building?', '+now.exam.building:''):'')+( now.exam.notes?' · '+now.exam.notes:'');
-    time.textContent=fmt12(now.exam.start)+' – '+fmt12(now.exam.end);
-  } else if (now.type==='exam-upcoming') {
-    rn.classList.add('status-exam-upcoming');
-    icon.textContent='⚠️';label.textContent=now.period.label+' exam today';
-    main.textContent=(now.cls?now.cls.name+' — exam at '+fmt12(now.exam.start):'Exam coming up');
-    sub.textContent=(now.exam.room?'Room: '+now.exam.room+(now.exam.building?', '+now.exam.building:''):'')+( now.exam.notes?' · '+now.exam.notes:'');
-    time.textContent=nowTime;
-  } else if (now.type==='exam-period') {
-    rn.classList.add('status-exam-upcoming');
-    icon.textContent='📋';label.textContent=now.period.label;
-    main.textContent='Exam period ongoing — check your exam schedules';
-    sub.textContent=fmtDate(now.period.start)+' to '+fmtDate(now.period.end);
-    time.textContent=nowTime;
-  } else if (now.type==='done') {
-    rn.classList.add('status-none');icon.textContent='✅';label.textContent='Classes done for today';
-    main.textContent='All your classes for today are done!';sub.textContent='Rest up and review your notes.';time.textContent=nowTime;
-  } else {
-    rn.classList.add('status-none');icon.textContent='📚';label.textContent='Right now';
-    main.textContent=S.classes.length?'No classes scheduled for today':'No classes added yet';
-    sub.textContent=S.classes.length?'Enjoy your free time!':'Click "+ Add class" to add your schedule.';
-    time.textContent=nowTime;
-  }
+  if(now.type==='current'){rn.classList.add('status-current');icon.textContent='🏫';label.textContent='In class right now';main.textContent=(now.cls.room?'Rm '+now.cls.room+' — ':'')+now.cls.name;sub.textContent='Until '+fmt12(now.cls.end)+(now.cls.instructor?' · '+now.cls.instructor:'');time.textContent=nowTime;}
+  else if(now.type==='upcoming'){const mins=Math.round((timeToNum(now.cls.start)-timeToNum(nowTimeStr()))/100*60);rn.classList.add('status-upcoming');icon.textContent='⏰';label.textContent='Upcoming class';main.textContent=now.cls.name+' at '+fmt12(now.cls.start);sub.textContent=(now.cls.room?'Rm '+now.cls.room:'')+(mins>0?' · in ~'+Math.max(0,mins)+' min':'');time.textContent=nowTime;}
+  else if(now.type==='exam-current'){rn.classList.add('status-exam-current');icon.textContent='📝';label.textContent=now.period.label+' — now';main.textContent=now.cls?now.cls.name:'Exam';sub.textContent=(now.exam.room?'Rm: '+now.exam.room+(now.exam.building?', '+now.exam.building:''):'')+( now.exam.notes?' · '+now.exam.notes:'');time.textContent=fmt12(now.exam.start)+' – '+fmt12(now.exam.end);}
+  else if(now.type==='exam-upcoming'){rn.classList.add('status-exam-upcoming');icon.textContent='⚠️';label.textContent=now.period.label+' exam today';main.textContent=now.cls?now.cls.name+' at '+fmt12(now.exam.start):'Exam coming up';sub.textContent=(now.exam.room?'Rm: '+now.exam.room:'')+(now.exam.notes?' · '+now.exam.notes:'');time.textContent=nowTime;}
+  else if(now.type==='exam-period'){rn.classList.add('status-exam-upcoming');icon.textContent='📋';label.textContent=now.period.label;main.textContent='Exam period ongoing — check exam schedules';sub.textContent=fmtDate(now.period.start)+' to '+fmtDate(now.period.end);time.textContent=nowTime;}
+  else if(now.type==='done'){rn.classList.add('status-none');icon.textContent='✅';label.textContent='Done for today';main.textContent='All classes done!';sub.textContent='Rest up and review your notes.';time.textContent=nowTime;}
+  else{rn.classList.add('status-none');icon.textContent='📚';label.textContent='Right now';main.textContent=S.classes.length?'No classes today':'No classes added yet';sub.textContent=S.classes.length?'Enjoy your free time!':'Tap "+ Add class" to get started.';time.textContent=nowTime;}
 }
 
 // ── TODAY LIST ────────────────────────────────────────────────────────────────
-function renderTodayList() {
+function renderTodayList(){
   const el=document.getElementById('today-list'),cnt=document.getElementById('today-count'),dayLabel=document.getElementById('today-date-label');
   const now=new Date(),day=now.getDay(),timeNum=timeToNum(nowTimeStr()),today=todayStr();
   dayLabel.textContent=DAYS_FULL[day]+"'s classes";
   const examPeriod=S.examPeriods.find(p=>p.start&&p.end&&today>=p.start&&today<=p.end);
-  const todayExams=examPeriod?(examPeriod.exams||[]).filter(e=>e.date===today):[];
   const classes=S.classes.filter(c=>(c.days||[]).includes(day)).sort((a,b)=>timeToNum(a.start)-timeToNum(b.start));
-  if (!classes.length&&!todayExams.length){el.innerHTML='<span style="font-size:13px;color:var(--light)">No classes today.</span>';cnt.textContent='';return;}
+  if(!classes.length){el.innerHTML='<span style="font-size:13px;color:var(--light)">No classes today.</span>';cnt.textContent='';return;}
   cnt.textContent=classes.length+' class'+(classes.length!==1?'es':'');
   let html='';
   classes.forEach(c=>{
     const s=timeToNum(c.start),e=timeToNum(c.end);
     const status=timeNum>=s&&timeNum<e?'current':timeNum>e?'done':'upcoming';
-    const examOverride=examPeriod?(examPeriod.exams||[]).find(ex=>ex.classId===c.id&&ex.date===today):null;
-    const room=examOverride?(examOverride.room||c.room):c.room;
-    const bldg=examOverride?(examOverride.building||c.building):c.building;
+    const ov=examPeriod?(examPeriod.exams||[]).find(ex=>ex.classId===c.id&&ex.date===today):null;
+    const room=ov?(ov.room||c.room):c.room;
     html+=`<div class="class-chip">
       <div class="chip-dot" style="background:${c.color||'#7B1C1C'}"></div>
       <div class="chip-body">
         <div class="chip-name">${esc(c.name)}</div>
-        <div class="chip-meta">${room?'Room '+esc(room)+(bldg?', '+esc(bldg):''):'No room set'}${examOverride?' · <span style="color:var(--prelim);font-weight:600">Exam today</span>':''}</div>
+        <div class="chip-meta">${room?'Rm '+esc(room):'No room'}${ov?' · <span style="color:var(--prelim);font-weight:600">Exam</span>':''}</div>
       </div>
-      <div>
-        <div class="chip-time">${fmt12(examOverride?examOverride.start:c.start)}</div>
-        <div class="chip-status ${status==='current'?'cs-current':status==='done'?'cs-done':examOverride?'cs-exam':'cs-upcoming'}">${status==='current'?'Now':status==='done'?'Done':examOverride?'Exam':'Upcoming'}</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0">
+        <div class="chip-time">${fmt12(ov?ov.start:c.start)}</div>
+        <div class="chip-status ${status==='current'?'cs-current':status==='done'?'cs-done':ov?'cs-exam':'cs-upcoming'}">${status==='current'?'Now':status==='done'?'Done':ov?'Exam':'Soon'}</div>
       </div>
     </div>`;
   });
@@ -560,10 +551,7 @@ let journalTimer;
 function initJournal(){
   const input=document.getElementById('journal-input'),today=todayStr();
   input.value=S.notes[today]||'';
-  input.addEventListener('input',()=>{
-    S.notes[today]=input.value;clearTimeout(journalTimer);
-    journalTimer=setTimeout(()=>{saveS();const ind=document.getElementById('save-ind');ind.textContent='Saved';setTimeout(()=>ind.textContent='',1500);},600);
-  });
+  input.addEventListener('input',()=>{S.notes[today]=input.value;clearTimeout(journalTimer);journalTimer=setTimeout(()=>{saveS();const ind=document.getElementById('save-ind');ind.textContent='Saved';setTimeout(()=>ind.textContent='',1500);},600);});
 }
 
 // ── WEEK GRID ─────────────────────────────────────────────────────────────────
@@ -574,20 +562,9 @@ function renderWeekGrid(){
   for(let d=1;d<=6;d++){
     const isToday=d===today;
     const dayClasses=S.classes.filter(c=>(c.days||[]).includes(d)).sort((a,b)=>timeToNum(a.start)-timeToNum(b.start));
-    html+=`<div class="day-col">
-      <div class="day-header${isToday?' today-col':''}"><div class="day-name">${DAYS[d]}${isToday?' · Today':''}</div></div>
-      <div class="day-classes">`;
-    if(dayClasses.length){
-      dayClasses.forEach(c=>{
-        const bg=hexToRgba(c.color||'#7B1C1C',0.12);
-        html+=`<div class="sched-block" style="background:${bg};border-color:${hexToRgba(c.color||'#7B1C1C',0.3)}" onclick="openClassModal('${c.id}')">
-          <div class="sb-code" style="color:${c.color||'#7B1C1C'}">${esc(c.code||'')}</div>
-          <div class="sb-name">${esc(c.name)}</div>
-          <div class="sb-meta" style="color:${c.color||'#7B1C1C'}">${fmt12(c.start)} – ${fmt12(c.end)}</div>
-          ${c.room?`<div class="sb-meta">Rm ${esc(c.room)}</div>`:''}
-        </div>`;
-      });
-    } else { html+=`<div class="no-class">Free</div>`; }
+    html+=`<div class="day-col"><div class="day-header${isToday?' today-col':''}"><div class="day-name">${DAYS[d]}${isToday?' ·':''}</div></div><div class="day-classes">`;
+    if(dayClasses.length){dayClasses.forEach(c=>{const bg=hexToRgba(c.color||'#7B1C1C',0.12);html+=`<div class="sched-block" style="background:${bg};border-color:${hexToRgba(c.color||'#7B1C1C',0.3)}" onclick="openClassModal('${c.id}')"><div class="sb-code" style="color:${c.color||'#7B1C1C'}">${esc(c.code||'')}</div><div class="sb-name">${esc(c.name)}</div><div class="sb-meta" style="color:${c.color||'#7B1C1C'}">${fmt12(c.start)}</div></div>`;});}
+    else{html+=`<div class="no-class">Free</div>`;}
     html+=`</div></div>`;
   }
   grid.innerHTML=html;
@@ -595,129 +572,70 @@ function renderWeekGrid(){
 
 // ── EXAM PERIODS ──────────────────────────────────────────────────────────────
 function renderExamPeriods(){
-  const sec=document.getElementById('exam-section');
-  let html='';
+  const sec=document.getElementById('exam-section');let html='';
   S.examPeriods.forEach(ep=>{
-    const colorCls=EP_COLOR_CLS[ep.id]||'ep-prelim';
-    const hasDate=ep.start&&ep.end;
+    const colorCls=EP_COLOR_CLS[ep.id]||'ep-prelim',hasDate=ep.start&&ep.end;
     html+=`<div class="exam-period-card ${colorCls}">
       <div class="epc-header" onclick="toggleEP('${ep.id}')">
         <div class="epc-badge">${esc(ep.label)}</div>
         <div class="epc-info">
           <div class="epc-title">${esc(ep.label)} Period</div>
-          <div class="epc-dates">${hasDate?fmtDate(ep.start)+' – '+fmtDate(ep.end):'Dates not set — click to configure'}</div>
+          <div class="epc-dates">${hasDate?fmtDate(ep.start)+' – '+fmtDate(ep.end):'Tap to configure'}</div>
         </div>
-        <span style="font-size:12px;color:var(--light)">${(ep.exams||[]).length} exam${(ep.exams||[]).length!==1?'s':''} scheduled</span>
+        <span style="font-size:11px;color:var(--light);flex-shrink:0">${(ep.exams||[]).length} exam${(ep.exams||[]).length!==1?'s':''}</span>
         <span class="epc-arrow" id="arrow-${ep.id}">▼</span>
       </div>
       <div class="epc-body" id="epbody-${ep.id}">
-        <div style="display:flex;gap:10px;align-items:center;margin:12px 0 8px;flex-wrap:wrap">
-          <span style="font-size:12px;color:var(--gray)">Period dates:</span>
+        <div class="epc-action-row">
           <button class="btn btn-sm" onclick="openEPDates('${ep.id}')">${hasDate?fmtDate(ep.start)+' – '+fmtDate(ep.end):'Set dates'}</button>
           <button class="btn btn-sm" onclick="openExamModal('${ep.id}')">+ Add exam schedule</button>
         </div>
-        ${(ep.exams||[]).length?(ep.exams||[]).map(ex=>{
-          const cls=S.classes.find(c=>c.id===ex.classId);
-          return `<div class="exam-entry">
-            <div class="ee-info">
-              <div class="ee-subject">${esc(cls?cls.name:'Unknown subject')}</div>
-              <div class="ee-meta">${ex.room?'Room '+esc(ex.room)+(ex.building?', '+esc(ex.building):''):'No room set'} · ${fmt12(ex.start)} – ${fmt12(ex.end)}${ex.notes?' · '+esc(ex.notes):''}</div>
-            </div>
-            <div class="ee-date">${fmtDate(ex.date)}</div>
-            <button class="btn btn-sm" onclick="openExamModal('${ep.id}','${ex.id}')">Edit</button>
-          </div>`;
-        }).join(''):'<div style="font-size:12px;color:var(--light);padding:4px 0">No exam schedules added yet. Use "+ Add exam schedule" to set temporary room and time changes.</div>'}
+        ${(ep.exams||[]).length?(ep.exams||[]).map(ex=>{const cls=S.classes.find(c=>c.id===ex.classId);return`<div class="exam-entry"><div class="ee-info"><div class="ee-subject">${esc(cls?cls.name:'Unknown subject')}</div><div class="ee-meta">${ex.room?'Rm '+esc(ex.room)+(ex.building?', '+esc(ex.building):''):'No room'} · ${fmt12(ex.start)}${ex.notes?' · '+esc(ex.notes):''}</div></div><div class="ee-date">${fmtDate(ex.date)}</div><button class="btn btn-sm" onclick="openExamModal('${ep.id}','${ex.id}')">Edit</button></div>`;}).join(''):'<div style="font-size:12px;color:var(--light);padding:4px 0">No exam schedules yet. Use "+ Add exam schedule" to set room and time overrides.</div>'}
       </div>
     </div>`;
   });
   sec.innerHTML=html;
-
-  // Update subtitle label
-  const calType=getCalType();
-  const subtitles={semestral:'Prelim · Midterm · Finals',trimestral:'1st Term · 2nd Term · 3rd Term',quadrimestral:'1st Quarter · 2nd Quarter · 3rd Quarter · 4th Quarter'};
-  document.getElementById('exam-period-count-label').textContent=subtitles[calType]||'Set dates and room overrides';
+  const subtitles={semestral:'Prelim · Midterm · Finals',trimestral:'1st · 2nd · 3rd Term',quadrimestral:'Q1 · Q2 · Q3 · Q4'};
+  document.getElementById('exam-period-count-label').textContent=subtitles[getCalType()]||'Set dates and overrides';
 }
 
-function toggleEP(id){
-  document.getElementById('epbody-'+id).classList.toggle('open');
-  document.getElementById('arrow-'+id).classList.toggle('open');
-}
+function toggleEP(id){document.getElementById('epbody-'+id).classList.toggle('open');document.getElementById('arrow-'+id).classList.toggle('open');}
 
 // ── CLASS MODAL ───────────────────────────────────────────────────────────────
 let editClassId=null,selectedColor='#7B1C1C';
 
-function getCurriculumSubjects(){
-  try { return (getDashData().subjects||[]).filter(s=>s.name&&s.status==='ongoing'); } catch { return []; }
-}
+function getCurriculumSubjects(){try{return(getDashData().subjects||[]).filter(s=>s.name&&s.status==='ongoing');}catch{return[];}}
+function markSubjectOngoing(code){if(!code)return;try{const raw=localStorage.getItem('acadtrack_data');if(!raw)return;const d=JSON.parse(raw);let changed=false;(d.subjects||[]).forEach(s=>{if(s.code===code&&s.status==='not_taken'){s.status='ongoing';changed=true;}});if(changed)localStorage.setItem('acadtrack_data',JSON.stringify(d));}catch{}}
 
-function markSubjectOngoing(code){
-  if(!code)return;
-  try{
-    const raw=localStorage.getItem('acadtrack_data');if(!raw)return;
-    const d=JSON.parse(raw);let changed=false;
-    (d.subjects||[]).forEach(s=>{if(s.code===code&&s.status==='not_taken'){s.status='ongoing';changed=true;}});
-    if(changed)localStorage.setItem('acadtrack_data',JSON.stringify(d));
-  }catch{}
-}
-
-function fillFromCurriculum(){
-  const id=document.getElementById('curr-picker').value;if(!id)return;
-  const s=getCurriculumSubjects().find(x=>x.id===id);if(!s)return;
-  document.getElementById('c-code').value=s.code||'';
-  document.getElementById('c-name').value=s.name;
-  document.getElementById('c-name').focus();
-}
+function fillFromCurriculum(){const id=document.getElementById('curr-picker').value;if(!id)return;const s=getCurriculumSubjects().find(x=>x.id===id);if(!s)return;document.getElementById('c-code').value=s.code||'';document.getElementById('c-name').value=s.name;document.getElementById('c-name').focus();}
 
 function openClassModal(id){
-  editClassId=id||null;
-  const cls=id?S.classes.find(c=>c.id===id):null;
-
-  // Build curriculum picker — only Ongoing subjects, grouped by Year/Term
+  editClassId=id||null;const cls=id?S.classes.find(c=>c.id===id):null;
   const picker=document.getElementById('curr-picker'),pickerFg=document.getElementById('curr-picker-fg');
   const currSubs=getCurriculumSubjects();
   if(currSubs.length&&!cls){
     pickerFg.style.display='block';
-    const groups={};
-    currSubs.forEach(s=>{
-      const k='Year '+s.year+' — '+getSemLabel(s.sem);
-      if(!groups[k])groups[k]=[];groups[k].push(s);
-    });
-    const scheduledCodes=S.classes.map(c=>c.code).filter(Boolean);
+    const groups={},scheduledCodes=S.classes.map(c=>c.code).filter(Boolean);
+    currSubs.forEach(s=>{const k='Year '+s.year+' — '+getSemLabel(s.sem);if(!groups[k])groups[k]=[];groups[k].push(s);});
     let opts='<option value="">— select a subject —</option>';
-    Object.entries(groups).forEach(([grp,list])=>{
-      const available=list.filter(s=>!scheduledCodes.includes(s.code));
-      if(!available.length)return;
-      opts+='<optgroup label="'+grp+'">';
-      available.forEach(s=>{opts+='<option value="'+s.id+'">'+(s.code?s.code+' — ':'')+s.name+'</option>';});
-      opts+='</optgroup>';
-    });
+    Object.entries(groups).forEach(([grp,list])=>{const av=list.filter(s=>!scheduledCodes.includes(s.code));if(!av.length)return;opts+='<optgroup label="'+grp+'">';av.forEach(s=>{opts+='<option value="'+s.id+'">'+(s.code?s.code+' — ':'')+s.name+'</option>';});opts+='</optgroup>';});
     picker.innerHTML=opts;
-  } else {
-    pickerFg.style.display='none';
-  }
-
+  }else{pickerFg.style.display='none';}
   document.getElementById('class-modal-title').textContent=cls?'Edit class':'Add class';
-  document.getElementById('c-code').value=cls?cls.code||'':'';
-  document.getElementById('c-name').value=cls?cls.name:'';
-  document.getElementById('c-start').value=cls?cls.start:'08:00';
-  document.getElementById('c-end').value=cls?cls.end:'09:30';
-  document.getElementById('c-room').value=cls?cls.room||'':'';
-  document.getElementById('c-bldg').value=cls?cls.building||'':'';
-  document.getElementById('c-instructor').value=cls?cls.instructor||'':'';
+  document.getElementById('c-code').value=cls?cls.code||'':'';document.getElementById('c-name').value=cls?cls.name:'';
+  document.getElementById('c-start').value=cls?cls.start:'08:00';document.getElementById('c-end').value=cls?cls.end:'09:30';
+  document.getElementById('c-room').value=cls?cls.room||'':'';document.getElementById('c-bldg').value=cls?cls.building||'':'';document.getElementById('c-instructor').value=cls?cls.instructor||'':'';
   selectedColor=cls?cls.color||'#7B1C1C':'#7B1C1C';
   document.querySelectorAll('.swatch').forEach(sw=>sw.classList.toggle('selected',sw.dataset.color===selectedColor));
-  const days=cls?cls.days||:[];
+  const days=cls?cls.days||[]:[];
   document.querySelectorAll('.day-pill').forEach(p=>p.classList.toggle('selected',days.includes(parseInt(p.dataset.day))));
   document.getElementById('delete-class-btn').style.display=cls?'inline-flex':'none';
-  document.getElementById('class-overlay').classList.add('open');
-  setTimeout(()=>document.getElementById('c-name').focus(),100);
+  openModal('class-overlay');
+  setTimeout(()=>document.getElementById('c-name').focus(),300);
 }
 
 document.querySelectorAll('.day-pill').forEach(p=>p.addEventListener('click',()=>p.classList.toggle('selected')));
-document.querySelectorAll('.swatch').forEach(sw=>sw.addEventListener('click',()=>{
-  document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));
-  sw.classList.add('selected');selectedColor=sw.dataset.color;
-}));
+document.querySelectorAll('.swatch').forEach(sw=>sw.addEventListener('click',()=>{document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));sw.classList.add('selected');selectedColor=sw.dataset.color;}));
 
 function saveClass(){
   const name=document.getElementById('c-name').value.trim();if(!name){document.getElementById('c-name').focus();return;}
@@ -729,107 +647,55 @@ function saveClass(){
 }
 
 function deleteClass(){
-  showConfirm('Delete class?','This will also remove all exam schedules for this class.',()=>{
-    S.classes=S.classes.filter(c=>c.id!==editClassId);
-    S.examPeriods.forEach(ep=>{ep.exams=(ep.exams||[]).filter(e=>e.classId!==editClassId);});
-    saveS();closeModal('class-overlay');renderAll();showToast('Class deleted');
-  });
+  showConfirm('Delete class?','This will also remove all exam schedules for this class.',()=>{S.classes=S.classes.filter(c=>c.id!==editClassId);S.examPeriods.forEach(ep=>{ep.exams=(ep.exams||[]).filter(e=>e.classId!==editClassId);});saveS();closeModal('class-overlay');renderAll();showToast('Class deleted');});
 }
 
 // ── EXAM MODAL ────────────────────────────────────────────────────────────────
 let currentEPId=null,editExamId=null;
-
 function openExamModal(periodId,examId){
   currentEPId=periodId;editExamId=examId||null;
-  const ep=S.examPeriods.find(p=>p.id===periodId);
-  const exam=examId?(ep.exams||[]).find(e=>e.id===examId):null;
+  const ep=S.examPeriods.find(p=>p.id===periodId),exam=examId?(ep.exams||[]).find(e=>e.id===examId):null;
   document.getElementById('exam-modal-title').textContent=(exam?'Edit':'Add')+' exam — '+ep.label;
-  const sel=document.getElementById('ex-class');
-  sel.innerHTML='<option value="">— select subject —</option>'+S.classes.map(c=>`<option value="${c.id}"${exam&&exam.classId===c.id?' selected':''}>${esc(c.code?c.code+' — ':'')+esc(c.name)}</option>`).join('');
-  document.getElementById('ex-date').value=exam?exam.date:(ep.start||'');
-  document.getElementById('ex-start').value=exam?exam.start:'08:00';
-  document.getElementById('ex-end').value=exam?exam.end:'10:00';
-  document.getElementById('ex-room').value=exam?exam.room||'':'';
-  document.getElementById('ex-bldg').value=exam?exam.building||'':'';
-  document.getElementById('ex-notes').value=exam?exam.notes||'':'';
+  const sel=document.getElementById('ex-class');sel.innerHTML='<option value="">— select subject —</option>'+S.classes.map(c=>`<option value="${c.id}"${exam&&exam.classId===c.id?' selected':''}>${esc(c.code?c.code+' — ':'')+esc(c.name)}</option>`).join('');
+  document.getElementById('ex-date').value=exam?exam.date:(ep.start||'');document.getElementById('ex-start').value=exam?exam.start:'08:00';document.getElementById('ex-end').value=exam?exam.end:'10:00';
+  document.getElementById('ex-room').value=exam?exam.room||'':'';document.getElementById('ex-bldg').value=exam?exam.building||'':'';document.getElementById('ex-notes').value=exam?exam.notes||'':'';
   document.getElementById('delete-exam-btn').style.display=exam?'inline-flex':'none';
-  document.getElementById('exam-overlay').classList.add('open');
+  openModal('exam-overlay');
 }
-
 function saveExam(){
   const classId=document.getElementById('ex-class').value,date=document.getElementById('ex-date').value;
   if(!classId||!date){showToast('Please select a subject and date');return;}
   const ep=S.examPeriods.find(p=>p.id===currentEPId);
   const exam={id:editExamId||('ex'+Date.now()),classId,date,start:document.getElementById('ex-start').value,end:document.getElementById('ex-end').value,room:document.getElementById('ex-room').value.trim(),building:document.getElementById('ex-bldg').value.trim(),notes:document.getElementById('ex-notes').value.trim()};
   if(!ep.exams)ep.exams=[];
-  if(editExamId)ep.exams=ep.exams.map(e=>e.id===editExamId?exam:e);
-  else ep.exams.push(exam);
+  if(editExamId)ep.exams=ep.exams.map(e=>e.id===editExamId?exam:e);else ep.exams.push(exam);
   saveS();closeModal('exam-overlay');renderExamPeriods();showToast('Exam schedule saved');
 }
-
-function deleteExam(){
-  showConfirm('Delete exam schedule?','This will remove this exam entry.',()=>{
-    const ep=S.examPeriods.find(p=>p.id===currentEPId);
-    ep.exams=(ep.exams||[]).filter(e=>e.id!==editExamId);
-    saveS();closeModal('exam-overlay');renderExamPeriods();showToast('Exam deleted');
-  });
-}
+function deleteExam(){showConfirm('Delete exam schedule?','This will remove this exam entry.',()=>{const ep=S.examPeriods.find(p=>p.id===currentEPId);ep.exams=(ep.exams||[]).filter(e=>e.id!==editExamId);saveS();closeModal('exam-overlay');renderExamPeriods();showToast('Exam deleted');});}
 
 // ── EXAM PERIOD DATES ─────────────────────────────────────────────────────────
-function openEPDates(id){
-  const ep=S.examPeriods.find(p=>p.id===id);
-  document.getElementById('epd-title').textContent='Set '+ep.label+' period dates';
-  document.getElementById('epd-id').value=id;
-  document.getElementById('epd-start').value=ep.start||'';
-  document.getElementById('epd-end').value=ep.end||'';
-  document.getElementById('epdates-overlay').classList.add('open');
-}
-function saveEPDates(){
-  const id=document.getElementById('epd-id').value;
-  const ep=S.examPeriods.find(p=>p.id===id);
-  ep.start=document.getElementById('epd-start').value;
-  ep.end=document.getElementById('epd-end').value;
-  saveS();closeModal('epdates-overlay');renderExamPeriods();showToast('Dates saved');
-}
+function openEPDates(id){const ep=S.examPeriods.find(p=>p.id===id);document.getElementById('epd-title').textContent='Set '+ep.label+' period dates';document.getElementById('epd-id').value=id;document.getElementById('epd-start').value=ep.start||'';document.getElementById('epd-end').value=ep.end||'';openModal('epdates-overlay');}
+function saveEPDates(){const id=document.getElementById('epd-id').value,ep=S.examPeriods.find(p=>p.id===id);ep.start=document.getElementById('epd-start').value;ep.end=document.getElementById('epd-end').value;saveS();closeModal('epdates-overlay');renderExamPeriods();showToast('Dates saved');}
 
-// ── MODALS / TOAST ────────────────────────────────────────────────────────────
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-function showConfirm(title,msg,onOk){
-  document.getElementById('confirm-title').textContent=title;
-  document.getElementById('confirm-msg').textContent=msg;
-  document.getElementById('confirm-ok').onclick=()=>{closeModal('confirm-overlay');onOk();};
-  document.getElementById('confirm-overlay').classList.add('open');
-}
-document.querySelectorAll('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.overlay.open').forEach(el=>el.classList.remove('open'));});
+// ── MODAL HELPERS ─────────────────────────────────────────────────────────────
+function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById(id).classList.remove('open');if(!document.querySelectorAll('.overlay.open').length)document.body.style.overflow='';}
+function overlayClose(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+function showConfirm(title,msg,onOk){document.getElementById('confirm-title').textContent=title;document.getElementById('confirm-msg').textContent=msg;document.getElementById('confirm-ok').onclick=()=>{closeModal('confirm-overlay');onOk();};openModal('confirm-overlay');}
 let toastTimer;
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2400);}
 
 // ── RENDER ALL ────────────────────────────────────────────────────────────────
-function renderAll(){
-  renderRightNow();
-  renderTodayList();
-  renderWeekGrid();
-  renderExamPeriods();
-}
+function renderAll(){renderRightNow();renderTodayList();renderWeekGrid();renderExamPeriods();}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-loadS();
-initJournal();
-renderAll();
+loadS();initJournal();renderAll();
 setInterval(()=>{renderRightNow();renderTodayList();},60000);
 </script>
+
 <script>
 (function(){
-  try{
-    var d=JSON.parse(localStorage.getItem('acadtrack_data')||'{}');
-    var name=d.name||(d.school?d.school.split(' ')[0]:'');
-    var init=name?name.charAt(0).toUpperCase():'?';
-    var av=document.getElementById('tb-avatar');
-    var lb=document.getElementById('tb-profile-label');
-    if(av)av.textContent=init;
-    if(lb)lb.textContent=name||'Profile';
-  }catch(e){}
+  try{var d=JSON.parse(localStorage.getItem('acadtrack_data')||'{}');var name=d.name||(d.school?d.school.split(' ')[0]:'');var init=name?name.charAt(0).toUpperCase():'?';var av=document.getElementById('tb-avatar');var lb=document.getElementById('tb-profile-label');if(av)av.textContent=init;if(lb)lb.textContent=name||'Profile';}catch(e){}
 })();
 </script>
 </body>
