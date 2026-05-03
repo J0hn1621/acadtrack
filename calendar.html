@@ -18,140 +18,202 @@
   --prelim:#C2410C;--prelim-bg:#FFF7ED;--prelim-border:#FED7AA;
   --midterm:#1D4ED8;--midterm-bg:#EFF6FF;--midterm-border:#BFDBFE;
   --finals:#7E22CE;--finals-bg:#FAF5FF;--finals-border:#DDD6FE;
-  --q4:#0F766E;--q4-bg:#CCFBF1;--q4-border:#5EEAD4;   /* 4th quarter — teal */
+  --q4:#0F766E;--q4-bg:#CCFBF1;--q4-border:#5EEAD4;
   --radius:8px;--radius-lg:14px;
 }
 body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.5;min-height:100vh}
 
 /* ── TOPBAR ── */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;height:54px;background:var(--maroon);gap:12px;position:sticky;top:0;z-index:100}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;height:54px;background:var(--maroon);gap:10px;position:sticky;top:0;z-index:200}
 .tb-left{display:flex;align-items:center;gap:0;flex-shrink:0}
-.tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:10px}
-.tb-seal{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:12px;flex-shrink:0}
+.tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.tb-seal{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:11px;flex-shrink:0}
 .tb-name{font-family:'Playfair Display',serif;font-size:15px;color:white;font-weight:600;white-space:nowrap}
-.tb-nav{display:flex;align-items:center;gap:1px}
-.tb-link{font-size:12px;color:rgba(255,255,255,0.72);text-decoration:none;padding:6px 11px;border-radius:6px;transition:all 0.12s;white-space:nowrap;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;line-height:1}
+.tb-nav{display:flex;align-items:center;gap:1px;margin-left:8px}
+.tb-link{font-size:12px;color:rgba(255,255,255,0.72);text-decoration:none;padding:5px 10px;border-radius:6px;transition:all 0.12s;white-space:nowrap;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;line-height:1}
 .tb-link:hover{background:rgba(255,255,255,0.15);color:white}
 .tb-link.active{background:rgba(255,255,255,0.2);color:white;font-weight:500}
-.tb-right{display:flex;align-items:center;gap:1px;flex-shrink:0}
-.tb-sep{width:1px;height:18px;background:rgba(255,255,255,0.2);margin:0 8px;flex-shrink:0}
-.tb-profile-btn{display:flex;align-items:center;gap:7px;padding:4px 12px 4px 5px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none;margin-left:4px}
+.tb-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.tb-sep{width:1px;height:18px;background:rgba(255,255,255,0.2);margin:0 2px;flex-shrink:0}
+.tb-profile-btn{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none}
 .tb-profile-btn:hover{background:rgba(255,255,255,0.24);color:white}
-.tb-avatar{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
+.tb-avatar{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0}
+
+/* ── HAMBURGER ── */
+.ham-btn{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:36px;height:36px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;border-radius:var(--radius);padding:6px;flex-shrink:0}
+.ham-line{display:block;width:16px;height:2px;background:white;border-radius:2px;transition:all 0.25s;transform-origin:center}
+.ham-btn.open .ham-line:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham-btn.open .ham-line:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham-btn.open .ham-line:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ── MOBILE DRAWER ── */
+.mobile-nav{display:none;position:fixed;top:54px;left:0;right:0;background:var(--maroon);z-index:199;padding:0.5rem 1rem 1rem;flex-direction:column;gap:2px;box-shadow:0 8px 24px rgba(0,0,0,0.25)}
+.mobile-nav.open{display:flex}
+.mob-link{font-size:14px;font-weight:500;color:rgba(255,255,255,0.85);text-decoration:none;padding:11px 14px;border-radius:var(--radius);display:block;transition:all 0.12s;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;text-align:left;width:100%}
+.mob-link:hover{background:rgba(255,255,255,0.15);color:white}
+.mob-divider{height:1px;background:rgba(255,255,255,0.15);margin:4px 0}
+.mob-link.highlight{background:rgba(255,255,255,0.18);color:white;font-weight:600;margin-top:4px}
+.nav-overlay{display:none;position:fixed;inset:0;top:54px;background:rgba(0,0,0,0.3);z-index:198}
+.nav-overlay.open{display:block}
 
 /* ── LAYOUT ── */
-.main{display:grid;grid-template-columns:1fr 320px;gap:1.5rem;max-width:1100px;margin:0 auto;padding:1.75rem 2rem 5rem;align-items:start}
+.main{display:grid;grid-template-columns:1fr 320px;gap:1.25rem;max-width:1100px;margin:0 auto;padding:1.5rem 1.25rem 5rem;align-items:start}
 
 /* ── CALENDAR ── */
-.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
-.cal-month{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600}
-.cal-nav{display:flex;gap:6px}
-.nav-btn{width:32px;height:32px;border-radius:var(--radius);border:1px solid var(--border);background:var(--white);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.12s}
-.nav-btn:hover{border-color:var(--maroon);color:var(--maroon)}
-.today-btn{font-size:12px;padding:6px 12px;border:1px solid var(--border);background:var(--white);border-radius:var(--radius);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.12s}
-.today-btn:hover{border-color:var(--maroon);color:var(--maroon)}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.cal-month{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600}
+.cal-nav{display:flex;gap:6px;align-items:center}
+.nav-btn{width:32px;height:32px;border-radius:var(--radius);border:1px solid var(--border);background:var(--white);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.12s;-webkit-tap-highlight-color:transparent}
+.nav-btn:hover,.nav-btn:active{border-color:var(--maroon);color:var(--maroon)}
+.today-btn{font-size:12px;padding:6px 12px;border:1px solid var(--border);background:var(--white);border-radius:var(--radius);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.12s;min-height:32px;-webkit-tap-highlight-color:transparent}
+.today-btn:hover,.today-btn:active{border-color:var(--maroon);color:var(--maroon)}
+
+/* ── LEGEND ── */
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:0.875rem}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--gray)}
+.legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.legend-block{width:10px;height:7px;border-radius:2px;flex-shrink:0}
 
 /* ── GRID ── */
 .cal-grid{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
 .cal-days-header{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border)}
-.cal-day-label{padding:8px 0;text-align:center;font-size:11px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.06em}
+.cal-day-label{padding:7px 0;text-align:center;font-size:10px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.05em}
 .cal-day-label.weekend{color:var(--maroon);opacity:0.7}
 .cal-weeks{display:flex;flex-direction:column}
 .cal-week{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border)}
 .cal-week:last-child{border-bottom:none}
-.cal-cell{border-right:1px solid var(--border);min-height:88px;padding:5px 6px;cursor:pointer;transition:background 0.1s;position:relative;overflow:hidden}
+.cal-cell{border-right:1px solid var(--border);min-height:76px;padding:4px 5px;cursor:pointer;transition:background 0.1s;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent}
 .cal-cell:last-child{border-right:none}
-.cal-cell:hover{background:var(--cream)}
-.cal-cell.other-month{opacity:0.4}
+.cal-cell:hover,.cal-cell:active{background:var(--cream)}
+.cal-cell.other-month{opacity:0.38}
 .cal-cell.today{background:var(--maroon-light)}
 .cal-cell.selected{background:rgba(123,28,28,0.08);outline:2px solid var(--maroon);outline-offset:-2px;border-radius:2px}
-/* Exam period cell backgrounds — semestral */
 .cal-cell.ep-prelim {background:var(--prelim-bg)}
 .cal-cell.ep-midterm{background:var(--midterm-bg)}
 .cal-cell.ep-finals {background:var(--finals-bg)}
 .cal-cell.ep-q4     {background:var(--q4-bg)}
-.cell-num{font-size:12px;font-weight:600;color:var(--mid);margin-bottom:3px;line-height:1}
-.cal-cell.today .cell-num{color:var(--maroon);font-size:13px}
-.cell-event{font-size:10px;padding:1px 5px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;cursor:pointer}
-.cell-more{font-size:9px;color:var(--light);margin-top:1px}
+.cell-num{font-size:11px;font-weight:600;color:var(--mid);margin-bottom:2px;line-height:1}
+.cal-cell.today .cell-num{color:var(--maroon);font-size:12px}
+.cell-event{font-size:9px;padding:1px 4px;border-radius:2px;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.cell-more{font-size:8px;color:var(--light);margin-top:1px}
 .cell-dot-row{display:flex;gap:2px;flex-wrap:wrap;margin-top:2px}
-.cell-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.cell-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 
-/* ── LEGEND ── */
-.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1rem}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)}
-.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.legend-block{width:12px;height:8px;border-radius:2px;flex-shrink:0}
-
-/* ── SIDE PANEL ── */
-.side-panel{position:sticky;top:72px}
-.sp-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1rem}
-.sp-date{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;margin-bottom:12px}
-.sp-section-title{font-size:11px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;margin-top:14px}
-.sp-section-title:first-of-type{margin-top:0}
-.sp-class{display:flex;align-items:flex-start;gap:8px;padding:7px 8px;border-radius:var(--radius);margin-bottom:5px;border:1px solid transparent}
-.sp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.sp-cls-name{font-size:13px;font-weight:500}
-.sp-cls-meta{font-size:11px;color:var(--gray);margin-top:1px}
-.sp-event{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:var(--radius);margin-bottom:4px;background:var(--cream)}
-.sp-ev-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.sp-ev-name{font-size:13px;font-weight:500}
-.sp-ev-meta{font-size:11px;color:var(--gray)}
-.sp-ev-edit{font-size:11px;padding:2px 8px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;background:transparent;font-family:'Inter',sans-serif;margin-left:auto;flex-shrink:0}
-.sp-ev-edit:hover{border-color:var(--mid)}
-
-/* ── EXAM PERIOD BANNER (side panel) ── */
-.ep-banner{font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:10px;display:inline-block}
-.ep-banner-prelim {background:var(--prelim-bg);color:var(--prelim);border:1px solid var(--prelim-border)}
-.ep-banner-midterm{background:var(--midterm-bg);color:var(--midterm);border:1px solid var(--midterm-border)}
-.ep-banner-finals {background:var(--finals-bg);color:var(--finals);border:1px solid var(--finals-border)}
-.ep-banner-q4     {background:var(--q4-bg);color:var(--q4);border:1px solid var(--q4-border)}
-
-/* ── JOURNAL ── */
-.note-area{width:100%;resize:none;min-height:80px;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Inter',sans-serif;outline:none;transition:border-color 0.12s;line-height:1.6;color:var(--dark);background:var(--white)}
-.note-area:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
-.note-area::placeholder{color:var(--light)}
-.save-ind{font-size:11px;color:var(--light);margin-top:4px;height:14px}
-.sp-empty{font-size:12px;color:var(--light)}
-
-/* ── MODALS ── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem}
-.overlay.open{display:flex}
-.modal{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;width:min(460px,100%);max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
-.modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;margin-bottom:1.5rem}
-.fg{margin-bottom:1rem}
-.fg label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:4px}
-.fg .opt{color:var(--light);font-weight:400}
-input[type=text],input[type=date],input[type=time],select{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.12s}
-input:focus,select:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
-input::placeholder{color:var(--light)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--mid);transition:all 0.12s}
-.btn:hover{border-color:var(--mid)}
-.btn-primary{background:var(--maroon);border-color:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover,#9B2525)}
-.btn-danger{border-color:#FCA5A5;color:var(--gf)}.btn-danger:hover{background:var(--gf-bg)}
-.btn-sm{padding:5px 12px;font-size:12px}
-.add-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius);background:var(--maroon);color:white;font-size:12px;font-weight:500;border:none;cursor:pointer;font-family:'Inter',sans-serif}
-
-/* ── EVENT TYPE COLOURS ── */
+/* ── EVENT CHIP COLORS ── */
 .ev-class   {background:#F5EBEB;color:var(--maroon)}
 .ev-exam    {background:var(--prelim-bg);color:var(--prelim)}
 .ev-deadline{background:#FEF3C7;color:#92400E}
 .ev-event   {background:var(--gp-bg);color:var(--gp)}
 .ev-holiday {background:#F5F5F4;color:#57534E}
 .ev-passed  {background:var(--gp-bg);color:var(--gp);font-weight:600}
-.ev-credited{background:#CCFBF1;color:#0F766E;font-weight:600}  /* credited — teal */
+.ev-credited{background:var(--q4-bg);color:var(--q4);font-weight:600}
 
-.toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:white;padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;z-index:999;transform:translateY(10px);opacity:0;transition:all 0.25s;pointer-events:none}
-.toast.show{transform:translateY(0);opacity:1}
-.confirm-msg{font-size:14px;color:var(--mid);margin-bottom:1.25rem;line-height:1.6}
+/* ── SIDE PANEL ── */
+.side-panel{position:sticky;top:70px}
+.sp-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem;margin-bottom:0.875rem}
+.sp-date{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;margin-bottom:10px}
+.sp-section-title{font-size:10px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:7px;margin-top:12px;display:flex;align-items:center;justify-content:space-between}
+.sp-section-title:first-of-type{margin-top:0}
+.sp-class{display:flex;align-items:flex-start;gap:7px;padding:6px 8px;border-radius:var(--radius);margin-bottom:4px;border:1px solid transparent}
+.sp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.sp-cls-name{font-size:12px;font-weight:500}
+.sp-cls-meta{font-size:11px;color:var(--gray);margin-top:1px;line-height:1.5}
+.sp-event{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:var(--radius);margin-bottom:4px;background:var(--cream)}
+.sp-ev-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sp-ev-name{font-size:12px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-ev-meta{font-size:11px;color:var(--gray)}
+.sp-ev-edit{font-size:11px;padding:3px 8px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;background:transparent;font-family:'Inter',sans-serif;margin-left:auto;flex-shrink:0;min-height:28px;-webkit-tap-highlight-color:transparent}
+.sp-ev-edit:hover{border-color:var(--mid)}
 
-@media(max-width:780px){.main{grid-template-columns:1fr}.side-panel{position:static}.tb-link:not(.always){display:none}.cal-cell{min-height:60px}}
+/* ── EXAM PERIOD BANNER (side panel) ── */
+.ep-banner{font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:8px;display:inline-block}
+.ep-banner-prelim {background:var(--prelim-bg);color:var(--prelim);border:1px solid var(--prelim-border)}
+.ep-banner-midterm{background:var(--midterm-bg);color:var(--midterm);border:1px solid var(--midterm-border)}
+.ep-banner-finals {background:var(--finals-bg);color:var(--finals);border:1px solid var(--finals-border)}
+.ep-banner-q4     {background:var(--q4-bg);color:var(--q4);border:1px solid var(--q4-border)}
+
+/* ── JOURNAL ── */
+.note-area{width:100%;resize:none;min-height:72px;font-size:14px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Inter',sans-serif;outline:none;transition:border-color 0.12s;line-height:1.6;color:var(--dark);background:var(--white);-webkit-appearance:none}
+.note-area:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
+.note-area::placeholder{color:var(--light)}
+.save-ind{font-size:11px;color:var(--light);margin-top:3px;height:14px}
+.sp-empty{font-size:12px;color:var(--light)}
+.add-event-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:var(--radius);background:var(--maroon);color:white;font-size:11px;font-weight:500;border:none;cursor:pointer;font-family:'Inter',sans-serif;min-height:28px}
+
+/* ── MODALS ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:flex-end;justify-content:center;z-index:300;padding:0}
+.overlay.open{display:flex}
+.modal{background:var(--white);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:1.25rem;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;box-shadow:0 -4px 32px rgba(0,0,0,0.15);animation:slideUp 0.25s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:40px;height:4px;background:var(--border);border-radius:99px;margin:0 auto 1.1rem}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;margin-bottom:1.1rem}
+.fg{margin-bottom:0.875rem}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:4px}
+.fg .opt{color:var(--light);font-weight:400}
+input[type=text],input[type=date],input[type=time],select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.12s;-webkit-appearance:none;appearance:none}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A8A29E' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+input:focus,select:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
+input::placeholder{color:var(--light)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--border)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;border-radius:var(--radius);font-size:14px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--mid);transition:all 0.12s;min-height:44px}
+.btn:hover{border-color:var(--mid);color:var(--dark)}
+.btn-primary{background:var(--maroon);border-color:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover)}
+.btn-danger{border-color:#FCA5A5;color:var(--gf)}.btn-danger:hover{background:var(--gf-bg)}
+.btn-sm{padding:6px 12px;font-size:12px;min-height:34px}
+.confirm-msg{font-size:14px;color:var(--mid);margin-bottom:1rem;line-height:1.6}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark);color:white;padding:10px 18px;border-radius:99px;font-size:13px;font-weight:500;z-index:999;opacity:0;transition:all 0.25s;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ── MOBILE DETAIL PANEL (slides up from bottom when date selected) ── */
+.detail-panel{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--white);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:0 1.25rem 2rem;z-index:150;max-height:65vh;overflow-y:auto;box-shadow:0 -4px 32px rgba(0,0,0,0.18);animation:slideUp 0.2s ease}
+.detail-panel.open{display:block}
+.detail-panel-handle{width:40px;height:4px;background:var(--border);border-radius:99px;margin:12px auto 10px}
+.detail-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.2);z-index:149}
+.detail-overlay.open{display:block}
+
+/* ══ RESPONSIVE ═══════════════════════════════════════════════════════════════ */
+@media(min-width:601px){
+  .overlay{align-items:center;padding:1rem}
+  .modal{border-radius:var(--radius-lg);animation:none}
+  .modal-handle{display:none}
+}
+@media(max-width:820px){
+  /* Switch to single-column: calendar full-width, side panel below */
+  .main{grid-template-columns:1fr;gap:1rem}
+  .side-panel{position:static;display:none} /* hidden on mobile — use detail panel instead */
+}
+@media(max-width:768px){
+  .tb-nav,.tb-sep,.tb-profile-btn{display:none}
+  .ham-btn{display:flex}
+}
+@media(max-width:600px){
+  .main{padding:1rem 0.875rem 5rem}
+  .cal-cell{min-height:52px;padding:3px 3px}
+  .cell-num{font-size:10px}
+  .cell-event{font-size:8px;padding:1px 3px}
+  .cal-day-label{font-size:9px;padding:5px 0}
+  .legend{gap:6px}
+  .legend-item{font-size:10px}
+  .cal-month{font-size:1.1rem}
+  .form-row{grid-template-columns:1fr}
+  .modal-actions{flex-direction:column-reverse;gap:8px}
+  .modal-actions .btn{width:100%;justify-content:center}
+}
+@media(max-width:380px){
+  .topbar{padding:0 0.75rem}
+  .tb-name{font-size:14px}
+  .cal-cell{min-height:44px}
+  .cell-dot{width:4px;height:4px}
+  .nav-btn{width:28px;height:28px;font-size:12px}
+}
 </style>
 </head>
 <body>
 
+<!-- ── TOPBAR ── -->
 <div class="topbar">
   <div class="tb-left">
     <a href="index.html" class="tb-logo">
@@ -173,16 +235,33 @@ input::placeholder{color:var(--light)}
       <div class="tb-avatar" id="tb-avatar">?</div>
       <span id="tb-profile-label">Profile</span>
     </a>
+    <button class="ham-btn" id="ham-btn" aria-label="Menu" onclick="toggleNav()">
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+    </button>
   </div>
 </div>
+
+<!-- Mobile drawer -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="dashboard.html" class="mob-link">📊 Dashboard</a>
+  <a href="schedule.html"  class="mob-link">🗓 Schedule</a>
+  <a href="calendar.html"  class="mob-link" style="color:white;font-weight:600">📅 Calendar</a>
+  <div class="mob-divider"></div>
+  <a href="dashboard.html" class="mob-link">⚙ Settings</a>
+  <a href="about.html"          class="mob-link">ℹ About</a>
+  <a href="about.html#feedback" class="mob-link">✉ Contact</a>
+  <div class="mob-divider"></div>
+  <button class="mob-link highlight" onclick="goToday();closeNav()">📍 Go to Today</button>
+</div>
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 
 <div class="main">
 
   <!-- ── CALENDAR COLUMN ── -->
   <div>
-    <!-- Legend — built dynamically to match active exam periods -->
     <div class="legend" id="cal-legend"></div>
-
     <div class="cal-header">
       <div class="cal-month" id="cal-month"></div>
       <div class="cal-nav">
@@ -191,36 +270,34 @@ input::placeholder{color:var(--light)}
         <button class="nav-btn" onclick="changeMonth(1)">›</button>
       </div>
     </div>
-
     <div class="cal-grid">
       <div class="cal-days-header">
-        <div class="cal-day-label weekend">Sun</div>
-        <div class="cal-day-label">Mon</div>
-        <div class="cal-day-label">Tue</div>
-        <div class="cal-day-label">Wed</div>
-        <div class="cal-day-label">Thu</div>
-        <div class="cal-day-label">Fri</div>
-        <div class="cal-day-label weekend">Sat</div>
+        <div class="cal-day-label weekend">S</div>
+        <div class="cal-day-label">M</div>
+        <div class="cal-day-label">T</div>
+        <div class="cal-day-label">W</div>
+        <div class="cal-day-label">T</div>
+        <div class="cal-day-label">F</div>
+        <div class="cal-day-label weekend">S</div>
       </div>
       <div class="cal-weeks" id="cal-weeks"></div>
     </div>
   </div>
 
-  <!-- ── SIDE PANEL ── -->
+  <!-- ── SIDE PANEL (desktop only — hidden on mobile) ── -->
   <div class="side-panel">
     <div class="sp-card">
       <div class="sp-date" id="sp-date">Select a date</div>
       <div id="sp-exam-banner"></div>
-
-      <div class="sp-section-title">Classes</div>
-      <div id="sp-classes"><span class="sp-empty">Select a date to see classes.</span></div>
-
-      <div class="sp-section-title" style="display:flex;align-items:center;justify-content:space-between">
+      <div class="sp-section-title">
+        <span>Classes</span>
+      </div>
+      <div id="sp-classes"><span class="sp-empty">Select a date.</span></div>
+      <div class="sp-section-title">
         <span>Events</span>
-        <button class="add-btn" id="add-event-btn" onclick="openEventModal()" style="display:none">+ Add</button>
+        <button class="add-event-btn" id="add-event-btn" onclick="openEventModal()" style="display:none">+ Add</button>
       </div>
       <div id="sp-events"><span class="sp-empty">Select a date.</span></div>
-
       <div class="sp-section-title">Note</div>
       <textarea class="note-area" id="day-note" placeholder="Write a note for this day…" style="display:none"></textarea>
       <div class="save-ind" id="note-save-ind"></div>
@@ -229,9 +306,31 @@ input::placeholder{color:var(--light)}
   </div>
 </div>
 
+<!-- ── MOBILE DETAIL PANEL (slides up when date tapped) ── -->
+<div class="detail-overlay" id="detail-overlay" onclick="closeDetailPanel()"></div>
+<div class="detail-panel" id="detail-panel">
+  <div class="detail-panel-handle"></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <div class="sp-date" id="dp-date" style="font-size:0.95rem"></div>
+    <button class="add-event-btn" onclick="openEventModal()">+ Add event</button>
+  </div>
+  <div id="dp-exam-banner"></div>
+
+  <div class="sp-section-title">Classes</div>
+  <div id="dp-classes"><span class="sp-empty">No classes.</span></div>
+
+  <div class="sp-section-title">Events</div>
+  <div id="dp-events"><span class="sp-empty">No events for this day.</span></div>
+
+  <div class="sp-section-title">Note</div>
+  <textarea class="note-area" id="dp-note" placeholder="Write a note for this day…" style="margin-top:4px"></textarea>
+  <div class="save-ind" id="dp-note-ind"></div>
+</div>
+
 <!-- ══ EVENT MODAL ════════════════════════════════════════════════════════════ -->
-<div class="overlay" id="event-overlay">
+<div class="overlay" id="event-overlay" onclick="overlayClose(event,'event-overlay')">
   <div class="modal">
+    <div class="modal-handle"></div>
     <div class="modal-title" id="ev-modal-title">Add event</div>
     <div class="fg"><label>Title <span style="color:var(--maroon)">*</span></label><input type="text" id="ev-title" placeholder="e.g. Project deadline, Org meeting, Holiday"></div>
     <div class="fg">
@@ -245,11 +344,11 @@ input::placeholder{color:var(--light)}
     </div>
     <div class="form-row">
       <div class="fg"><label>Date</label><input type="date" id="ev-date"></div>
-      <div class="fg"><label>End date <span class="opt">(optional)</span></label><input type="date" id="ev-end-date"><div style="font-size:11px;color:var(--light);margin-top:3px">For multi-day events</div></div>
+      <div class="fg"><label>End date <span class="opt">(optional)</span></label><input type="date" id="ev-end-date"><div style="font-size:11px;color:var(--light);margin-top:3px">Multi-day events</div></div>
     </div>
     <div class="form-row">
-      <div class="fg"><label>Time <span class="opt">(optional)</span></label><input type="time" id="ev-time"></div>
-      <div class="fg"><label>End time <span class="opt">(optional)</span></label><input type="time" id="ev-end-time"></div>
+      <div class="fg"><label>Time <span class="opt">(opt.)</span></label><input type="time" id="ev-time"></div>
+      <div class="fg"><label>End time <span class="opt">(opt.)</span></label><input type="time" id="ev-end-time"></div>
     </div>
     <div class="fg"><label>Notes <span class="opt">(optional)</span></label><input type="text" id="ev-notes" placeholder="Additional details"></div>
     <div class="modal-actions">
@@ -261,13 +360,14 @@ input::placeholder{color:var(--light)}
 </div>
 
 <!-- ══ CONFIRM MODAL ═════════════════════════════════════════════════════════ -->
-<div class="overlay" id="confirm-overlay">
+<div class="overlay" id="confirm-overlay" onclick="overlayClose(event,'confirm-overlay')">
   <div class="modal" style="max-width:360px">
+    <div class="modal-handle"></div>
     <div class="modal-title" id="confirm-title">Confirm</div>
     <div class="confirm-msg" id="confirm-msg"></div>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('confirm-overlay')">Cancel</button>
-      <button class="btn btn-danger" id="confirm-ok">Confirm</button>
+      <button class="btn btn-danger" id="confirm-ok" style="flex:1">Confirm</button>
     </div>
   </div>
 </div>
@@ -275,444 +375,296 @@ input::placeholder{color:var(--light)}
 <div class="toast" id="toast"></div>
 
 <script>
+// ── NAV TOGGLE ────────────────────────────────────────────────────────────────
+function toggleNav(){
+  var btn=document.getElementById('ham-btn'),drawer=document.getElementById('mobile-nav'),ov=document.getElementById('nav-overlay');
+  var open=drawer.classList.toggle('open');
+  btn.classList.toggle('open',open);ov.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeNav(){
+  document.getElementById('ham-btn').classList.remove('open');
+  document.getElementById('mobile-nav').classList.remove('open');
+  document.getElementById('nav-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeNav();document.querySelectorAll('.overlay.open').forEach(el=>el.classList.remove('open'));closeDetailPanel();}});
+
 // ── DATA ──────────────────────────────────────────────────────────────────────
-const SKEY = 'acadtrack_sched';
-let S = null;
+const SKEY='acadtrack_sched';let S=null;
 
-function loadS() {
-  try {
-    const r = localStorage.getItem(SKEY);
-    S = r ? JSON.parse(r) : {};
-    if (!S.notes)      S.notes      = {};
-    if (!S.events)     S.events     = [];
-    if (!S.examPeriods)S.examPeriods= [];
-    if (!S.classes)    S.classes    = [];
-  } catch { S = { classes:[], examPeriods:[], events:[], notes:{} }; }
-}
-function saveS() { localStorage.setItem(SKEY, JSON.stringify(S)); }
+function loadS(){try{const r=localStorage.getItem(SKEY);S=r?JSON.parse(r):{};if(!S.notes)S.notes={};if(!S.events)S.events=[];if(!S.examPeriods)S.examPeriods=[];if(!S.classes)S.classes=[];}catch{S={classes:[],examPeriods:[],events:[],notes:{}};}}
+function saveS(){localStorage.setItem(SKEY,JSON.stringify(S));}
 
-// ── DASHBOARD DATA HELPERS ────────────────────────────────────────────────────
-function getDashData() {
-  try { return JSON.parse(localStorage.getItem('acadtrack_data') || '{}'); } catch { return {}; }
-}
-function getCalType() { return getDashData().calendarType || 'semestral'; }
+function getDashData(){try{return JSON.parse(localStorage.getItem('acadtrack_data')||'{}');}catch{return{};}}
+function getCalType(){return getDashData().calendarType||'semestral';}
+function getDashboardSubjects(){return getDashData().subjects||[];}
 
-function getDashboardSubjects() {
-  return getDashData().subjects || [];
-}
-
-// ── CALENDAR / SEM HELPERS ────────────────────────────────────────────────────
-const SEM_LABELS = {
-  semestral:     { 1:'1st Sem',  2:'2nd Sem',  3:'Summer'  },
-  trimestral:    { 1:'1st Term', 2:'2nd Term',  3:'3rd Term' },
-  quadrimestral: { 1:'1st Term', 2:'2nd Term',  3:'3rd Term', 4:'4th Term' }
+// ── CAL / SEM HELPERS ─────────────────────────────────────────────────────────
+const SEM_LABELS={
+  semestral:{1:'1st Sem',2:'2nd Sem',3:'Summer'},
+  trimestral:{1:'1st Term',2:'2nd Term',3:'3rd Term'},
+  quadrimestral:{1:'1st Term',2:'2nd Term',3:'3rd Term',4:'4th Term'}
 };
+function getSemLabel(sem){return(SEM_LABELS[getCalType()]||SEM_LABELS.semestral)[sem]||('Term '+sem);}
 
-function getSemLabel(sem) {
-  return (SEM_LABELS[getCalType()] || SEM_LABELS.semestral)[sem] || ('Term ' + sem);
+function semEndDate(year,sem){
+  try{
+    const d=getDashData(),cy=new Date().getFullYear();
+    const base=cy-((d.yearLevel||1)-1),sy=base+(year-1);
+    const cal=getCalType();
+    if(cal==='trimestral'){if(sem===1)return sy+'-12-01';if(sem===2)return(sy+1)+'-04-01';return(sy+1)+'-08-01';}
+    if(cal==='quadrimestral'){if(sem===1)return sy+'-10-15';if(sem===2)return(sy+1)+'-01-15';if(sem===3)return(sy+1)+'-04-15';return(sy+1)+'-07-15';}
+    if(sem===1)return sy+'-12-15';if(sem===2)return(sy+1)+'-05-15';return(sy+1)+'-07-15';
+  }catch{return new Date().getFullYear()+'-01-01';}
 }
 
-// Estimated semester-end date based on calendar type.
-// Semestral:     Sem1→Dec 15, Sem2→May 15, Summer→Jul 15
-// Trimestral:    T1→Dec 01,   T2→Apr 01,   T3→Aug 01
-// Quadrimestral: T1→Oct 15,   T2→Jan 15,   T3→Apr 15,  T4→Jul 15
-function semEndDate(year, sem) {
-  try {
-    const d = getDashData();
-    const currentYear = new Date().getFullYear();
-    const baseYear = currentYear - ((d.yearLevel || 1) - 1);
-    const schoolYear = baseYear + (year - 1);
-    const cal = getCalType();
+const EP_CELL_CLS={prelim:'ep-prelim',midterm:'ep-midterm',finals:'ep-finals',q4:'ep-q4'};
+const EP_BANNER_CLS={prelim:'ep-banner-prelim',midterm:'ep-banner-midterm',finals:'ep-banner-finals',q4:'ep-banner-q4'};
 
-    if (cal === 'trimestral') {
-      if (sem === 1) return schoolYear        + '-12-01';
-      if (sem === 2) return (schoolYear + 1)  + '-04-01';
-      return              (schoolYear + 1)    + '-08-01';
-    }
-    if (cal === 'quadrimestral') {
-      if (sem === 1) return schoolYear        + '-10-15';
-      if (sem === 2) return (schoolYear + 1)  + '-01-15';
-      if (sem === 3) return (schoolYear + 1)  + '-04-15';
-      return              (schoolYear + 1)    + '-07-15';
-    }
-    // Semestral (default)
-    if (sem === 1) return schoolYear       + '-12-15';
-    if (sem === 2) return (schoolYear + 1) + '-05-15';
-    return              (schoolYear + 1)   + '-07-15';
-  } catch {
-    return new Date().getFullYear() + '-01-01';
-  }
-}
-
-// ── EXAM PERIOD THEMING ───────────────────────────────────────────────────────
-// Maps stored period IDs to CSS classes
-const EP_CELL_CLS   = { prelim:'ep-prelim', midterm:'ep-midterm', finals:'ep-finals', q4:'ep-q4' };
-const EP_BANNER_CLS = { prelim:'ep-banner-prelim', midterm:'ep-banner-midterm', finals:'ep-banner-finals', q4:'ep-banner-q4' };
-
-// ── MONTH / DATE HELPERS ──────────────────────────────────────────────────────
-const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-
-function fmt12(t) {
-  if (!t) return '';
-  const [h,m] = t.split(':').map(Number);
-  return ((h%12)||12) + ':' + String(m).padStart(2,'0') + (h>=12?' PM':' AM');
-}
-function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function toDateStr(y,m,d){ return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'); }
-function todayStr(){ const d=new Date(); return toDateStr(d.getFullYear(),d.getMonth(),d.getDate()); }
-function hexToRgba(hex,alpha){
-  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
-  return `rgba(${r},${g},${b},${alpha})`;
-}
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function fmt12(t){if(!t)return'';const[h,m]=t.split(':').map(Number);return((h%12)||12)+':'+String(m).padStart(2,'0')+' '+(h>=12?'PM':'AM');}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function toDateStr(y,m,d){return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');}
+function todayStr(){const d=new Date();return toDateStr(d.getFullYear(),d.getMonth(),d.getDate());}
+function hexToRgba(hex,alpha){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return`rgba(${r},${g},${b},${alpha})`;}
+function isMobile(){return window.innerWidth<=820;}
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
-let viewYear     = new Date().getFullYear();
-let viewMonth    = new Date().getMonth();
-let selectedDate = todayStr();
-let editEventId  = null;
+let viewYear=new Date().getFullYear(),viewMonth=new Date().getMonth(),selectedDate=todayStr(),editEventId=null;
 
 // ── LEGEND ────────────────────────────────────────────────────────────────────
-function buildLegend() {
-  const cal = getCalType();
-  // Period legend labels from stored exam periods (use their stored labels)
-  const periodItems = S.examPeriods.map(ep => {
-    const clsMap = { prelim:'var(--prelim-bg)', midterm:'var(--midterm-bg)', finals:'var(--finals-bg)', q4:'var(--q4-bg)' };
-    const borderMap = { prelim:'var(--prelim-border)', midterm:'var(--midterm-border)', finals:'var(--finals-border)', q4:'var(--q4-border)' };
-    return `<span class="legend-item"><span class="legend-block" style="background:${clsMap[ep.id]||'#eee'};border:1px solid ${borderMap[ep.id]||'#ccc'}"></span>${esc(ep.label)}</span>`;
-  }).join('');
-
-  document.getElementById('cal-legend').innerHTML =
-    `<span class="legend-item"><span class="legend-dot" style="background:var(--maroon)"></span>Class</span>` +
-    `<span class="legend-item"><span class="legend-dot" style="background:var(--prelim)"></span>Exam</span>` +
-    `<span class="legend-item"><span class="legend-dot" style="background:#B8960C"></span>Deadline</span>` +
-    `<span class="legend-item"><span class="legend-dot" style="background:var(--gp)"></span>Event</span>` +
-    `<span class="legend-item"><span class="legend-dot" style="background:var(--gp);border:2px solid var(--gp)"></span>Passed</span>` +
-    `<span class="legend-item"><span class="legend-dot" style="background:var(--q4)"></span>Credited</span>` +
+function buildLegend(){
+  const clsMap={prelim:'var(--prelim-bg)',midterm:'var(--midterm-bg)',finals:'var(--finals-bg)',q4:'var(--q4-bg)'};
+  const borderMap={prelim:'var(--prelim-border)',midterm:'var(--midterm-border)',finals:'var(--finals-border)',q4:'var(--q4-border)'};
+  const periodItems=S.examPeriods.map(ep=>`<span class="legend-item"><span class="legend-block" style="background:${clsMap[ep.id]||'#eee'};border:1px solid ${borderMap[ep.id]||'#ccc'}"></span>${esc(ep.label)}</span>`).join('');
+  document.getElementById('cal-legend').innerHTML=
+    `<span class="legend-item"><span class="legend-dot" style="background:var(--maroon)"></span>Class</span>`+
+    `<span class="legend-item"><span class="legend-dot" style="background:#B8960C"></span>Deadline</span>`+
+    `<span class="legend-item"><span class="legend-dot" style="background:var(--gp)"></span>Event / Passed</span>`+
     periodItems;
 }
 
 // ── CALENDAR RENDER ───────────────────────────────────────────────────────────
-function renderCalendar() {
-  document.getElementById('cal-month').textContent = MONTHS[viewMonth] + ' ' + viewYear;
-  const weeks = document.getElementById('cal-weeks');
-  const today = todayStr();
-  const first = new Date(viewYear, viewMonth, 1).getDay();
-  const daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
-  const daysInPrev  = new Date(viewYear, viewMonth,   0).getDate();
-
-  const allPassedSubs   = getDashboardSubjects().filter(s => s.status === 'passed');
-  const allCreditedSubs = getDashboardSubjects().filter(s => s.status === 'credited');
-
-  let html = '';
-  let day = 1 - first;
-
-  for (let week = 0; week < 6; week++) {
-    let hasAnyDay = false;
-    let weekHtml = '<div class="cal-week">';
-
-    for (let dow = 0; dow < 7; dow++) {
-      let cellYear = viewYear, cellMonth = viewMonth, cellDay;
-      let otherMonth = false;
-
-      if (day < 1) {
-        cellMonth = viewMonth - 1;
-        if (cellMonth < 0) { cellMonth = 11; cellYear--; }
-        cellDay = daysInPrev + day;
-        otherMonth = true;
-      } else if (day > daysInMonth) {
-        cellMonth = viewMonth + 1;
-        if (cellMonth > 11) { cellMonth = 0; cellYear++; }
-        cellDay = day - daysInMonth;
-        otherMonth = true;
-      } else {
-        cellDay = day;
-        hasAnyDay = true;
-      }
-
-      const dateStr  = toDateStr(cellYear, cellMonth, cellDay);
-      const isToday  = dateStr === today;
-      const isSelected = dateStr === selectedDate;
-
-      // Find active exam period for this cell
-      const examPeriod = S.examPeriods.find(p => p.start && p.end && dateStr >= p.start && dateStr <= p.end);
-      const epCls = examPeriod ? (EP_CELL_CLS[examPeriod.id] || '') : '';
-
-      // Passed / credited subjects ending on this estimated date
-      const passedHere   = allPassedSubs.filter(s => semEndDate(s.year, s.sem) === dateStr);
-      const creditedHere = allCreditedSubs.filter(s => semEndDate(s.year, s.sem) === dateStr);
-
-      // Events spanning this date
-      const dayEvents = S.events.filter(e => e.endDate ? (dateStr >= e.date && dateStr <= e.endDate) : e.date === dateStr);
-
-      // Exam overrides for this date
-      const examOverrides = [];
-      S.examPeriods.forEach(ep => { (ep.exams||[]).filter(e => e.date === dateStr).forEach(e => examOverrides.push(e)); });
-
-      // Classes on this day-of-week
-      const cellDow = new Date(cellYear, cellMonth, cellDay).getDay();
-      const dayClasses = S.classes.filter(c => (c.days||[]).includes(cellDow));
-
-      let content = `<div class="cell-num">${cellDay}</div>`;
-
-      // Exam override badges
-      examOverrides.forEach(ex => {
-        const cls = S.classes.find(c => c.id === ex.classId);
-        content += `<div class="cell-event ev-exam">${esc(cls ? (cls.code||cls.name.slice(0,8)) : 'Exam')}</div>`;
-      });
-
-      // Passed subjects (green chips)
-      passedHere.slice(0,1).forEach(s => {
-        content += `<div class="cell-event ev-passed" title="${esc(s.name)} — Grade ${s.grade||'—'}">${esc(s.code||s.name.slice(0,6))} ✓</div>`;
-      });
-      if (passedHere.length > 1) content += `<div class="cell-more">+${passedHere.length-1} passed</div>`;
-
-      // Credited subjects (teal chips)
-      creditedHere.slice(0,1).forEach(s => {
-        content += `<div class="cell-event ev-credited" title="${esc(s.name)} — Credited">${esc(s.code||s.name.slice(0,6))} ★</div>`;
-      });
-      if (creditedHere.length > 1) content += `<div class="cell-more">+${creditedHere.length-1} credited</div>`;
-
-      // Events (up to 2)
-      dayEvents.slice(0,2).forEach(e => {
-        content += `<div class="cell-event ev-${e.type||'event'}" onclick="event.stopPropagation();openEventModal('${e.id}')">${esc(e.title)}</div>`;
-      });
-      if (dayEvents.length > 2) content += `<div class="cell-more">+${dayEvents.length-2} more</div>`;
-
-      // Class dots (only when no exam override)
-      if (dayClasses.length && !examOverrides.length) {
-        content += '<div class="cell-dot-row">' +
-          dayClasses.slice(0,4).map(c => `<div class="cell-dot" style="background:${c.color||'#7B1C1C'}" title="${esc(c.name)}"></div>`).join('') +
-          '</div>';
-      }
-
-      weekHtml += `<div class="cal-cell${otherMonth?' other-month':''}${isToday?' today':''}${isSelected?' selected':''}${epCls?' '+epCls:''}" onclick="selectDate('${dateStr}')">${content}</div>`;
+function renderCalendar(){
+  document.getElementById('cal-month').textContent=MONTHS[viewMonth]+' '+viewYear;
+  const weeks=document.getElementById('cal-weeks'),today=todayStr();
+  const first=new Date(viewYear,viewMonth,1).getDay();
+  const daysInMonth=new Date(viewYear,viewMonth+1,0).getDate();
+  const daysInPrev=new Date(viewYear,viewMonth,0).getDate();
+  const allPassedSubs=getDashboardSubjects().filter(s=>s.status==='passed');
+  const allCreditedSubs=getDashboardSubjects().filter(s=>s.status==='credited');
+  let html='',day=1-first;
+  for(let week=0;week<6;week++){
+    let hasAny=false,weekHtml='<div class="cal-week">';
+    for(let dow=0;dow<7;dow++){
+      let cy=viewYear,cm=viewMonth,cd;let otherMonth=false;
+      if(day<1){cm=viewMonth-1;if(cm<0){cm=11;cy--;}cd=daysInPrev+day;otherMonth=true;}
+      else if(day>daysInMonth){cm=viewMonth+1;if(cm>11){cm=0;cy++;}cd=day-daysInMonth;otherMonth=true;}
+      else{cd=day;hasAny=true;}
+      const dateStr=toDateStr(cy,cm,cd),isToday=dateStr===today,isSel=dateStr===selectedDate;
+      const ep=S.examPeriods.find(p=>p.start&&p.end&&dateStr>=p.start&&dateStr<=p.end);
+      const epCls=ep?(EP_CELL_CLS[ep.id]||''):'';
+      const passedHere=allPassedSubs.filter(s=>semEndDate(s.year,s.sem)===dateStr);
+      const creditedHere=allCreditedSubs.filter(s=>semEndDate(s.year,s.sem)===dateStr);
+      const dayEvents=S.events.filter(e=>e.endDate?(dateStr>=e.date&&dateStr<=e.endDate):e.date===dateStr);
+      const examOvs=[];S.examPeriods.forEach(p=>{(p.exams||[]).filter(e=>e.date===dateStr).forEach(e=>examOvs.push(e));});
+      const cellDow=new Date(cy,cm,cd).getDay();
+      const dayClasses=S.classes.filter(c=>(c.days||[]).includes(cellDow));
+      let content=`<div class="cell-num">${cd}</div>`;
+      examOvs.forEach(ex=>{const cls=S.classes.find(c=>c.id===ex.classId);content+=`<div class="cell-event ev-exam">${esc(cls?(cls.code||cls.name.slice(0,6)):'Ex')}</div>`;});
+      passedHere.slice(0,1).forEach(s=>{content+=`<div class="cell-event ev-passed">${esc(s.code||s.name.slice(0,5))}✓</div>`;});
+      if(passedHere.length>1)content+=`<div class="cell-more">+${passedHere.length-1}</div>`;
+      creditedHere.slice(0,1).forEach(s=>{content+=`<div class="cell-event ev-credited">${esc(s.code||s.name.slice(0,5))}★</div>`;});
+      dayEvents.slice(0,isMobile()?1:2).forEach(e=>{content+=`<div class="cell-event ev-${e.type||'event'}" onclick="event.stopPropagation();openEventModal('${e.id}')">${esc(e.title)}</div>`;});
+      if(dayEvents.length>(isMobile()?1:2))content+=`<div class="cell-more">+${dayEvents.length-(isMobile()?1:2)}</div>`;
+      if(dayClasses.length&&!examOvs.length)content+='<div class="cell-dot-row">'+dayClasses.slice(0,4).map(c=>`<div class="cell-dot" style="background:${c.color||'#7B1C1C'}"></div>`).join('')+'</div>';
+      weekHtml+=`<div class="cal-cell${otherMonth?' other-month':''}${isToday?' today':''}${isSel?' selected':''}${epCls?' '+epCls:''}" onclick="selectDate('${dateStr}')">${content}</div>`;
       day++;
     }
-
-    weekHtml += '</div>';
-    if (hasAnyDay || week < 5) html += weekHtml;
-    if (!hasAnyDay && week >= 5) break;
+    weekHtml+='</div>';
+    if(hasAny||week<5)html+=weekHtml;
+    if(!hasAny&&week>=5)break;
   }
-  weeks.innerHTML = html;
+  weeks.innerHTML=html;
 }
 
-// ── SIDE PANEL ────────────────────────────────────────────────────────────────
+// ── SELECT DATE ───────────────────────────────────────────────────────────────
+function selectDate(dateStr){
+  selectedDate=dateStr;
+  renderCalendar();
+  if(isMobile()){renderDetailPanel();openDetailPanel();}
+  else{renderSidePanel();}
+}
+
+// ── SIDE PANEL (desktop) ──────────────────────────────────────────────────────
 let noteTimer;
-function renderSidePanel() {
-  if (!selectedDate) return;
-  const [y,m,d] = selectedDate.split('-').map(Number);
-  const dateObj  = new Date(y, m-1, d);
-  const dow      = dateObj.getDay();
-
-  document.getElementById('sp-date').textContent = DAYS[dow] + ', ' + MONTHS[m-1] + ' ' + d + ', ' + y;
-  document.getElementById('add-event-btn').style.display = 'inline-flex';
-
-  // Exam period banner
-  const ep = S.examPeriods.find(p => p.start && p.end && selectedDate >= p.start && selectedDate <= p.end);
-  const bannerEl = document.getElementById('sp-exam-banner');
-  if (ep) {
-    bannerEl.innerHTML = `<div class="ep-banner ${EP_BANNER_CLS[ep.id]||'ep-banner-prelim'}">📋 ${esc(ep.label)} Period</div>`;
-  } else {
-    bannerEl.innerHTML = '';
-  }
-
-  // Exam overrides for today
-  const examOverrides = {};
-  S.examPeriods.forEach(p => {
-    (p.exams||[]).filter(e => e.date === selectedDate).forEach(e => { examOverrides[e.classId] = { exam:e, period:p }; });
-  });
-
-  // Classes
-  const classes = S.classes.filter(c => (c.days||[]).includes(dow));
-  const classEl = document.getElementById('sp-classes');
-  if (!classes.length) {
-    classEl.innerHTML = `<span class="sp-empty">No classes on ${DAYS[dow]}.</span>`;
-  } else {
-    classEl.innerHTML = classes.map(c => {
-      const ov   = examOverrides[c.id];
-      const room = ov ? (ov.exam.room||c.room) : c.room;
-      const bldg = ov ? (ov.exam.building||c.building) : c.building;
-      const start= ov ? ov.exam.start : c.start;
-      const end  = ov ? ov.exam.end   : c.end;
-      return `<div class="sp-class" style="background:${hexToRgba(c.color||'#7B1C1C',0.06)};border-color:${hexToRgba(c.color||'#7B1C1C',0.2)}">
-        <div class="sp-dot" style="background:${c.color||'#7B1C1C'}"></div>
-        <div>
-          <div class="sp-cls-name">${esc(c.code?c.code+' — ':'')+esc(c.name)}</div>
-          <div class="sp-cls-meta">${fmt12(start)} – ${fmt12(end)}${room?' · Room '+esc(room)+(bldg?', '+esc(bldg):''):''}${ov?' · <span style="color:var(--prelim);font-weight:600">'+esc(ov.period.label)+' Exam</span>':''}${c.instructor?' · '+esc(c.instructor):''}</div>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  // Passed subjects history
-  const passedHere   = getDashboardSubjects().filter(s => s.status==='passed'   && semEndDate(s.year,s.sem)===selectedDate);
-  const creditedHere = getDashboardSubjects().filter(s => s.status==='credited' && semEndDate(s.year,s.sem)===selectedDate);
-  const histSubs = [...passedHere, ...creditedHere];
-
-  if (histSubs.length) {
-    const histEl = document.createElement('div');
-    histEl.innerHTML = '<div class="sp-section-title">Subject history (est. end of this term)</div>' +
-      histSubs.map(s => {
-        const isCredited = s.status === 'credited';
-        const bg    = isCredited ? 'var(--q4-bg)'  : 'var(--gp-bg)';
-        const bc    = isCredited ? '#5EEAD4'        : '#86EFAC';
-        const color = isCredited ? 'var(--q4)'      : 'var(--gp)';
-        const label = isCredited ? '★ Credited'     : `Grade: ${s.grade||'—'}`;
-        return `<div class="sp-class" style="background:${bg};border-color:${bc}">
-          <div class="sp-dot" style="background:${color}"></div>
-          <div>
-            <div class="sp-cls-name">${esc(s.code?s.code+' — '+s.name:s.name)}</div>
-            <div class="sp-cls-meta">${label} &nbsp;·&nbsp; ${s.units} unit${s.units!==1?'s':''} &nbsp;·&nbsp; Year ${s.year}, ${getSemLabel(s.sem)}</div>
-          </div>
-        </div>`;
-      }).join('');
-    classEl.after(histEl);
-  }
-
-  // Events
-  const events = S.events.filter(e => e.endDate ? (selectedDate>=e.date&&selectedDate<=e.endDate) : e.date===selectedDate);
-  const evEl   = document.getElementById('sp-events');
-  const TYPE_COLORS = { event:'var(--gp)', exam:'var(--prelim)', deadline:'#B8960C', holiday:'var(--gn)' };
-  if (!events.length) {
-    evEl.innerHTML = '<span class="sp-empty">No events. Click "+ Add" to create one.</span>';
-  } else {
-    evEl.innerHTML = events.map(e => `
-      <div class="sp-event">
-        <div class="sp-ev-dot" style="background:${TYPE_COLORS[e.type||'event']||'var(--gp)'}"></div>
-        <div style="flex:1;min-width:0">
-          <div class="sp-ev-name">${esc(e.title)}</div>
-          <div class="sp-ev-meta">${e.time?fmt12(e.time)+(e.endTime?' – '+fmt12(e.endTime):'')+(e.notes?' · ':''):''} ${e.notes?esc(e.notes):''}</div>
-        </div>
-        <button class="sp-ev-edit" onclick="openEventModal('${e.id}')">Edit</button>
-      </div>`).join('');
-  }
-
-  // Journal note
-  const noteArea = document.getElementById('day-note');
-  const notePH   = document.getElementById('note-placeholder');
-  noteArea.style.display = 'block';
-  notePH.style.display   = 'none';
-  noteArea.value = S.notes[selectedDate] || '';
-  noteArea.oninput = () => {
-    S.notes[selectedDate] = noteArea.value;
-    clearTimeout(noteTimer);
-    noteTimer = setTimeout(() => {
-      saveS();
-      const ind = document.getElementById('note-save-ind');
-      ind.textContent = 'Saved';
-      setTimeout(() => ind.textContent = '', 1500);
-    }, 600);
-  };
+function renderSidePanel(){
+  if(!selectedDate)return;
+  const[y,m,d]=selectedDate.split('-').map(Number);
+  const dateObj=new Date(y,m-1,d),dow=dateObj.getDay();
+  document.getElementById('sp-date').textContent=DAYS[dow]+', '+MONTHS[m-1]+' '+d+', '+y;
+  document.getElementById('add-event-btn').style.display='inline-flex';
+  _renderExamBanner('sp-exam-banner');
+  _renderClasses('sp-classes',dow);
+  _renderPassedHistory('sp-classes');
+  _renderEvents('sp-events');
+  _initNote('day-note','note-save-ind','note-placeholder');
 }
 
-function hexToRgba(hex, alpha) {
-  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
-  return `rgba(${r},${g},${b},${alpha})`;
+// ── DETAIL PANEL (mobile) ─────────────────────────────────────────────────────
+let noteTimerMob;
+function renderDetailPanel(){
+  if(!selectedDate)return;
+  const[y,m,d]=selectedDate.split('-').map(Number);
+  const dateObj=new Date(y,m-1,d),dow=dateObj.getDay();
+  document.getElementById('dp-date').textContent=DAYS[dow]+', '+MONTHS[m-1]+' '+d;
+  _renderExamBanner('dp-exam-banner');
+  _renderClasses('dp-classes',dow);
+  _renderEvents('dp-events');
+  _initNoteMob('dp-note','dp-note-ind');
 }
 
-function selectDate(dateStr) {
-  selectedDate = dateStr;
-  renderCalendar();
-  renderSidePanel();
+function openDetailPanel(){
+  document.getElementById('detail-panel').classList.add('open');
+  document.getElementById('detail-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
 }
-function changeMonth(dir) {
-  viewMonth += dir;
-  if (viewMonth < 0) { viewMonth=11; viewYear--; }
-  if (viewMonth > 11){ viewMonth=0;  viewYear++; }
-  renderCalendar();
+function closeDetailPanel(){
+  document.getElementById('detail-panel').classList.remove('open');
+  document.getElementById('detail-overlay').classList.remove('open');
+  document.body.style.overflow='';
 }
-function goToday() {
-  const now = new Date();
-  viewYear=now.getFullYear(); viewMonth=now.getMonth();
-  selectedDate=todayStr();
-  renderCalendar(); renderSidePanel();
+
+// ── SHARED RENDER HELPERS ─────────────────────────────────────────────────────
+function _renderExamBanner(elId){
+  const ep=S.examPeriods.find(p=>p.start&&p.end&&selectedDate>=p.start&&selectedDate<=p.end);
+  const el=document.getElementById(elId);
+  el.innerHTML=ep?`<div class="ep-banner ${EP_BANNER_CLS[ep.id]||'ep-banner-prelim'}">📋 ${esc(ep.label)} Period</div>`:'';
 }
+
+function _renderClasses(elId,dow){
+  const examOvs={};S.examPeriods.forEach(p=>{(p.exams||[]).filter(e=>e.date===selectedDate).forEach(e=>{examOvs[e.classId]={exam:e,period:p};});});
+  const classes=S.classes.filter(c=>(c.days||[]).includes(dow));
+  const el=document.getElementById(elId);
+  if(!classes.length){el.innerHTML=`<span class="sp-empty">No classes on ${DAYS[dow]}.</span>`;return;}
+  el.innerHTML=classes.map(c=>{
+    const ov=examOvs[c.id];
+    const room=ov?(ov.exam.room||c.room):c.room;
+    const start=ov?ov.exam.start:c.start,end=ov?ov.exam.end:c.end;
+    return`<div class="sp-class" style="background:${hexToRgba(c.color||'#7B1C1C',0.06)};border-color:${hexToRgba(c.color||'#7B1C1C',0.2)}">
+      <div class="sp-dot" style="background:${c.color||'#7B1C1C'}"></div>
+      <div><div class="sp-cls-name">${esc(c.code?c.code+' — ':'')+esc(c.name)}</div>
+      <div class="sp-cls-meta">${fmt12(start)} – ${fmt12(end)}${room?' · Rm '+esc(room):''}${ov?' · <span style="color:var(--prelim);font-weight:600">'+esc(ov.period.label)+'</span>':''}</div></div>
+    </div>`;
+  }).join('');
+}
+
+function _renderPassedHistory(afterElId){
+  const passedHere=getDashboardSubjects().filter(s=>s.status==='passed'&&semEndDate(s.year,s.sem)===selectedDate);
+  const creditedHere=getDashboardSubjects().filter(s=>s.status==='credited'&&semEndDate(s.year,s.sem)===selectedDate);
+  const histSubs=[...passedHere,...creditedHere];
+  if(!histSubs.length)return;
+  const histEl=document.createElement('div');
+  histEl.innerHTML='<div class="sp-section-title">Subject history</div>'+histSubs.map(s=>{
+    const isCred=s.status==='credited';
+    return`<div class="sp-class" style="background:${isCred?'var(--q4-bg)':'var(--gp-bg)'};border-color:${isCred?'#5EEAD4':'#86EFAC'}">
+      <div class="sp-dot" style="background:${isCred?'var(--q4)':'var(--gp)'}"></div>
+      <div><div class="sp-cls-name">${esc(s.code?s.code+' — '+s.name:s.name)}</div>
+      <div class="sp-cls-meta">${isCred?'★ Credited':'Grade: '+(s.grade||'—')} · ${s.units}u · Y${s.year} ${getSemLabel(s.sem)}</div></div>
+    </div>`;
+  }).join('');
+  const after=document.getElementById(afterElId);
+  if(after)after.after(histEl);
+}
+
+function _renderEvents(elId){
+  const events=S.events.filter(e=>e.endDate?(selectedDate>=e.date&&selectedDate<=e.endDate):e.date===selectedDate);
+  const el=document.getElementById(elId);
+  const TYPE_COLORS={event:'var(--gp)',exam:'var(--prelim)',deadline:'#B8960C',holiday:'#57534E'};
+  if(!events.length){el.innerHTML='<span class="sp-empty">No events. Tap "+ Add" to create one.</span>';return;}
+  el.innerHTML=events.map(e=>`<div class="sp-event">
+    <div class="sp-ev-dot" style="background:${TYPE_COLORS[e.type||'event']||'var(--gp)'}"></div>
+    <div style="flex:1;min-width:0">
+      <div class="sp-ev-name">${esc(e.title)}</div>
+      <div class="sp-ev-meta">${e.time?fmt12(e.time)+' ':''}${e.notes?esc(e.notes):''}</div>
+    </div>
+    <button class="sp-ev-edit" onclick="openEventModal('${e.id}')">Edit</button>
+  </div>`).join('');
+}
+
+function _initNote(textareaId,indId,phId){
+  const noteArea=document.getElementById(textareaId),notePH=phId?document.getElementById(phId):null;
+  if(!noteArea)return;
+  if(notePH)notePH.style.display='none';
+  noteArea.style.display='block';
+  noteArea.value=S.notes[selectedDate]||'';
+  noteArea.oninput=()=>{S.notes[selectedDate]=noteArea.value;clearTimeout(noteTimer);noteTimer=setTimeout(()=>{saveS();const ind=document.getElementById(indId);ind.textContent='Saved';setTimeout(()=>ind.textContent='',1500);},600);};
+}
+function _initNoteMob(textareaId,indId){
+  const noteArea=document.getElementById(textareaId);if(!noteArea)return;
+  noteArea.value=S.notes[selectedDate]||'';
+  noteArea.oninput=()=>{S.notes[selectedDate]=noteArea.value;clearTimeout(noteTimerMob);noteTimerMob=setTimeout(()=>{saveS();const ind=document.getElementById(indId);ind.textContent='Saved';setTimeout(()=>ind.textContent='',1500);},600);};
+}
+let noteTimerMob2;
+
+// ── CALENDAR NAV ──────────────────────────────────────────────────────────────
+function changeMonth(dir){viewMonth+=dir;if(viewMonth<0){viewMonth=11;viewYear--;}if(viewMonth>11){viewMonth=0;viewYear++;}renderCalendar();}
+function goToday(){const now=new Date();viewYear=now.getFullYear();viewMonth=now.getMonth();selectedDate=todayStr();renderCalendar();if(!isMobile())renderSidePanel();}
 
 // ── EVENT MODAL ───────────────────────────────────────────────────────────────
-function openEventModal(id) {
-  editEventId = id || null;
-  const ev = id ? S.events.find(e=>e.id===id) : null;
-  document.getElementById('ev-modal-title').textContent = ev ? 'Edit event' : 'Add event';
-  document.getElementById('ev-title').value    = ev ? ev.title  : '';
-  document.getElementById('ev-type').value     = ev ? ev.type||'event' : 'event';
-  document.getElementById('ev-date').value     = ev ? ev.date   : (selectedDate||todayStr());
-  document.getElementById('ev-end-date').value = ev ? ev.endDate||'' : '';
-  document.getElementById('ev-time').value     = ev ? ev.time||'' : '';
-  document.getElementById('ev-end-time').value = ev ? ev.endTime||'' : '';
-  document.getElementById('ev-notes').value    = ev ? ev.notes||'' : '';
-  document.getElementById('del-ev-btn').style.display = ev ? 'inline-flex' : 'none';
-  document.getElementById('event-overlay').classList.add('open');
-  setTimeout(() => document.getElementById('ev-title').focus(), 100);
+function openEventModal(id){
+  editEventId=id||null;const ev=id?S.events.find(e=>e.id===id):null;
+  document.getElementById('ev-modal-title').textContent=ev?'Edit event':'Add event';
+  document.getElementById('ev-title').value=ev?ev.title:'';
+  document.getElementById('ev-type').value=ev?ev.type||'event':'event';
+  document.getElementById('ev-date').value=ev?ev.date:(selectedDate||todayStr());
+  document.getElementById('ev-end-date').value=ev?ev.endDate||'':'';
+  document.getElementById('ev-time').value=ev?ev.time||'':'';
+  document.getElementById('ev-end-time').value=ev?ev.endTime||'':'';
+  document.getElementById('ev-notes').value=ev?ev.notes||'':'';
+  document.getElementById('del-ev-btn').style.display=ev?'inline-flex':'none';
+  openModal('event-overlay');
+  setTimeout(()=>document.getElementById('ev-title').focus(),300);
 }
 
-function saveEvent() {
-  const title = document.getElementById('ev-title').value.trim();
-  const date  = document.getElementById('ev-date').value;
-  if (!title||!date) { showToast('Title and date are required'); return; }
-  const ev = {
-    id:      editEventId || ('ev'+Date.now()),
-    title,
-    type:    document.getElementById('ev-type').value,
-    date,
-    endDate: document.getElementById('ev-end-date').value || null,
-    time:    document.getElementById('ev-time').value || null,
-    endTime: document.getElementById('ev-end-time').value || null,
-    notes:   document.getElementById('ev-notes').value.trim() || null
-  };
-  if (editEventId) S.events = S.events.map(e=>e.id===editEventId?ev:e);
-  else S.events.push(ev);
-  saveS(); closeModal('event-overlay');
-  const [yr,mo] = ev.date.split('-').map(Number);
-  viewYear=yr; viewMonth=mo-1; selectedDate=ev.date;
-  renderCalendar(); renderSidePanel();
-  showToast(editEventId ? 'Event updated' : 'Event added');
+function saveEvent(){
+  const title=document.getElementById('ev-title').value.trim(),date=document.getElementById('ev-date').value;
+  if(!title||!date){showToast('Title and date are required');return;}
+  const ev={id:editEventId||('ev'+Date.now()),title,type:document.getElementById('ev-type').value,date,endDate:document.getElementById('ev-end-date').value||null,time:document.getElementById('ev-time').value||null,endTime:document.getElementById('ev-end-time').value||null,notes:document.getElementById('ev-notes').value.trim()||null};
+  if(editEventId)S.events=S.events.map(e=>e.id===editEventId?ev:e);else S.events.push(ev);
+  saveS();closeModal('event-overlay');
+  const[yr,mo]=ev.date.split('-').map(Number);viewYear=yr;viewMonth=mo-1;selectedDate=ev.date;
+  renderCalendar();
+  if(isMobile()){renderDetailPanel();}else{renderSidePanel();}
+  showToast(editEventId?'Event updated':'Event added');
 }
 
-function deleteEvent() {
-  showConfirm('Delete event?','This will permanently remove this event.',()=>{
-    S.events = S.events.filter(e=>e.id!==editEventId);
-    saveS(); closeModal('event-overlay'); renderCalendar(); renderSidePanel();
-    showToast('Event deleted');
-  });
+function deleteEvent(){
+  showConfirm('Delete event?','This will permanently remove this event.',()=>{S.events=S.events.filter(e=>e.id!==editEventId);saveS();closeModal('event-overlay');renderCalendar();if(isMobile())renderDetailPanel();else renderSidePanel();showToast('Event deleted');});
 }
 
 // ── MODAL HELPERS ─────────────────────────────────────────────────────────────
-function closeModal(id){ document.getElementById(id).classList.remove('open'); }
-function showConfirm(title,msg,onOk){
-  document.getElementById('confirm-title').textContent = title;
-  document.getElementById('confirm-msg').textContent   = msg;
-  document.getElementById('confirm-ok').onclick = ()=>{ closeModal('confirm-overlay'); onOk(); };
-  document.getElementById('confirm-overlay').classList.add('open');
-}
-document.querySelectorAll('.overlay').forEach(el=>el.addEventListener('click',e=>{ if(e.target===el)el.classList.remove('open'); }));
-document.addEventListener('keydown',e=>{ if(e.key==='Escape')document.querySelectorAll('.overlay.open').forEach(el=>el.classList.remove('open')); });
-
+function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById(id).classList.remove('open');if(!document.querySelectorAll('.overlay.open').length)document.body.style.overflow='';}
+function overlayClose(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+function showConfirm(title,msg,onOk){document.getElementById('confirm-title').textContent=title;document.getElementById('confirm-msg').textContent=msg;document.getElementById('confirm-ok').onclick=()=>{closeModal('confirm-overlay');onOk();};openModal('confirm-overlay');}
 let toastTimer;
-function showToast(msg){
-  const t=document.getElementById('toast'); t.textContent=msg;
-  t.classList.add('show'); clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),2400);
-}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2400);}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-loadS();
-buildLegend();
-renderCalendar();
-renderSidePanel();
+loadS();buildLegend();renderCalendar();
+if(!isMobile())renderSidePanel();
+
+// Handle resize (switching between mobile/desktop)
+window.addEventListener('resize',()=>{if(!isMobile()){closeDetailPanel();renderSidePanel();}});
 </script>
 
 <script>
 (function(){
-  try{
-    var d=JSON.parse(localStorage.getItem('acadtrack_data')||'{}');
-    var name=d.name||(d.school?d.school.split(' ')[0]:'');
-    var init=name?name.charAt(0).toUpperCase():'?';
-    var av=document.getElementById('tb-avatar');
-    var lb=document.getElementById('tb-profile-label');
-    if(av)av.textContent=init;
-    if(lb)lb.textContent=name||'Profile';
-  }catch(e){}
+  try{var d=JSON.parse(localStorage.getItem('acadtrack_data')||'{}');var name=d.name||(d.school?d.school.split(' ')[0]:'');var init=name?name.charAt(0).toUpperCase():'?';var av=document.getElementById('tb-avatar');var lb=document.getElementById('tb-profile-label');if(av)av.textContent=init;if(lb)lb.textContent=name||'Profile';}catch(e){}
 })();
 </script>
 </body>
