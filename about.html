@@ -21,32 +21,49 @@
 body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.6}
 
 /* ── TOPBAR ── */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;height:54px;background:var(--maroon);gap:12px;position:sticky;top:0;z-index:100}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;height:54px;background:var(--maroon);gap:10px;position:sticky;top:0;z-index:200}
 .tb-left{display:flex;align-items:center;gap:0;flex-shrink:0}
-.tb-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:10px}
-.tb-seal{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:12px;flex-shrink:0}
+.tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.tb-seal{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:11px;flex-shrink:0}
 .tb-name{font-family:'Playfair Display',serif;font-size:15px;color:white;font-weight:600;white-space:nowrap}
-.tb-nav{display:flex;align-items:center;gap:1px}
-.tb-link{font-size:12px;color:rgba(255,255,255,0.72);text-decoration:none;padding:6px 11px;border-radius:6px;transition:all 0.12s;white-space:nowrap;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;line-height:1}
+.tb-nav{display:flex;align-items:center;gap:1px;margin-left:8px}
+.tb-link{font-size:12px;color:rgba(255,255,255,0.72);text-decoration:none;padding:5px 10px;border-radius:6px;transition:all 0.12s;white-space:nowrap;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;line-height:1}
 .tb-link:hover{background:rgba(255,255,255,0.15);color:white}
 .tb-link.active{background:rgba(255,255,255,0.2);color:white;font-weight:500}
-.tb-right{display:flex;align-items:center;gap:1px;flex-shrink:0}
-.tb-sep{width:1px;height:18px;background:rgba(255,255,255,0.2);margin:0 8px;flex-shrink:0}
-.tb-profile-btn{display:flex;align-items:center;gap:7px;padding:4px 12px 4px 5px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none;margin-left:4px}
+.tb-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.tb-sep{width:1px;height:18px;background:rgba(255,255,255,0.2);margin:0 2px;flex-shrink:0}
+.tb-profile-btn{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:99px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;font-family:'Inter',sans-serif;color:rgba(255,255,255,0.9);font-size:12px;font-weight:500;transition:all 0.12s;white-space:nowrap;text-decoration:none}
 .tb-profile-btn:hover{background:rgba(255,255,255,0.24);color:white}
-.tb-avatar{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
+.tb-avatar{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0}
+
+/* ── HAMBURGER ── */
+.ham-btn{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:36px;height:36px;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.28);cursor:pointer;border-radius:var(--radius);padding:6px;flex-shrink:0}
+.ham-line{display:block;width:16px;height:2px;background:white;border-radius:2px;transition:all 0.25s;transform-origin:center}
+.ham-btn.open .ham-line:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham-btn.open .ham-line:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham-btn.open .ham-line:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ── MOBILE DRAWER ── */
+.mobile-nav{display:none;position:fixed;top:54px;left:0;right:0;background:var(--maroon);z-index:199;padding:0.5rem 1rem 1rem;flex-direction:column;gap:2px;box-shadow:0 8px 24px rgba(0,0,0,0.25)}
+.mobile-nav.open{display:flex}
+.mob-link{font-size:14px;font-weight:500;color:rgba(255,255,255,0.85);text-decoration:none;padding:11px 14px;border-radius:var(--radius);display:block;transition:all 0.12s}
+.mob-link:hover,.mob-link:active{background:rgba(255,255,255,0.15);color:white}
+.mob-divider{height:1px;background:rgba(255,255,255,0.15);margin:4px 0}
+.mob-link.highlight{background:rgba(255,255,255,0.18);color:white;font-weight:600;margin-top:4px}
+.nav-overlay{display:none;position:fixed;inset:0;top:54px;background:rgba(0,0,0,0.3);z-index:198}
+.nav-overlay.open{display:block}
 
 /* ── PAGE ── */
-.page{max-width:740px;margin:0 auto;padding:3rem 2rem 5rem}
-.page-header{text-align:center;margin-bottom:3rem}
+.page{max-width:740px;margin:0 auto;padding:2.5rem 1.25rem 5rem}
+.page-header{text-align:center;margin-bottom:2.5rem}
 .page-tag{font-size:11px;font-weight:600;color:var(--light);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
-.page-title{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.5rem);font-weight:600;line-height:1.2;margin-bottom:1rem}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,5vw,2.5rem);font-weight:600;line-height:1.2;margin-bottom:0.875rem}
 .page-title em{color:var(--maroon);font-style:italic}
-.page-desc{font-size:15px;color:var(--gray);max-width:520px;margin:0 auto}
+.page-desc{font-size:14px;color:var(--gray);max-width:480px;margin:0 auto;line-height:1.7}
 
 /* ── SECTIONS ── */
-.section{margin-bottom:3rem}
-.section-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.section{margin-bottom:2.5rem}
+.section-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border)}
 .prose{font-size:14px;color:var(--mid);line-height:1.8}
 .prose p{margin-bottom:0.75rem}
@@ -55,73 +72,96 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);li
 .prose strong{font-weight:600;color:var(--dark)}
 
 /* ── FEATURE GRID ── */
-.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:1rem}
-.feat-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:1rem}
+.feat-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem}
 .feat-item h4{font-size:13px;font-weight:600;margin-bottom:5px}
 .feat-item p{font-size:12px;color:var(--gray);line-height:1.6}
-/* NEW badge on feat items */
-.feat-new{font-size:9px;font-weight:700;background:var(--gold-light);color:var(--gold);border:1px solid var(--gold-border);padding:1px 6px;border-radius:99px;margin-left:6px;vertical-align:middle;letter-spacing:0.04em;text-transform:uppercase}
+.feat-new{font-size:9px;font-weight:700;background:var(--gold-light);color:var(--gold);border:1px solid var(--gold-border);padding:1px 6px;border-radius:99px;margin-left:5px;vertical-align:middle;letter-spacing:0.04em;text-transform:uppercase}
+
+/* ── CHANGELOG ── */
+.changelog-list{display:flex;flex-direction:column;gap:8px;margin-top:1rem}
+.cl-item{display:flex;gap:10px;padding:10px 12px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);align-items:flex-start}
+.cl-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.cl-body h5{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px;line-height:1.4}
+.cl-body p{font-size:12px;color:var(--gray);line-height:1.6}
+.cl-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;margin-left:5px;vertical-align:middle}
+.tag-new{background:var(--success-bg);color:var(--success)}
 
 /* ── STORAGE CARD ── */
 .storage-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-top:1rem}
-.sc-row{display:flex;gap:14px;padding:1rem 1.25rem;border-bottom:1px solid var(--border);align-items:flex-start}
+.sc-row{display:flex;gap:12px;padding:1rem 1.1rem;border-bottom:1px solid var(--border);align-items:flex-start}
 .sc-row:last-child{border-bottom:none}
-.sc-icon{width:32px;height:32px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:2px}
+.sc-icon{width:30px;height:30px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:2px}
 .sc-content h4{font-size:13px;font-weight:600;margin-bottom:3px}
 .sc-content p{font-size:12px;color:var(--gray);line-height:1.6}
 
-/* ── SYNC ALERT ── */
-.sync-alert{background:var(--warn-bg);border:1px solid #FCD34D;border-radius:var(--radius);padding:14px 16px;margin-top:1rem}
+/* ── SYNC STEPS ── */
+.sync-alert{background:var(--warn-bg);border:1px solid #FCD34D;border-radius:var(--radius);padding:12px 14px;margin-top:1rem}
 .sync-alert-title{font-size:13px;font-weight:600;color:var(--warn);margin-bottom:6px}
 .sync-alert p{font-size:12px;color:#78350F;line-height:1.7}
 .sync-steps{margin-top:10px;display:flex;flex-direction:column;gap:6px}
 .sync-step{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:#78350F}
 .sync-num{width:20px;height:20px;border-radius:50%;background:#FCD34D;color:#78350F;font-weight:700;font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 
-/* ── SCHOOL LIST ── */
+/* ── SCHOOL PILLS ── */
 .school-region{margin-bottom:1rem}
 .school-region h5{font-size:11px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
-.school-pills{display:flex;flex-wrap:wrap;gap:6px}
-.school-pill{font-size:11px;padding:3px 10px;border-radius:99px;background:var(--white);border:1px solid var(--border);color:var(--mid)}
+.school-pills{display:flex;flex-wrap:wrap;gap:5px}
+.school-pill{font-size:11px;padding:4px 10px;border-radius:99px;background:var(--white);border:1px solid var(--border);color:var(--mid);line-height:1.4}
 .school-pill.special{border-color:var(--gold-border);background:var(--gold-light);color:#78350F}
 
-/* ── CHANGELOG ── */
-.changelog-list{display:flex;flex-direction:column;gap:10px;margin-top:1rem}
-.cl-item{display:flex;gap:12px;padding:10px 14px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);align-items:flex-start}
-.cl-icon{font-size:16px;flex-shrink:0;margin-top:1px}
-.cl-body h5{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px}
-.cl-body p{font-size:12px;color:var(--gray);line-height:1.6}
-.cl-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle}
-.tag-new{background:var(--success-bg);color:var(--success)}
-.tag-improved{background:var(--info-bg);color:var(--info)}
-
 /* ── FEEDBACK FORM ── */
-.form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;margin-top:1rem}
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-top:1rem}
 .fg{margin-bottom:1rem}
 .fg label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:5px}
 .fg .req{color:var(--maroon)}
-.fg .hint{font-size:11px;color:var(--light);margin-top:3px}
-input[type=text],input[type=email],select,textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.15s}
+.fg .hint{font-size:11px;color:var(--light);margin-top:3px;line-height:1.5}
+input[type=text],input[type=email],select,textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);outline:none;transition:border-color 0.15s;-webkit-appearance:none;appearance:none}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A8A29E' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
 input:focus,select:focus,textarea:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(123,28,28,0.08)}
 input::placeholder,textarea::placeholder{color:var(--light)}
-textarea{resize:vertical;min-height:100px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form-submit{margin-top:1.25rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+textarea{resize:vertical;min-height:100px;line-height:1.6}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-submit{margin-top:1.1rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .form-note{font-size:11px;color:var(--light);line-height:1.6}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius);font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;border:none;transition:all 0.15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 20px;border-radius:var(--radius);font-size:14px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;border:none;transition:all 0.15s;min-height:44px}
 .btn-primary{background:var(--maroon);color:white}.btn-primary:hover{background:var(--maroon-hover,#9B2525)}
-.success-msg{background:var(--success-bg);border:1px solid #86EFAC;border-radius:var(--radius);padding:12px 16px;font-size:13px;color:var(--success);display:none}
-.setup-notice{background:var(--info-bg);border:1px solid #93C5FD;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:var(--info);line-height:1.7;margin-bottom:1.25rem}
+.success-msg{background:var(--success-bg);border:1px solid #86EFAC;border-radius:var(--radius);padding:12px 14px;font-size:13px;color:var(--success);display:none;line-height:1.6}
+.setup-notice{background:var(--info-bg);border:1px solid #93C5FD;border-radius:var(--radius);padding:11px 13px;font-size:12px;color:var(--info);line-height:1.7;margin-bottom:1.1rem}
 .setup-notice strong{font-weight:600}
 .setup-notice code{background:rgba(29,78,216,0.1);padding:1px 5px;border-radius:4px;font-family:monospace;font-size:11px}
-.tpl-request{background:var(--gold-light);border:1px solid var(--gold-border);border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#5A4206;line-height:1.7;margin-top:1rem}
+.tpl-request{background:var(--gold-light);border:1px solid var(--gold-border);border-radius:var(--radius);padding:11px 13px;font-size:12px;color:#5A4206;line-height:1.7;margin-top:1rem}
+.tpl-request a{color:var(--gold);text-decoration:none}
 
-footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-top:1px solid var(--border);background:var(--white);margin-top:2rem}
-@media(max-width:520px){.page{padding:2rem 1.25rem 4rem}.form-row{grid-template-columns:1fr}}
+/* ── FOOTER ── */
+footer{text-align:center;padding:1.75rem 1.25rem;font-size:12px;color:var(--light);border-top:1px solid var(--border);background:var(--white);margin-top:2rem}
+
+/* ══ RESPONSIVE ═══════════════════════════════════════════════════════════════ */
+@media(max-width:768px){
+  .tb-nav,.tb-sep,.tb-profile-btn{display:none}
+  .ham-btn{display:flex}
+}
+@media(max-width:600px){
+  .page{padding:2rem 1rem 5rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .form-submit{flex-direction:column;align-items:stretch}
+  .form-submit .btn{width:100%;justify-content:center}
+  .sc-row{flex-direction:row}
+  .cl-item{gap:8px}
+}
+@media(max-width:400px){
+  .topbar{padding:0 0.875rem}
+  .tb-name{font-size:14px}
+  .feat-grid{grid-template-columns:1fr}
+  .page-title{font-size:1.4rem}
+  .school-pill{font-size:10px;padding:3px 8px}
+}
 </style>
 </head>
 <body>
 
+<!-- ── TOPBAR ── -->
 <div class="topbar">
   <div class="tb-left">
     <a href="index.html" class="tb-logo">
@@ -143,11 +183,31 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
       <div class="tb-avatar" id="tb-avatar">?</div>
       <span id="tb-profile-label">Profile</span>
     </a>
+    <button class="ham-btn" id="ham-btn" aria-label="Menu" onclick="toggleNav()">
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+    </button>
   </div>
 </div>
 
+<!-- Mobile drawer -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="dashboard.html" class="mob-link">📊 Dashboard</a>
+  <a href="schedule.html"  class="mob-link">🗓 Schedule</a>
+  <a href="calendar.html"  class="mob-link">📅 Calendar</a>
+  <div class="mob-divider"></div>
+  <a href="dashboard.html" class="mob-link">⚙ Settings</a>
+  <a href="about.html"          class="mob-link" style="color:white;font-weight:600">ℹ About</a>
+  <a href="about.html#feedback" class="mob-link">✉ Contact / Feedback</a>
+  <div class="mob-divider"></div>
+  <a href="about.html#feedback" class="mob-link highlight" onclick="closeNav()">📬 Send feedback →</a>
+</div>
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+
 <div class="page">
 
+  <!-- PAGE HEADER -->
   <div class="page-header">
     <div class="page-tag">About AcadTrack</div>
     <h1 class="page-title">Built for Filipino students,<br><em>free and private</em></h1>
@@ -158,57 +218,46 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
   <div class="section">
     <h2 class="section-title">What AcadTrack does</h2>
     <div class="feat-grid">
-
       <div class="feat-item">
         <h4>📊 GWA computation</h4>
-        <p>Supports the Philippine <strong>1.0-highest</strong>, <strong>5.0-highest</strong>, and <strong>Benilde 4.0-highest</strong> grading systems. GWA updates live with Latin honors (Cum laude, Magna, Summa).</p>
+        <p>Supports <strong>1.0-highest</strong>, <strong>5.0-highest</strong>, and <strong>Benilde 4.0-highest</strong> grading systems. Latin honors update live.</p>
       </div>
-
       <div class="feat-item">
         <h4>🔗 Prerequisite tracking</h4>
-        <p>Link subjects together. Subjects with unmet prerequisites are flagged automatically so you know what to take first.</p>
+        <p>Link subjects together. Unmet prerequisites are flagged automatically.</p>
       </div>
-
       <div class="feat-item">
         <h4>📈 Progress tracking</h4>
-        <p>See your degree completion percentage based on earned units vs. total curriculum units — broken down by year and semester.</p>
+        <p>See your degree completion percentage by year and semester, including credited subjects.</p>
       </div>
-
       <div class="feat-item">
         <h4>🗓 Graduation estimate</h4>
-        <p>Supports <strong>semestral</strong>, <strong>trimestral</strong>, and <strong>quadrimestral</strong> calendars. AcadTrack estimates your finish date based on remaining terms.</p>
+        <p>Supports <strong>semestral</strong>, <strong>trimestral</strong>, and <strong>quadrimestral</strong> calendars.</p>
       </div>
-
       <div class="feat-item">
         <h4>🔮 What-if Simulator <span class="feat-new">New</span></h4>
-        <p>Assign hypothetical grades to remaining subjects and see your projected GWA update in real time. Great for academic planning.</p>
+        <p>Assign hypothetical grades to remaining subjects and see your projected GWA in real time.</p>
       </div>
-
       <div class="feat-item">
-        <h4>⚠ Irregular student detection <span class="feat-new">New</span></h4>
-        <p>Automatically flags your account as <strong>Irregular</strong> if your ongoing subjects span more than one year level.</p>
+        <h4>⚠ Irregular detection <span class="feat-new">New</span></h4>
+        <p>Automatically flags your account as <strong>Irregular</strong> if ongoing subjects span more than one year level.</p>
       </div>
-
       <div class="feat-item">
         <h4>★ Credited subjects <span class="feat-new">New</span></h4>
-        <p>Mark transferred or cross-enrolled subjects as <strong>Credited</strong>. They count toward your earned units but are excluded from GWA computation.</p>
+        <p>Mark transferred or cross-enrolled subjects as <strong>Credited</strong> — counts toward units, excluded from GWA.</p>
       </div>
-
+      <div class="feat-item">
+        <h4>🏫 50 schools <span class="feat-new">New</span></h4>
+        <p>Searchable dropdown of 50 Philippine universities with auto-detected grading and calendar type.</p>
+      </div>
       <div class="feat-item">
         <h4>📚 Curriculum templates</h4>
-        <p>Load a pre-built curriculum to instantly populate all your subjects. Adamson BSBA Marketing Management (2022) is available now, with more coming.</p>
+        <p>Load a pre-built curriculum to instantly populate subjects. Adamson BSBA Marketing (2022) is available now.</p>
       </div>
-
-      <div class="feat-item">
-        <h4>🏫 50 schools supported <span class="feat-new">New</span></h4>
-        <p>Choose your school from a searchable dropdown of 50 Philippine universities across NCR, Luzon, Visayas, and Mindanao. Auto-detects grading system and calendar type.</p>
-      </div>
-
       <div class="feat-item">
         <h4>🔒 No account needed</h4>
-        <p>Everything is stored in your browser's local storage. Nothing is sent to any server. Your academic data is yours alone.</p>
+        <p>Everything is saved in your browser's local storage. Nothing is ever uploaded anywhere.</p>
       </div>
-
     </div>
   </div>
 
@@ -216,63 +265,55 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
   <div class="section">
     <h2 class="section-title">What's new</h2>
     <div class="changelog-list">
-
       <div class="cl-item">
         <div class="cl-icon">🏫</div>
         <div class="cl-body">
-          <h5>School dropdown with 50 Philippine universities <span class="cl-tag tag-new">New</span></h5>
-          <p>The registration now shows a searchable list of 50 top universities grouped by region (NCR, Luzon, Visayas, Mindanao). Selecting your school auto-suggests the right grading system and calendar type. Can't find yours? Choose "Other" and type it in.</p>
+          <h5>School dropdown — 50 Philippine universities <span class="cl-tag tag-new">New</span></h5>
+          <p>Registration now shows a searchable list grouped by region (NCR, Luzon, Visayas, Mindanao). Auto-detects grading system and calendar type. "Other" option lets you type any school name.</p>
         </div>
       </div>
-
       <div class="cl-item">
         <div class="cl-icon">📘</div>
         <div class="cl-body">
           <h5>Benilde / CSB grading system <span class="cl-tag tag-new">New</span></h5>
-          <p>GPA-style 4.0 scale used by De La Salle – College of Saint Benilde. 4.0 = Excellent, 1.0 = minimum passing (D), 0.0 = Failed. Latin honors adjusted for the Benilde scale (Summa ≥ 3.80, Magna ≥ 3.50, Cum Laude ≥ 3.20). CSB is auto-detected when selected from the school dropdown.</p>
+          <p>GPA-style 4.0 scale. 4.0 = Excellent, 1.0 = minimum passing, 0.0 = Failed. Honors at 3.20/3.50/3.80. Auto-detected when CSB is selected.</p>
         </div>
       </div>
-
       <div class="cl-item">
         <div class="cl-icon">📅</div>
         <div class="cl-body">
           <h5>Trimestral &amp; Quadrimestral calendar support <span class="cl-tag tag-new">New</span></h5>
-          <p>Choose your calendar system during setup: <strong>Semestral</strong> (2 sems + summer), <strong>Trimestral</strong> (3 terms/year), or <strong>Quadrimestral</strong> (4 terms/year). Semester labels, exam period names, graduation estimates, and calendar highlights all update to match. DLSU is auto-detected as trimestral.</p>
+          <p>Choose Semestral, Trimestral, or Quadrimestral during setup. Semester labels, exam periods, graduation estimates, and calendar highlights all update to match. DLSU auto-detected as trimestral.</p>
         </div>
       </div>
-
       <div class="cl-item">
         <div class="cl-icon">🔮</div>
         <div class="cl-body">
           <h5>What-if GWA Simulator <span class="cl-tag tag-new">New</span></h5>
-          <p>Found on the Dashboard next to "Add subject." Assign hypothetical grades to your remaining or failed subjects and watch your projected GWA update instantly. Nothing is saved — it's purely for planning. Supports all three grading systems.</p>
+          <p>Found on the Dashboard. Assign hypothetical grades to remaining or failed subjects and watch projected GWA update instantly. Nothing is saved — planning only.</p>
         </div>
       </div>
-
       <div class="cl-item">
         <div class="cl-icon">⚠</div>
         <div class="cl-body">
           <h5>Irregular student detection <span class="cl-tag tag-new">New</span></h5>
-          <p>If you have ongoing subjects across more than one year level, the Dashboard automatically shows an <strong>⚠ Irregular</strong> badge on your GWA card. No manual tagging needed.</p>
+          <p>If ongoing subjects span more than one year level, Dashboard shows an <strong>⚠ Irregular</strong> badge on the GWA card automatically.</p>
         </div>
       </div>
-
       <div class="cl-item">
         <div class="cl-icon">★</div>
         <div class="cl-body">
           <h5>Credited subject status <span class="cl-tag tag-new">New</span></h5>
-          <p>A new <strong>Credited</strong> status (teal badge) for transferred, cross-enrolled, or advanced-credited subjects. Credited subjects count toward your earned units and satisfy prerequisites, but are excluded from GWA computation — matching how most Philippine universities handle them.</p>
+          <p>New teal <strong>Credited</strong> badge for transferred or cross-enrolled subjects. Counts toward earned units and satisfies prerequisites, but excluded from GWA — matching how most PH universities handle them.</p>
         </div>
       </div>
-
       <div class="cl-item">
-        <div class="cl-icon">🗓</div>
+        <div class="cl-icon">📱</div>
         <div class="cl-body">
-          <h5>4th Quarter exam period on Schedule &amp; Calendar <span class="cl-tag tag-new">New</span></h5>
-          <p>Quadrimestral students now get a 4th Quarter exam period (teal color) on the Schedule page and calendar highlights. All exam period labels update dynamically based on your calendar type.</p>
+          <h5>Full mobile responsiveness <span class="cl-tag tag-new">New</span></h5>
+          <p>All 5 pages now have a hamburger menu, bottom-sheet modals, and touch-friendly layouts. The calendar shows a tap-to-open detail panel on mobile instead of a side panel.</p>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -280,10 +321,9 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
   <div class="section">
     <h2 class="section-title">Supported schools</h2>
     <div class="prose">
-      <p>AcadTrack works for <strong>any Philippine university</strong> — you can always type your school name manually. The following 50 schools are available in the dropdown with auto-detected grading system and calendar type.</p>
+      <p>AcadTrack works for <strong>any Philippine university</strong> — you can always type your school name manually. The 50 schools below are in the registration dropdown with auto-detected grading and calendar settings.</p>
     </div>
-
-    <div style="margin-top:1.25rem">
+    <div style="margin-top:1.1rem">
       <div class="school-region">
         <h5>Metro Manila (NCR)</h5>
         <div class="school-pills">
@@ -306,7 +346,7 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
           <span class="school-pill">Philippine Christian University</span>
           <span class="school-pill">Philippine Normal University</span>
           <span class="school-pill">Philippine Women's University</span>
-          <span class="school-pill">Polytechnic University of the Philippines</span>
+          <span class="school-pill">PUP</span>
           <span class="school-pill">San Beda University</span>
           <span class="school-pill">TUP</span>
           <span class="school-pill">University of the East</span>
@@ -355,47 +395,42 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
         </div>
       </div>
     </div>
-
-    <div class="tpl-request" style="margin-top:1rem">
-      🏫 <strong>Don't see your school?</strong> Select "Other" in the dropdown and type your school name. It works exactly the same — the dropdown is just a shortcut. You can also <a href="#feedback" style="color:var(--gold)">send a request</a> to have your school added.
+    <div class="tpl-request">
+      🏫 <strong>Don't see your school?</strong> Select "Other" in the dropdown and type your school name. You can also <a href="#feedback">send a request</a> to have it added to the list.
     </div>
   </div>
 
-  <!-- ── STORAGE & SYNC ── -->
+  <!-- ── DATA & SYNC ── -->
   <div class="section">
     <h2 class="section-title">Your data &amp; sync</h2>
-
     <div class="storage-card">
       <div class="sc-row">
         <div class="sc-icon" style="background:var(--success-bg)">💾</div>
         <div class="sc-content">
           <h4>Where is my data saved?</h4>
-          <p>AcadTrack saves your data in your browser's <strong>localStorage</strong> — a built-in storage area in every modern browser. It stays on your device and is never uploaded anywhere.</p>
+          <p>AcadTrack saves everything in your browser's <strong>localStorage</strong> — it stays on your device and is never uploaded anywhere.</p>
         </div>
       </div>
       <div class="sc-row">
         <div class="sc-icon" style="background:#FEE2E2">📵</div>
         <div class="sc-content">
           <h4>Does it sync between my phone and PC?</h4>
-          <p><strong>No — not automatically.</strong> localStorage is specific to the browser and device you're using. If you add subjects on your phone, those changes will not appear on your PC's browser, and vice versa.</p>
-          <p style="margin-top:6px">This also means: if you clear your browser data or use a different browser on the same device, your tracker data may be lost. Always export regularly.</p>
+          <p><strong>No — not automatically.</strong> localStorage is device and browser-specific. Use Export/Import to move data between devices. Always export before clearing browser data.</p>
         </div>
       </div>
     </div>
-
     <div class="sync-alert">
-      <div class="sync-alert-title">⚡ How to use AcadTrack across multiple devices</div>
-      <p>Use the <strong>Export</strong> and <strong>Import</strong> feature (Settings → Data &amp; backup) to move your data between devices manually.</p>
+      <div class="sync-alert-title">⚡ How to sync between devices</div>
+      <p>Use <strong>Export</strong> and <strong>Import</strong> in Settings → Data &amp; backup.</p>
       <div class="sync-steps">
-        <div class="sync-step"><div class="sync-num">1</div><span>On your current device: open <strong>Settings ⚙</strong> on the dashboard and click <strong>Export to file</strong>. A .json file will download.</span></div>
-        <div class="sync-step"><div class="sync-num">2</div><span>Transfer the file to your other device — via Google Drive, email, Messenger, USB, or any method you prefer.</span></div>
-        <div class="sync-step"><div class="sync-num">3</div><span>On the new device: go to <strong>AcadTrack</strong> in your browser, open <strong>Settings ⚙</strong>, and click <strong>Import from file</strong>. Select the .json file.</span></div>
-        <div class="sync-step"><div class="sync-num">4</div><span>Your tracker is now synced. Repeat whenever you make major updates on one device.</span></div>
+        <div class="sync-step"><div class="sync-num">1</div><span>Open <strong>Settings ⚙</strong> on the Dashboard → <strong>Export to file</strong>. A .json file downloads.</span></div>
+        <div class="sync-step"><div class="sync-num">2</div><span>Transfer it to your other device — via Google Drive, email, Messenger, or USB.</span></div>
+        <div class="sync-step"><div class="sync-num">3</div><span>On the new device, open <strong>Settings ⚙</strong> → <strong>Import from file</strong>. Select the .json file.</span></div>
+        <div class="sync-step"><div class="sync-num">4</div><span>Your tracker is synced. Repeat whenever you make major updates.</span></div>
       </div>
     </div>
-
     <div class="prose" style="margin-top:1rem">
-      <p><strong>Tip:</strong> Pick one primary device (e.g. your PC) for updating grades, and use Export/Import whenever you want to view it on your phone. Automatic cloud sync may be added in a future version.</p>
+      <p><strong>Tip:</strong> Pick one primary device for updating grades, then Export/Import to sync to your phone or tablet.</p>
     </div>
   </div>
 
@@ -404,10 +439,10 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
     <h2 class="section-title">Request a curriculum template</h2>
     <div class="prose">
       <p>Currently available: <strong>Adamson University — BSBA Marketing Management (Curriculum Year 2022)</strong>.</p>
-      <p>More templates will be added over time. If your school and course isn't available yet, you can request it below. Include your school name, course, and curriculum year and we'll add it in an upcoming update.</p>
+      <p>More templates will be added over time. If your school and course isn't listed, request it using the form below — include your school name, course, and curriculum year.</p>
     </div>
     <div class="tpl-request">
-      📋 <strong>Want your curriculum added?</strong> Send us your school name, course title, and curriculum year using the form below. Attach or paste your subject list and we'll build it for free.
+      📋 <strong>Want your curriculum added?</strong> Send your school name, course title, and curriculum year using the form below. Paste your subject list in the message and we'll build it for free.
     </div>
   </div>
 
@@ -415,24 +450,14 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
   <div class="section">
     <h2 class="section-title" id="feedback">Send feedback or report a bug</h2>
     <div class="prose">
-      <p>Found a bug? Have a suggestion? Want to request a curriculum template or a new school in the dropdown? Send us a message — it helps make AcadTrack better for everyone.</p>
+      <p>Found a bug? Have a suggestion? Want to request a curriculum template or add your school to the dropdown? Send us a message.</p>
     </div>
-
     <div class="form-card">
       <div class="setup-notice">
-        <strong>📌 Developer note:</strong> Replace the <code>action</code> on the form below with your Formspree endpoint. Sign up free at <a href="https://formspree.io" target="_blank" style="color:var(--info)">formspree.io</a>, create a form, and paste the URL here. Use a dedicated email like <code>acadtrack.feedback@gmail.com</code> so feedback stays separate from your personal inbox.
+        <strong>📌 Developer note:</strong> Replace the <code>action</code> below with your Formspree endpoint. Sign up free at <a href="https://formspree.io" target="_blank" style="color:var(--info)">formspree.io</a> and paste your form URL. Use a dedicated email like <code>acadtrack.feedback@gmail.com</code>.
       </div>
-
-      <div class="success-msg" id="success-msg">
-        ✓ Thanks for your message! We'll review it and get back to you if needed.
-      </div>
-
-      <form
-        action="https://formspree.io/f/YOUR_FORM_ID_HERE"
-        method="POST"
-        id="feedback-form"
-        onsubmit="handleSubmit(event)"
-      >
+      <div class="success-msg" id="success-msg">✓ Thanks for your message! We'll review it and get back to you if needed.</div>
+      <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" id="feedback-form" onsubmit="handleSubmit(event)">
         <div class="form-row">
           <div class="fg">
             <label>Name <span class="req">*</span></label>
@@ -441,59 +466,51 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
           <div class="fg">
             <label>Email <span style="color:var(--light);font-weight:400">(optional)</span></label>
             <input type="email" name="email" placeholder="so we can follow up">
-            <div class="hint">We'll only use this to reply to you.</div>
+            <div class="hint">Only used to reply to you.</div>
           </div>
         </div>
-
         <div class="fg">
           <label>Type of feedback <span class="req">*</span></label>
           <select name="type" required id="feedback-type" onchange="onFeedbackTypeChange()">
             <option value="">— Select one —</option>
-            <option value="bug">🐛 Bug report — something isn't working correctly</option>
+            <option value="bug">🐛 Bug report — something isn't working</option>
             <option value="curriculum">📚 Curriculum request — add my school and course</option>
             <option value="school">🏫 School request — add my school to the dropdown</option>
-            <option value="feature">💡 Feature suggestion — add or improve something</option>
+            <option value="feature">💡 Feature suggestion</option>
             <option value="other">💬 General feedback or question</option>
           </select>
         </div>
-
-        <!-- Curriculum request extra fields -->
         <div class="fg" id="curriculum-fields" style="display:none">
           <label>School and course details</label>
-          <input type="text" name="curriculum_school" placeholder="School name · Course name · Curriculum year (e.g. 2022)" style="margin-bottom:6px">
-          <div class="hint">Include as much detail as you can. Attaching or pasting the full subject list in the message below will help us add it faster.</div>
+          <input type="text" name="curriculum_school" placeholder="School name · Course · Curriculum year (e.g. 2022)" style="margin-bottom:6px">
+          <div class="hint">Paste your full subject list in the message below to help us add it faster.</div>
         </div>
-
-        <!-- School dropdown request extra fields -->
         <div class="fg" id="school-fields" style="display:none">
           <label>School details</label>
-          <input type="text" name="school_name" placeholder="Full school name · City / Province · Grading system (if known)" style="margin-bottom:6px">
-          <div class="hint">Let us know your school's grading system (1.0-highest, 5.0-highest, 4.0-highest, etc.) and calendar type (semestral, trimestral, quadrimestral) if you know them.</div>
+          <input type="text" name="school_name" placeholder="Full school name · City / Province · Grading system (if known)">
+          <div class="hint">Include calendar type (semestral / trimestral / quadrimestral) if you know it.</div>
         </div>
-
         <div class="fg">
           <label>Your message <span class="req">*</span></label>
-          <textarea name="message" placeholder="Describe the issue or suggestion in detail. For bugs, mention what you were doing and what went wrong." required></textarea>
+          <textarea name="message" placeholder="Describe the issue or suggestion. For bugs, mention what you were doing and what went wrong." required></textarea>
         </div>
-
         <input type="hidden" name="_subject" value="AcadTrack Feedback">
         <input type="text"   name="_gotcha"  style="display:none">
-
         <div class="form-submit">
           <button type="submit" class="btn btn-primary" id="submit-btn">Send message →</button>
-          <span class="form-note">Responses are typically reviewed within a few days.<br>For curriculum requests, allow 1–2 weeks for the template to be added.</span>
+          <span class="form-note">Typically reviewed within a few days.<br>Curriculum requests: allow 1–2 weeks.</span>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- ── ABOUT THE PROJECT ── -->
+  <!-- ── ABOUT ── -->
   <div class="section">
     <h2 class="section-title">About the project</h2>
     <div class="prose">
-      <p>AcadTrack was built to help Filipino college students stay on top of their academic progress without needing to maintain messy spreadsheets or rely on school portals that can be hard to navigate.</p>
-      <p>It's designed to work for <strong>any Philippine university</strong> — whether you're in UP, Ateneo, La Salle, Adamson, UST, Benilde, or any other school — with support for all major grading systems and calendar types used across the country.</p>
-      <p>Your privacy matters. AcadTrack does not track your usage, collect analytics, show ads, or send your data anywhere. Everything lives in your browser.</p>
+      <p>AcadTrack was built to help Filipino college students stay on top of their academic progress without messy spreadsheets or hard-to-navigate school portals.</p>
+      <p>It works for <strong>any Philippine university</strong> — UP, Ateneo, La Salle, Adamson, UST, Benilde, and any other school — with support for all major grading systems and calendar types used across the country.</p>
+      <p>Your privacy matters. AcadTrack does not track usage, collect analytics, show ads, or send your data anywhere. Everything lives in your browser.</p>
     </div>
   </div>
 
@@ -505,28 +522,39 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--light);border-t
 </footer>
 
 <script>
-function onFeedbackTypeChange() {
-  const v = document.getElementById('feedback-type').value;
-  document.getElementById('curriculum-fields').style.display = (v === 'curriculum') ? 'block' : 'none';
-  document.getElementById('school-fields').style.display     = (v === 'school')     ? 'block' : 'none';
+// ── NAV TOGGLE ────────────────────────────────────────────────────────────────
+function toggleNav(){
+  var btn=document.getElementById('ham-btn'),drawer=document.getElementById('mobile-nav'),ov=document.getElementById('nav-overlay');
+  var open=drawer.classList.toggle('open');
+  btn.classList.toggle('open',open);ov.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeNav(){
+  document.getElementById('ham-btn').classList.remove('open');
+  document.getElementById('mobile-nav').classList.remove('open');
+  document.getElementById('nav-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeNav();});
+
+// ── FEEDBACK FORM ─────────────────────────────────────────────────────────────
+function onFeedbackTypeChange(){
+  var v=document.getElementById('feedback-type').value;
+  document.getElementById('curriculum-fields').style.display=(v==='curriculum')?'block':'none';
+  document.getElementById('school-fields').style.display=(v==='school')?'block':'none';
 }
 
-async function handleSubmit(e) {
+async function handleSubmit(e){
   e.preventDefault();
-  const form = document.getElementById('feedback-form');
-  const btn  = document.getElementById('submit-btn');
-  btn.textContent = 'Sending…';
-  btn.disabled    = true;
-  try {
-    const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
-    if (res.ok) {
-      form.style.display = 'none';
-      document.getElementById('success-msg').style.display = 'block';
-    } else { throw new Error(); }
-  } catch {
-    btn.textContent = 'Send message →';
-    btn.disabled = false;
-    alert('Could not send message. Please try again, or email us directly at acadtrack.feedback@gmail.com');
+  var form=document.getElementById('feedback-form'),btn=document.getElementById('submit-btn');
+  btn.textContent='Sending…';btn.disabled=true;
+  try{
+    var res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+    if(res.ok){form.style.display='none';document.getElementById('success-msg').style.display='block';}
+    else throw new Error();
+  }catch{
+    btn.textContent='Send message →';btn.disabled=false;
+    alert('Could not send. Please try again or email acadtrack.feedback@gmail.com');
   }
 }
 </script>
