@@ -4,7 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard — AcadTrack</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7B1C1C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AcadTrack">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -266,6 +271,7 @@ input::placeholder,textarea::placeholder{color:var(--light)}
     <button class="tb-link tb-desktop" onclick="openSettings()">Settings</button>
     <a href="about.html"          class="tb-link tb-desktop">About</a>
     <a href="about.html#feedback" class="tb-link tb-desktop">Contact</a>
+    <button id="install-btn" class="tb-link tb-desktop" onclick="installApp()" style="display:none;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);border-radius:6px;font-weight:500;color:white">⬇ Install App</button>
     <button class="tb-profile-btn" onclick="openSettings()" id="tb-profile-btn">
       <div class="tb-avatar" id="tb-avatar">?</div>
       <span id="tb-profile-label">Profile</span>
@@ -388,7 +394,8 @@ input::placeholder,textarea::placeholder{color:var(--light)}
           <option value="credited">Credited ★</option>
         </select>
       </div>
-      <div class="fg"><label>Grade</label><select id="m-grade"><option value="">— no grade —</option></select></div>
+      <div class="fg"><label>Grade</label><select id="m-grade" onchange="onGradeChange()"><option value="">— no grade —</option></select>
+      <div id="grade-hint" style="font-size:11px;margin-top:5px;padding:7px 10px;border-radius:var(--radius);display:none;line-height:1.5"></div></div>
     </div>
     <div id="credited-note" class="credited-note" style="display:none">★ <strong>Credited</strong> subjects count toward earned units but are excluded from GWA computation.</div>
     <div class="fg">
@@ -426,6 +433,7 @@ input::placeholder,textarea::placeholder{color:var(--light)}
           <option value="1_highest">1.0 highest (UP, Ateneo, Adamson…)</option>
           <option value="5_highest">5.0 highest</option>
           <option value="benilde">4.0 highest — Benilde / CSB</option>
+          <option value="percentage">Percentage (99–75 passing) — some state universities</option>
         </select>
       </div>
       <div class="form-row">
@@ -542,13 +550,27 @@ function save(){localStorage.setItem(KEY,JSON.stringify(D));}
 const GRADES_1H=[{v:'1.00',p:99},{v:'1.25',p:96},{v:'1.50',p:92},{v:'1.75',p:89},{v:'2.00',p:86},{v:'2.25',p:83},{v:'2.50',p:80},{v:'2.75',p:77},{v:'3.00',p:75},{v:'4.00',p:72},{v:'5.00',p:65},{v:'INC',p:null},{v:'DRP',p:null}];
 const GRADES_5H=[{v:'5.00',p:99},{v:'4.75',p:96},{v:'4.50',p:93},{v:'4.25',p:90},{v:'4.00',p:87},{v:'3.75',p:84},{v:'3.50',p:81},{v:'3.25',p:78},{v:'3.00',p:75},{v:'2.75',p:72},{v:'2.50',p:70},{v:'2.25',p:68},{v:'2.00',p:65},{v:'1.75',p:62},{v:'1.50',p:59},{v:'1.00',p:55},{v:'INC',p:null},{v:'DRP',p:null}];
 const GRADES_B=[{v:'4.00',p:97},{v:'3.50',p:93},{v:'3.00',p:89},{v:'2.50',p:85},{v:'2.00',p:80},{v:'1.50',p:75},{v:'1.00',p:70},{v:'0.00',p:null},{v:'INC',p:null},{v:'DRP',p:null},{v:'W',p:null}];
-function gTable(){if(D.gradeSystem==='5_highest')return GRADES_5H;if(D.gradeSystem==='benilde')return GRADES_B;return GRADES_1H;}
+// Percentage-based grading — used by some state universities and schools that record grades as raw scores
+const GRADES_PCT=[
+  {v:'99',p:99},{v:'98',p:98},{v:'97',p:97},{v:'96',p:96},{v:'95',p:95},
+  {v:'94',p:94},{v:'93',p:93},{v:'92',p:92},{v:'91',p:91},{v:'90',p:90},
+  {v:'89',p:89},{v:'88',p:88},{v:'87',p:87},{v:'86',p:86},{v:'85',p:85},
+  {v:'84',p:84},{v:'83',p:83},{v:'82',p:82},{v:'81',p:81},{v:'80',p:80},
+  {v:'79',p:79},{v:'78',p:78},{v:'77',p:77},{v:'76',p:76},{v:'75',p:75},
+  {v:'74',p:74},{v:'73',p:73},{v:'72',p:72},{v:'71',p:71},{v:'70',p:70},
+  {v:'INC',p:null},{v:'DRP',p:null}
+];
+function gTable(){if(D.gradeSystem==='5_highest')return GRADES_5H;if(D.gradeSystem==='benilde')return GRADES_B;if(D.gradeSystem==='percentage')return GRADES_PCT;return GRADES_1H;}
+function isNum(g){return g&&!isNaN(parseFloat(g));}
+function isPassing(g){if(!isNum(g))return false;const n=parseFloat(g),p=D.passingGrade||3.00;if(D.gradeSystem==='5_highest'||D.gradeSystem==='benilde'||D.gradeSystem==='percentage')return n>=p;return n<=p;}
+function gColor(g){if(!isNum(g))return'var(--gray)';if(!isPassing(g))return'var(--gf)';const n=parseFloat(g);if(D.gradeSystem==='benilde')return n>=3.50?'var(--gp)':n>=2.50?'var(--go)':'var(--mid)';if(D.gradeSystem==='5_highest')return n>=4.50?'var(--gp)':n>=3.50?'var(--go)':'var(--mid)';if(D.gradeSystem==='percentage')return n>=95?'var(--gp)':n>=85?'var(--go)':'var(--mid)';return n<=1.75?'var(--gp)':n<=2.50?'var(--go)':'var(--mid)';}
+function g2pct(g){const r=gTable().find(x=>x.v===String(g));return r?r.p:null;}
 function isNum(g){return g&&!isNaN(parseFloat(g));}
 function isPassing(g){if(!isNum(g))return false;const n=parseFloat(g),p=D.passingGrade||3.00;if(D.gradeSystem==='5_highest'||D.gradeSystem==='benilde')return n>=p;return n<=p;}
 function gColor(g){if(!isNum(g))return'var(--gray)';if(!isPassing(g))return'var(--gf)';const n=parseFloat(g);if(D.gradeSystem==='benilde')return n>=3.50?'var(--gp)':n>=2.50?'var(--go)':'var(--mid)';if(D.gradeSystem==='5_highest')return n>=4.50?'var(--gp)':n>=3.50?'var(--go)':'var(--mid)';return n<=1.75?'var(--gp)':n<=2.50?'var(--go)':'var(--mid)';}
 function g2pct(g){const r=gTable().find(x=>x.v===String(g));return r?r.p:null;}
 function computeGWA(subs){const g=subs.filter(s=>s.status==='passed'&&isNum(s.grade));if(!g.length)return null;return(g.reduce((a,s)=>a+parseFloat(s.grade)*s.units,0)/g.reduce((a,s)=>a+s.units,0)).toFixed(2);}
-function honorLabel(gwa){if(!gwa)return'No grades yet';const n=parseFloat(gwa);if(D.gradeSystem==='benilde'){if(n>=3.80)return'Summa cum laude';if(n>=3.50)return'Magna cum laude';if(n>=3.20)return'Cum laude';if(n>=1.00)return'Passing';return'Below passing';}if(D.gradeSystem==='5_highest'){if(n>=4.75)return'Summa cum laude';if(n>=4.25)return'Magna cum laude';if(n>=3.75)return'Cum laude';if(n>=3.00)return'Passing';return'Below passing';}if(n<=1.20)return'Summa cum laude';if(n<=1.45)return'Magna cum laude';if(n<=1.75)return'Cum laude';if(n<=2.00)return'Good standing';if(n<=3.00)return'Passing';return'Below passing';}
+function honorLabel(gwa){if(!gwa)return'No grades yet';const n=parseFloat(gwa);if(D.gradeSystem==='benilde'){if(n>=3.80)return'Summa cum laude';if(n>=3.50)return'Magna cum laude';if(n>=3.20)return'Cum laude';if(n>=1.00)return'Passing';return'Below passing';}if(D.gradeSystem==='5_highest'){if(n>=4.75)return'Summa cum laude';if(n>=4.25)return'Magna cum laude';if(n>=3.75)return'Cum laude';if(n>=3.00)return'Passing';return'Below passing';}if(D.gradeSystem==='percentage'){if(n>=97)return'Summa cum laude';if(n>=94)return'Magna cum laude';if(n>=90)return'Cum laude';if(n>=75)return'Passing';return'Below passing';}if(n<=1.20)return'Summa cum laude';if(n<=1.45)return'Magna cum laude';if(n<=1.75)return'Cum laude';if(n<=2.00)return'Good standing';if(n<=3.00)return'Passing';return'Below passing';}
 
 // ── CALENDAR ──────────────────────────────────────────────────────────────────
 const SEM_LABELS={semestral:{1:'1st Semester',2:'2nd Semester',3:'Summer / Midyear'},trimestral:{1:'1st Term',2:'2nd Term',3:'3rd Term'},quadrimestral:{1:'1st Term',2:'2nd Term',3:'3rd Term',4:'4th Term'}};
@@ -587,7 +609,7 @@ function render(){
 
 function renderAlert(gwa){
   const el=document.getElementById('track-alert');
-  if(D.targetGWA&&gwa){const tg=parseFloat(D.targetGWA),cg=parseFloat(gwa);const isBetter=D.gradeSystem==='benilde'||D.gradeSystem==='5_highest'?cg>=tg:cg<=tg;el.style.display='flex';el.textContent=isBetter?'✓ You are meeting your target GWA of '+D.targetGWA+'.':'Your current GWA ('+gwa+') is not yet at your target of '+D.targetGWA+'.';el.className='alert '+(isBetter?'ok':'warn');}
+  if(D.targetGWA&&gwa){const tg=parseFloat(D.targetGWA),cg=parseFloat(gwa);const isBetter=D.gradeSystem==='benilde'||D.gradeSystem==='5_highest'||D.gradeSystem==='percentage'?cg>=tg:cg<=tg;el.style.display='flex';el.textContent=isBetter?'✓ You are meeting your target GWA of '+D.targetGWA+'.':'Your current GWA ('+gwa+') is not yet at your target of '+D.targetGWA+'.';el.className='alert '+(isBetter?'ok':'warn');}
   else el.style.display='none';
 }
 
@@ -638,7 +660,38 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 function stLabel(s){return{passed:'Passed',failed:'Failed',ongoing:'Ongoing',not_taken:'Not taken',credited:'Credited'}[s]||s;}
 
 // ── GRADE / SEM OPTIONS ───────────────────────────────────────────────────────
-function buildGradeOpts(sel){const opts=['<option value="">— no grade —</option>'];gTable().forEach(g=>opts.push(`<option value="${g.v}"${g.v===sel?' selected':''}>${g.v}${g.p!==null?' ('+g.p+'%)':''}</option>`));document.getElementById('m-grade').innerHTML=opts.join('');}
+function buildGradeOpts(sel){
+  const opts=['<option value="">— no grade —</option>'];
+  gTable().forEach(g=>{
+    let label=g.v;
+    if(g.v==='INC') label='INC — Incomplete (excluded from GWA)';
+    else if(g.v==='DRP') label='DRP — Dropped (excluded from GWA)';
+    else if(g.v==='W') label='W — Withdrawn (excluded from GWA)';
+    else if(g.p!==null) label=g.v+' ('+g.p+'%)';
+    opts.push(`<option value="${g.v}"${g.v===sel?' selected':''}>${label}</option>`);
+  });
+  document.getElementById('m-grade').innerHTML=opts.join('');
+  onGradeChange();
+}
+function onGradeChange(){
+  const v=document.getElementById('m-grade').value;
+  const hint=document.getElementById('grade-hint');
+  if(!hint)return;
+  const HINTS={
+    'INC':'⏳ <strong>Incomplete</strong> — subject is not yet finished. Does <strong>not</strong> count toward GWA. You can update this grade once completed.',
+    'DRP':'🚫 <strong>Dropped</strong> — subject was officially dropped. Does <strong>not</strong> count toward GWA or earned units.',
+    'W':'↩ <strong>Withdrawn</strong> — officially withdrawn (Benilde/CSB). Does <strong>not</strong> count toward GWA.'
+  };
+  if(HINTS[v]){
+    hint.innerHTML=HINTS[v];
+    hint.style.display='block';
+    hint.style.background='var(--warn-bg,#FEF3C7)';
+    hint.style.border='1px solid #FCD34D';
+    hint.style.color='#78350F';
+  }else{
+    hint.style.display='none';
+  }
+}
 function buildSemOpts(sel){const opts=getSemOptions();document.getElementById('m-sem').innerHTML=opts.map(o=>`<option value="${o.v}"${String(o.v)===String(sel)?' selected':''}>${o.l}</option>`).join('');}
 function semOrder(y,s){return y*10+s;}
 function buildPrereqList(excId,selIds,curY,curS){
@@ -699,7 +752,7 @@ function confirmDelete(id){
 
 // ── SETTINGS ─────────────────────────────────────────────────────────────────
 function buildSettingsSemOpts(calType,cur){const labels=SEM_LABELS[calType]||SEM_LABELS.semestral;document.getElementById('st-sem').innerHTML=Object.entries(labels).map(([v,l])=>`<option value="${v}"${String(v)===String(cur)?' selected':''}>${l}</option>`).join('');}
-function onSettingsGSChange(){const v=document.getElementById('st-gsys').value;if(v==='benilde')document.getElementById('st-passing').value='1.00';else document.getElementById('st-passing').value='3.00';}
+function onSettingsGSChange(){const v=document.getElementById('st-gsys').value;if(v==='benilde')document.getElementById('st-passing').value='1.00';else if(v==='percentage')document.getElementById('st-passing').value='75';else document.getElementById('st-passing').value='3.00';}
 function onSettingsCalChange(){buildSettingsSemOpts(document.getElementById('st-caltype').value,document.getElementById('st-sem').value||1);}
 function openSettings(){
   document.getElementById('st-school').value=D.school||'';document.getElementById('st-name').value=D.name||'';document.getElementById('st-course').value=D.course||'';
@@ -763,6 +816,33 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 // ── INIT ──────────────────────────────────────────────────────────────────────
 load();
 if(D){activeYear=D.yearLevel||1;render();}
+</script>
+<script>
+// ── PWA INSTALL ───────────────────────────────────────────────────────────────
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault();deferredPrompt=e;
+  var btn=document.getElementById('install-btn');
+  if(btn)btn.style.display='inline-flex';
+});
+function installApp(){
+  if(!deferredPrompt)return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(function(r){
+    if(r.outcome==='accepted'){var btn=document.getElementById('install-btn');if(btn)btn.style.display='none';}
+    deferredPrompt=null;
+  });
+}
+window.addEventListener('appinstalled',function(){
+  var btn=document.getElementById('install-btn');if(btn)btn.style.display='none';
+  deferredPrompt=null;
+});
+// ── SERVICE WORKER ────────────────────────────────────────────────────────────
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
 </script>
 </body>
 </html>

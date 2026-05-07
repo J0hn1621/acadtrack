@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AcadTrack — College Progress Tracker</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7B1C1C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AcadTrack">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -391,6 +396,10 @@ footer{text-align:center;padding:2rem 1.5rem;font-size:12px;color:var(--light);b
             <input type="radio" name="gsys" value="benilde" onchange="pickGS('benilde')">
             <div><div class="rt">4.0 is the highest grade &nbsp;<span style="font-size:10px;background:#DBEAFE;color:#1D4ED8;padding:2px 7px;border-radius:99px;font-weight:700">Benilde / CSB</span></div><div class="rd">GPA-style scale. 4.0 = Excellent, 1.0 = minimum passing, 0.0 = Failed.</div></div>
           </label>
+          <label class="radio-opt" id="roptP">
+            <input type="radio" name="gsys" value="percentage" onchange="pickGS('percentage')">
+            <div><div class="rt">Percentage grade (99–75) &nbsp;<span style="font-size:10px;background:#DCFCE7;color:#15803D;padding:2px 7px;border-radius:99px;font-weight:700">Some state universities</span></div><div class="rd">Raw percentage scores. 99 = Excellent, 75 = minimum passing. Also supports INC and DRP.</div></div>
+          </label>
         </div>
       </div>
       <div class="form-row">
@@ -528,12 +537,13 @@ function getSchoolValue(){
 // ── GRADING SYSTEM ────────────────────────────────────────────────────────────
 function pickGS(val){
   selectedGS=val;
-  ['ropt1','ropt5','roptB'].forEach(function(id){document.getElementById(id).classList.remove('selected');});
-  var map={'1_highest':'ropt1','5_highest':'ropt5','benilde':'roptB'};
+  ['ropt1','ropt5','roptB','roptP'].forEach(function(id){document.getElementById(id).classList.remove('selected');});
+  var map={'1_highest':'ropt1','5_highest':'ropt5','benilde':'roptB','percentage':'roptP'};
   if(map[val])document.getElementById(map[val]).classList.add('selected');
   var ph=document.getElementById('passing-hint'),pf=document.getElementById('f-passing');
   if(val==='benilde'){pf.value='1.00';ph.textContent='GPA scale: 1.00 is the minimum passing grade.';}
   else if(val==='5_highest'){pf.value='3.00';ph.textContent='Grades at or above this are passing.';}
+  else if(val==='percentage'){pf.value='75';ph.textContent='Percentage: 75 and above is passing.';}
   else{pf.value='3.00';ph.textContent='Grades at or below this are passing.';}
 }
 
@@ -657,6 +667,13 @@ window.addEventListener('DOMContentLoaded',function(){
   document.getElementById('f-graddate').value=fut.getFullYear()+'-'+String(fut.getMonth()+1).padStart(2,'0');
   updateSemOptions();
 });
+</script>
+<script>
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;var b=document.getElementById('install-btn');if(b){b.style.display='inline-flex';}});
+function installApp(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted'){var b=document.getElementById('install-btn');if(b)b.style.display='none';}deferredPrompt=null;});}
+window.addEventListener('appinstalled',function(){var b=document.getElementById('install-btn');if(b)b.style.display='none';deferredPrompt=null;});
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
 </script>
 </body>
 </html>

@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About — AcadTrack</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7B1C1C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AcadTrack">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -236,6 +241,7 @@ footer{text-align:center;padding:1.75rem 1.25rem;font-size:12px;color:var(--ligh
     <a href="dashboard.html" class="tb-link tb-desktop">Settings</a>
     <a href="about.html"          class="tb-link tb-desktop active">About</a>
     <a href="about.html#feedback" class="tb-link tb-desktop">Contact</a>
+    <button id="install-btn" class="tb-link tb-desktop" onclick="installApp()" style="display:none;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);border-radius:6px;font-weight:500;color:white">⬇ Install App</button>
     <a href="dashboard.html" class="tb-profile-btn" id="tb-profile-btn">
       <div class="tb-avatar" id="tb-avatar">?</div>
       <span id="tb-profile-label">Profile</span>
@@ -277,14 +283,33 @@ footer{text-align:center;padding:1.75rem 1.25rem;font-size:12px;color:var(--ligh
     <h2 class="section-title">🗒 Update log</h2>
     <div class="patch-list">
 
-      <!-- v1.3 — Latest -->
+      <!-- v1.4 — Latest -->
       <div class="patch-entry">
-        <div class="patch-dot latest">📱</div>
+        <div class="patch-dot latest">🎓</div>
+        <div class="patch-body">
+          <div class="patch-header">
+            <span class="patch-version">v1.4 — Grades &amp; App Update</span>
+            <span class="patch-date">May 2026</span>
+            <span class="patch-badge latest">Latest</span>
+          </div>
+          <div class="patch-changes">
+            <div class="patch-change"><span class="patch-change-icon">📊</span><span class="patch-tag pt-new">New</span>Percentage grading system (99–75) — for state universities that record raw scores</div>
+            <div class="patch-change"><span class="patch-change-icon">📋</span><span class="patch-tag pt-new">New</span>INC (Incomplete) and DRP (Dropped) grade options now available in all grading systems</div>
+            <div class="patch-change"><span class="patch-change-icon">📱</span><span class="patch-tag pt-new">New</span>Install App button — tap to add AcadTrack to your home screen directly from the site</div>
+            <div class="patch-change"><span class="patch-change-icon">⚙</span><span class="patch-tag pt-improved">Improved</span>Service worker restored — offline support active across all pages</div>
+            <div class="patch-change"><span class="patch-change-icon">🏅</span><span class="patch-tag pt-improved">Improved</span>Latin honors thresholds added for percentage grading (Summa ≥97, Magna ≥94, Cum Laude ≥90)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- v1.3 — Mobile Update -->
+      <div class="patch-entry">
+        <div class="patch-dot">📱</div>
         <div class="patch-body">
           <div class="patch-header">
             <span class="patch-version">v1.3 — Mobile Update</span>
             <span class="patch-date">May 2026</span>
-            <span class="patch-badge latest">Latest</span>
+            <span class="patch-badge patch">Feature</span>
           </div>
           <div class="patch-changes">
             <div class="patch-change"><span class="patch-change-icon">📱</span><span class="patch-tag pt-new">New</span>Hamburger menu (☰) on all 5 pages — fully responsive navigation</div>
@@ -550,9 +575,29 @@ footer{text-align:center;padding:1.75rem 1.25rem;font-size:12px;color:var(--ligh
     </div>
   </div>
 
-</div>
+  <!-- ── ABOUT THE DEVELOPER ── -->
+  <div class="section">
+    <h2 class="section-title">👨‍💻 About the developer</h2>
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem">
+      <p style="font-size:14px;color:var(--mid);line-height:1.85;margin-bottom:1rem">
+        I created this tool and made it <strong>free for all students forever.</strong>
+      </p>
+      <p style="font-size:14px;color:var(--mid);line-height:1.85;margin-bottom:1rem">
+        The reason I built AcadTrack is simple — I encountered a real problem during college. There was no single app where I could track my progress. If I wanted to know which subjects I hadn't taken yet, I had to manually check one by one in the school's e-learning portal to see which ones already had a grade. Another way was to print out the curriculum and scratch off subjects as I finished them — which created confusion, especially during enrollment season.
+      </p>
+      <p style="font-size:14px;color:var(--mid);line-height:1.85;margin-bottom:1rem">
+        The second problem was the calendar. There was no personalized academic calendar where all school activities were plotted in one place. Students always had to rely on announcements from different departments, often missing deadlines or being caught off-guard by exam schedules.
+      </p>
+      <p style="font-size:14px;color:var(--mid);line-height:1.85;margin-bottom:1rem">
+        AcadTrack solves both of those. It gives every student — regardless of school or course — a single place to track their degree progress, manage their schedule, and plan ahead without depending on fragmented announcements.
+      </p>
+      <p style="font-size:14px;color:var(--mid);line-height:1.85">
+        The long-term goal is for universities and colleges to integrate something like this directly into their systems — making students' academic lives easier, clearer, and less stressful. Until then, AcadTrack will stay free, open, and improving based on real feedback from real students. 🙏
+      </p>
+    </div>
+  </div>
 
-<footer>
+</div>
   <p>AcadTrack — A free college progress tracker for Filipino students.</p>
   <p style="margin-top:4px;font-size:11px">No ads · No account · No data collection · <a href="index.html" style="color:var(--light)">Home</a> · <a href="dashboard.html" style="color:var(--light)">Dashboard</a></p>
 </footer>
@@ -605,6 +650,13 @@ async function handleSubmit(e){
     if(lb)lb.textContent=name||'Profile';
   }catch(e){}
 })();
+</script>
+<script>
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;var b=document.getElementById('install-btn');if(b)b.style.display='inline-flex';});
+function installApp(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted'){var b=document.getElementById('install-btn');if(b)b.style.display='none';}deferredPrompt=null;});}
+window.addEventListener('appinstalled',function(){var b=document.getElementById('install-btn');if(b)b.style.display='none';deferredPrompt=null;});
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
 </script>
 </body>
 </html>
