@@ -177,7 +177,30 @@ input::placeholder,textarea::placeholder{color:var(--light)}
 .io-row{display:flex;gap:8px;flex-wrap:wrap}
 .io-note{font-size:11px;color:var(--light);margin-top:5px;line-height:1.5}
 
-/* ── CREDITED NOTE ── */
+/* ── BACKUP REMINDER BANNER ── */
+.backup-banner{background:#FFFBEB;border:1.5px solid #FCD34D;border-radius:var(--radius-lg);padding:1rem 1.1rem;margin-bottom:1.25rem;display:none}
+.backup-banner.urgent{background:#FEF2F2;border-color:#FCA5A5}
+.backup-banner.never{background:#EFF6FF;border-color:#93C5FD}
+.bb-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:0.75rem}
+.bb-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--dark)}
+.bb-icon{font-size:18px;flex-shrink:0}
+.bb-dismiss{background:none;border:none;cursor:pointer;color:var(--light);font-size:16px;padding:0;line-height:1;flex-shrink:0;font-family:'Inter',sans-serif}
+.bb-dismiss:hover{color:var(--mid)}
+.bb-body{font-size:12px;color:var(--mid);line-height:1.7;margin-bottom:0.875rem}
+.bb-body strong{color:var(--dark);font-weight:600}
+.bb-reasons{display:flex;flex-direction:column;gap:5px;margin:8px 0}
+.bb-reason{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:var(--mid);line-height:1.6}
+.bb-reason-icon{flex-shrink:0;font-size:11px;margin-top:2px}
+.bb-actions{display:flex;gap:8px;flex-wrap:wrap}
+.bb-export-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:var(--radius);background:var(--maroon);color:white;font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.15s;min-height:38px}
+.bb-export-btn:hover{background:var(--maroon-hover,#9B2525)}
+.bb-later-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius);background:transparent;color:var(--gray);font-size:12px;font-weight:500;border:1px solid var(--border);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;min-height:38px}
+.bb-later-btn:hover{border-color:var(--mid);color:var(--dark)}
+.bb-last-export{font-size:11px;color:var(--light);margin-top:6px}
+@media(max-width:600px){
+  .bb-actions{flex-direction:column}
+  .bb-export-btn,.bb-later-btn{width:100%;justify-content:center}
+}
 .credited-note{font-size:11px;color:var(--gc);background:var(--gc-bg);border:1px solid #99F6E4;border-radius:var(--radius);padding:8px 10px;margin-bottom:0.875rem;line-height:1.5}
 
 /* ── SIMULATOR ── */
@@ -300,6 +323,32 @@ input::placeholder,textarea::placeholder{color:var(--light)}
 <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 
 <div class="content">
+
+  <!-- BACKUP REMINDER BANNER -->
+  <div class="backup-banner" id="backup-banner">
+    <div class="bb-header">
+      <div class="bb-title">
+        <span class="bb-icon" id="bb-icon">💾</span>
+        <span id="bb-title-text">Weekly backup reminder</span>
+      </div>
+      <button class="bb-dismiss" onclick="dismissBackupBanner()" title="Dismiss">&#x2715;</button>
+    </div>
+    <div class="bb-body">
+      <div id="bb-message"></div>
+      <div class="bb-reasons">
+        <div class="bb-reason"><span class="bb-reason-icon">⚠</span><span><strong>Browser data can be cleared at any time.</strong> Clearing your browser cache, cookies, or site data will permanently delete your entire AcadTrack history — all subjects, grades, schedule, and journal entries.</span></div>
+        <div class="bb-reason"><span class="bb-reason-icon">📱</span><span><strong>Uninstalling or switching apps deletes local data.</strong> If you uninstall your browser, switch to a new phone, or do a factory reset, your data is gone with it.</span></div>
+        <div class="bb-reason"><span class="bb-reason-icon">💻</span><span><strong>Your phone and PC don't sync automatically.</strong> Data saved on your phone is separate from your PC. Export from one device and import on the other to stay in sync.</span></div>
+        <div class="bb-reason"><span class="bb-reason-icon">🔒</span><span><strong>No cloud backup exists.</strong> AcadTrack is privacy-first — your data never leaves your device. This means you are the only backup. One export file keeps years of academic progress safe.</span></div>
+      </div>
+      <strong>How to recover:</strong> If you lose your data, simply import your latest export file — Settings > Data & backup > Import. All subjects, grades, and settings restore instantly.
+      <div class="bb-last-export" id="bb-last-export"></div>
+    </div>
+    <div class="bb-actions">
+      <button class="bb-export-btn" onclick="exportDataFromBanner()">⬇ Export my data now</button>
+      <button class="bb-later-btn" onclick="snoozeBackupBanner()">Remind me in 3 days</button>
+    </div>
+  </div>
 
   <!-- TODAY STRIP -->
   <div class="today-strip" id="today-strip">
@@ -777,7 +826,76 @@ function dashImportCurriculum(e){const file=e.target.files[0];if(!file)return;co
 function dashApplyCurriculum(){if(!dashParsedSubjects||!dashParsedSubjects.length)return;D.curriculum=dashParsedSubjects.map(s=>({id:s.id,code:s.code,name:s.name,units:s.units,year:s.year,sem:s.sem,prereqs:s.prereqs}));const existCodes=D.subjects.map(s=>s.code).filter(Boolean);const toAdd=dashParsedSubjects.filter(s=>!existCodes.includes(s.code));const skipped=dashParsedSubjects.length-toAdd.length;D.subjects=D.subjects.concat(toAdd);save();closeModal('settings-overlay');render();activeYear=1;showToast(toAdd.length+' subjects added'+(skipped?' ('+skipped+' skipped)':''));dashParsedSubjects=null;document.getElementById('dash-curr-preview').style.display='none';}
 
 // ── EXPORT / IMPORT ───────────────────────────────────────────────────────────
-function exportData(){const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');const name=(D.school||'acadtrack').replace(/[^a-z0-9]/gi,'-').toLowerCase();a.href=url;a.download='acadtrack-'+name+'-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);showToast('Data exported');}
+function exportData(){
+  const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const name=(D.school||'acadtrack').replace(/[^a-z0-9]/gi,'-').toLowerCase();
+  a.href=url;a.download='acadtrack-'+name+'-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  // Record export date
+  localStorage.setItem('acadtrack_last_export',new Date().toISOString().slice(0,10));
+  localStorage.removeItem('acadtrack_backup_snooze');
+  document.getElementById('backup-banner').style.display='none';
+  showToast('Data exported — keep this file somewhere safe!');
+}
+
+function exportDataFromBanner(){
+  closeModal('settings-overlay');
+  exportData();
+}
+
+// ── BACKUP REMINDER ────────────────────────────────────────────────────────────
+function checkBackupReminder(){
+  const banner=document.getElementById('backup-banner');
+  if(!banner||!D||!D.subjects||!D.subjects.length)return;
+  const lastExport=localStorage.getItem('acadtrack_last_export');
+  const snoozeUntil=localStorage.getItem('acadtrack_backup_snooze');
+  const today=new Date().toISOString().slice(0,10);
+  // Don't show if snoozed
+  if(snoozeUntil&&today<snoozeUntil)return;
+  const daysSinceExport=lastExport?Math.floor((new Date(today)-new Date(lastExport))/(1000*60*60*24)):null;
+  const titleEl=document.getElementById('bb-title-text'),msgEl=document.getElementById('bb-message'),iconEl=document.getElementById('bb-icon'),lastEl=document.getElementById('bb-last-export');
+  if(!lastExport){
+    // Never exported
+    banner.className='backup-banner never';
+    iconEl.textContent='🔵';
+    titleEl.textContent='Back up your data — first time reminder';
+    msgEl.innerHTML='You have <strong>never exported your data</strong>. Your subjects, grades, and schedule only exist on this device right now. One browser clear and everything is gone permanently.';
+    lastEl.textContent='No export on record.';
+    banner.style.display='block';
+  }else if(daysSinceExport>=14){
+    // Overdue
+    banner.className='backup-banner urgent';
+    iconEl.textContent='🔴';
+    titleEl.textContent='Backup overdue — '+daysSinceExport+' days since last export';
+    msgEl.innerHTML='Your last export was <strong>'+daysSinceExport+' days ago</strong>. Any grades, subjects, or schedule changes since then are at risk. Export now to protect your academic progress.';
+    lastEl.textContent='Last export: '+lastExport;
+    banner.style.display='block';
+  }else if(daysSinceExport>=7){
+    // Due for weekly backup
+    banner.className='backup-banner';
+    iconEl.textContent='💾';
+    titleEl.textContent='Weekly backup reminder — '+daysSinceExport+' days since last export';
+    msgEl.innerHTML='It has been <strong>'+daysSinceExport+' days</strong> since your last export. A weekly backup takes 5 seconds and protects everything you have built in AcadTrack.';
+    lastEl.textContent='Last export: '+lastExport;
+    banner.style.display='block';
+  }
+}
+
+function dismissBackupBanner(){
+  document.getElementById('backup-banner').style.display='none';
+  // Dismiss for 7 days
+  const snooze=new Date();snooze.setDate(snooze.getDate()+7);
+  localStorage.setItem('acadtrack_backup_snooze',snooze.toISOString().slice(0,10));
+}
+
+function snoozeBackupBanner(){
+  document.getElementById('backup-banner').style.display='none';
+  const snooze=new Date();snooze.setDate(snooze.getDate()+3);
+  localStorage.setItem('acadtrack_backup_snooze',snooze.toISOString().slice(0,10));
+  showToast('Reminder snoozed for 3 days');
+}
 function importData(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{try{const parsed=JSON.parse(ev.target.result);if(!parsed.school||!Array.isArray(parsed.subjects))throw new Error('Invalid file');showConfirm('Import and replace data?','This will replace your current tracker data.',()=>{D=parsed;if(!D.calendarType)D.calendarType='semestral';save();closeModal('settings-overlay');render();showToast('Data imported');});}catch{showToast('Invalid file — use a valid AcadTrack export');}e.target.value='';};reader.readAsText(file);}
 
 // ── SIMULATOR ─────────────────────────────────────────────────────────────────
@@ -815,7 +933,7 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 load();
-if(D){activeYear=D.yearLevel||1;render();}
+if(D){activeYear=D.yearLevel||1;render();checkBackupReminder();}
 </script>
 <script>
 // ── PWA INSTALL ───────────────────────────────────────────────────────────────
